@@ -1,0 +1,68 @@
+<%- include('./components/head.ejs',{title :'Signin'}) %>
+<body>
+    <%- include('./components/sidebar.ejs',{active:"transaction"}) %>
+  <div  class="page-wrapper">
+    <%- include('./components/navbartop.ejs',{active:""}) %>
+    <%- include('./components/navbarbottom.ejs',{active:"transaction"}) %>
+    <div class="page-body">
+        <div class="container-xl">
+          <div class="row row-deck row-cards">
+            
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Transaction Summary</h3>
+                  <div id="transaction_chart" class="chart-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Transaction Percentage in 2023</h3>
+                  <div id="transaction_detail_chart" class="chart-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Credit Card Percentage in 2023</h3>
+                  <div id="credit_card_chart" class="chart-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Debit Card Percentage in 2023</h3>
+                  <div id="dedit_card_chart" class="chart-lg"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="card-title">Invoice Patment Percentage in 2023</h3>
+                  <div id="invoice_payment" class="chart-lg"></div>
+                </div>
+              </div>
+            </div>
+            
+        </div>
+      </div>
+      <%- include('./components/footer.ejs') %>
+      <script src="jquery/maps/apexcharts.min.js">
+
+      </script>
+      <!-- <script src="jquery/maps/jsvectormap.min.js"></script> -->
+      <!-- <script src="jquery/maps/world.js"></script> -->
+      <!-- <script src="jquery/maps/world-merc.js"></script> -->
+      <script src="jquery/jQuery.js"></script>
+      <script src="jquery/demo-theme.js"></script>
+      <script src="jquery/tabler.min.js"></script>
+      <script src="script/transaction_chart.js">  
+     // @formatter:off
+      
+      </script>
+</body>

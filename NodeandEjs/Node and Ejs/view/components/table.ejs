@@ -1,0 +1,88 @@
+<div class="page-body">
+    <div class="container-xl">
+      <div class="row row-deck row-cards">
+    
+
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between">
+              <div>
+                <h3 class="card-title">Invoices</h3>
+              </div>
+              <div>
+                <button id="btn_for_dele"   type="button" class="btn btn-danger ">Delete all</button>
+              </div>
+              
+            </div>
+          
+            
+            <div class="table-responsive">
+             
+              <table id="emp_table" class="table card-table table-vcenter text-nowrap datatable border-top">
+                <thead>
+                  <tr>
+                    <th class="w-1"><input id="all_delete_checkbox" class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
+                    <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
+                    </th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Date of Joining</th>
+                    <th>Date of Birth</th>
+                    <th>Designation</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% response?.forEach((employee)=>{ %>
+                    <tr>
+                      <td><input name="check_del" value=" <%= employee.id %>" class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
+                      <td><span class="text-muted"><%= employee.id %></span></td>
+                      <td><a href="javascript:void(0)" class="text-reset" tabindex="-1"> <%= employee.Emp_name %></a></td>
+                      <td>
+                        <span class="flag flag-country-us"></span>
+                        <%= employee.Email %>
+                      </td>
+                      <td>
+                        <%= employee.Gender %>
+                      </td>
+                      <td>
+                        <%= employee.Doj %>
+                      </td>
+                      <td>
+                        <span class="flag flag-country-us"></span> <%= employee.Dob %>
+                      </td>
+                      <td> <%= employee.Designation %></td>
+                      <td class="text-end">
+                        <span><button onclick="update_btn('<%= employee.id %>')" class=" d-none d-sm-inline-block update_btn" data-bs-toggle="modal" data-bs-target="#update-modal"  id="update_btn"  value="<%= employee.id %>" class="">Update</button></span>
+                        <span><button  data-bs-toggle="modal" data-bs-target="#delete_Modal" onclick="delete_btn('<%= employee.id %>')"      id="delete_btn" value="<%= employee.id %>" class="delete_btn">Delete</button></span>
+                      </td>
+                    </tr>
+                   
+                    
+                    <% })  %>
+                  
+                  
+                </tbody>
+              </table>
+            </div>
+            <!-- Delete modal -->
+            <%- include('./delete_modal.ejs',{id:'delete_Modal',del_name:'this item',dele_btn_id:'delete_item'}) %>
+            <div class="success_position">
+              <p id="create_success" class="create_success" ></p>
+            
+            </div>
+            <%- include('./successful_modal.ejs',{id:'delete_successful',status:"Details Deleted"})  %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- update_modal -->
+<%- include('./update_form.ejs') %>
+
+
+<!-- delete all modal -->
+<%- include('./delete_modal.ejs',{id:'modal_delete',del_name:'all this item',dele_btn_id:'all_delete'}) %>
