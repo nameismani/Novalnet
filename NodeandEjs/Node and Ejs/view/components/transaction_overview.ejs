@@ -1,0 +1,234 @@
+<div class="page-body">
+  <div class="container-xl">
+    <div class="row row-deck row-cards">
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Transaction Count</div>
+              <div class="ms-auto lh-1">
+                <div class="dropdown">
+                  <select id="select_last" class="dropdown-toggle text-muted selects" >
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <option  id="get_month" class="dropdown-item active" >This Month</option>
+                 
+                  </div>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div id="trans_per" class="h1 mb-3"></div>
+            <div class="d-flex mb-2">
+              <div>Conversion rate</div>
+              <div class="ms-auto">
+                <span class="text-green d-inline-flex align-items-center lh-1">
+                  7% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg>
+                </span>
+              </div>
+            </div>
+            <div class="progress progress-sm">
+              <div class="progress-bar bg-primary" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="75% Complete">
+                <span class="visually-hidden">75% Complete</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Credit Card Success</div>
+              <div class="ms-auto lh-1">
+                <div class="dropdown">
+                  <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">This Year</a>
+                  <!-- <div class="dropdown-menu dropdown-menu-end"> -->
+                    <!-- <a class="dropdown-item active" href="#">Last 7 days</a>
+                    <a class="dropdown-item" href="#">Last 30 days</a>
+                    <a class="dropdown-item" href="#">Last 3 months</a> -->
+                  <!-- </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <div id="credit_card_per" class="h1 mb-0 me-2"></div>
+              <div class="me-auto">
+                <span class="text-green d-inline-flex align-items-center lh-1">
+                  8% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg>
+                </span>
+              </div>
+
+            </div>
+            <div class="mt-3">
+            <div id="chart-revenue-bg" class="chart-sm"></div>
+              
+            </div>
+          </div>
+          
+        </div>
+        
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Debit Card Success</div>
+              <div class="ms-auto lh-1">
+                <div class="dropdown">
+                  <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">This Year</a>
+                  <!-- <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item active" href="#">Last 7 days</a>
+                    <a class="dropdown-item" href="#">Last 30 days</a>
+                    <a class="dropdown-item" href="#">Last 3 months</a>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <div id="debit_card_per" class="h1 mb-3 me-2"></div>
+              <div class="me-auto">
+                <span class="text-yellow d-inline-flex align-items-center lh-1">
+                  0% <!-- Download SVG icon from http://tabler-icons.io/i/minus -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l14 0" /></svg>
+                </span>
+              </div>
+            </div>
+            <div id="chart-new-clients" class="chart-sm"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center">
+              <div class="subheader">Invoice Payment Success</div>
+              <div class="ms-auto lh-1">
+                <div class="dropdown">
+                  <a  class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">This Year</a>
+                  <!-- <div class="dropdown-menu dropdown-menu-end">
+                    <a class="dropdown-item active" >This Month</a>
+                   
+                  </div>
+                -->
+                </div>
+              </div>
+            </div>
+            <div class="d-flex align-items-baseline">
+              <div id="invoice_per" class="h1 mb-3 me-2"></div>
+              <div class="me-auto">
+                <span class="text-green d-inline-flex align-items-center lh-1">
+                  4% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 17l6 -6l4 4l8 -8" /><path d="M14 7l7 0l0 7" /></svg>
+                </span>
+              </div>
+            </div>
+            <div id="chart-active-users" class="chart-sm"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="row row-cards">
+          <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="bg-primary text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
+                    </span>
+                  </div>
+                  <div class="col">
+                    <div id="total_transaction" class="font-weight-medium">
+                    
+                    </div>
+                    <div id="pending_transaction" class="text-muted">
+                   
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="bg-green text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/shopping-cart -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-credit-card" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M3 5m0 3a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3z"></path>
+                        <path d="M3 10l18 0"></path>
+                        <path d="M7 15l.01 0"></path>
+                        <path d="M11 15l2 0"></path>
+                     </svg> </span>
+                  </div>
+                  <div class="col">
+                    <div id="credit_card_total" class="font-weight-medium">
+                    
+                    </div>
+                    <div id="credit_card_pending" class="text-muted">
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-mastercard" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M14 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                        <path d="M12 9.765a3 3 0 1 0 0 4.47"></path>
+                        <path d="M3 5m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"></path>
+                     </svg> </span>
+                  </div>
+                  <div class="col">
+                    <div id="debit_card_total" class="font-weight-medium">
+                    
+                    </div>
+                    <div id="debit_card_pending" class="text-muted">
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-lg-3">
+            <div class="card card-sm">
+              <div class="card-body">
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="bg-facebook text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-facebook -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-amazon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M17 12.5a15.198 15.198 0 0 1 -7.37 1.44a14.62 14.62 0 0 1 -6.63 -2.94"></path>
+                        <path d="M19.5 15c.907 -1.411 1.451 -3.323 1.5 -5c-1.197 -.773 -2.577 -.935 -4 -1"></path>
+                     </svg> </span>
+                  </div>
+                  <div class="col">
+                    <div id="invoice_total" class="font-weight-medium">
+                      
+                    </div>
+                    <div id="invoice_pending" class="text-muted">
+                   
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+</div>

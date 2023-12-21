@@ -1,0 +1,32 @@
+<div class="modal fade" id="<%= id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h4 class="modal-title" id="myModalLabel">Image preview</h4>
+        </div>
+        <form   id="settingForm">
+        <div class="modal-body d-flex justify-content-center  align-items-center ">
+          <img  id="imagepreview" style="width: 150px; height: 150px;" >
+        </div>
+        <div class="col-auto my-2 text-center">
+            <a   class="btn">
+                <label for="imageInput">Change Avatar</label>
+              </a>
+              <input oninput="document.getElementById('imagepreview').src = window.URL.createObjectURL(this.files[0])" id="imageInput" type="file" name="ProfileImage" accept="image/png, image/gif, image/jpeg"    class="form-control " style="display: none;" >
+        </div>
+        <div class="modal-footer">
+            <a id="cancel_image" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                Cancel
+              </a>
+              <button  type="submit"  class="btn btn-primary ms-auto" >
+                <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                
+                Submit
+              </button>
+        </div>
+        </form>
+
+      </div>
+    </div>
+  </div>

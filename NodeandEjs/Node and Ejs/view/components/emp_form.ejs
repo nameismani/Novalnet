@@ -1,0 +1,126 @@
+<form id="create_emp" >
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input id="emp_name" type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+          </div>
+          <p id="name_err" class="error_show"></p>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input id="emp_email" type="text" class="form-control" name="example-text-input" placeholder="Your report email">
+          </div>
+          <p id="email_err" class="error_show"></p>
+          <div class="d-flex gap-2 align-items-center">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-label">Date of Joining</label>
+                <input id="emp_doj" type="date" class="form-control">
+              </div>
+              
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input id="emp_dob" type="date" class="form-control">
+              </div>
+          
+            </div>
+          </div>
+          <div class="d-flex justify-content-around" >
+
+            <p id="doj_err" class="error_show"></p>
+            <p id="dob_err"  class="error_show "></p>
+          </div>
+          
+          
+        </div>
+        <div class="mx-3">
+          <div class="mb-3 d-flex justify-content-between align-items-center">
+            <div>
+              <label class="form-selectgroup-item">
+                <input type="radio" name="gender" value="male" class="form-selectgroup-input" checked>
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="me-3">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">male</span>
+                  
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div>
+
+              <label class="form-selectgroup-item">
+                <input type="radio" name="gender" value="female" class="form-selectgroup-input">
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="me-3">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">Female</span>
+                  
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div>
+              <label class="form-selectgroup-item">
+                <input type="radio" name="gender" value="others" class="form-selectgroup-input">
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="me-3">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">Others</span>
+                  
+                  </span>
+                </span>
+              </label>
+
+            </div>
+            
+                        
+          </div>
+        </div>
+        <p id="rad_err" class="error_show text-center"></p>
+        <div class="mx-3">
+          <div class="mb-3">
+            <label  for="designation">Designation</label>
+            <select class="form-control" name="designation" id="designations">
+                <option class="form-control" >Frontend developer</option>
+                <option   class="form-control"  >Backend developer</option>
+                <option   class="form-control" >UI/UX designing</option>
+            </select>
+          </div>
+        </div>
+       
+        
+        
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div>
+                <label class="form-label">Address</label>
+                <textarea id="comments" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="cmt_err" class="error_show text-center"></p>
+       
+        <div class="modal-footer">
+          <button id="cancel_modal" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button type="submit" href="javascript:void(0)" class="btn btn-primary ms-auto" >
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+            Create new employee
+          </button>
+        </div>
+      </div>
+    </form>
+    <%- include('./successful_modal.ejs',{id:'CreateEmpModal',status:"Employee Details Created"})  %>

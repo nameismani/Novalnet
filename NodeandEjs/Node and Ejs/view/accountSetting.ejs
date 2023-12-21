@@ -1,0 +1,32 @@
+<%- include('./components/head.ejs',{title :'Dashboard'}) %>
+<body>
+  <%- include('./components/sidebar.ejs',{active :"about"}) %>
+    <div class="page-wrapper">
+         <%- include('./components/navbartop.ejs',{active:"about"}) %>
+    <%- include('./components/navbarbottom.ejs',{active:"about"}) %>
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row g-2 align-items-center">
+              <div class="col">
+                <h2 class="page-title">
+                  Account Settings
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Page body -->
+        <%- include('./components/accoundMyaccound.ejs',{active:'Myaccount'}) %>
+        <%- include('./components/footer.ejs') %>
+        
+      </div>
+
+    <script src="assets/fontawesome/js/all.js"></script>    
+    <script src="jquery/jQuery.js"></script>
+
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <script src="jquery/demo-theme.js"></script>
+    <script src="script/settings.js"></script>
+    <script src="script/setNewPassword.js"></script>
+</body>

@@ -1,0 +1,50 @@
+<%- include('./components/head.ejs',{title :'Dashboard'}) %>
+
+<!-- Navbar -->
+<body>
+    
+  <%- include('./components/sidebar.ejs',{active:"home"}) %>
+  <div  class="page-wrapper">
+    <header   >
+        <!-- top navbar (Navbartop.js) -->
+        
+        <%- include('./components/navbartop.ejs',{active:""}) %>
+    </header>
+    <header class="navbar-expand-md">
+        <!-- bottom navbar (NavbarBottom.js) -->
+        <%- include('./components/navbarbottom.ejs',{active:'home'}) %>
+
+    </header>
+   
+    <header class="my-3">
+        <!-- create button  (create button js)-->
+        <%- include('./components/create_button.ejs') %>
+    </header>
+    <header> 
+        <%- include('./components/transaction_overview.ejs') %>
+    </header>
+    <header>
+        <!-- table (table.js) -->
+        <%- include('./components/table.ejs') %>
+    </header>
+   
+    <%- include('./components/footer.ejs') %>
+  </div>
+
+    <script src="assets/fontawesome/js/all.js"></script>    
+    <script src="jquery/jQuery.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+ <script src="jquery/dataTable.js"></script>
+    <script src="jquery/demo-theme.js"></script>
+    <script src="jquery/tabler.js"></script>
+    <script src="script/emp_tab.js"></script>
+    <script src="script/show_table.js"></script>
+    <script src="jquery/maps/apexcharts.min.js" ></script>
+    <script src="jquery/maps/charts.js"></script>
+ 
+ 
+     
+
+
+</body>

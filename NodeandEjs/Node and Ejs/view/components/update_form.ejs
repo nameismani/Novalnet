@@ -1,0 +1,139 @@
+<div class="modal modal-blur fade" id="update-modal" tabindex="-1" role="dialog" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" >
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <h5 class="modal-title">Update Employee</h5>
+        <button id="cancel_update_modalIcon" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="update_emp" >
+        <div class="modal-body">
+          <div class="mb-1">
+            <label class="form-label">Name</label>
+            <input id="up_name" type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+          </div>
+          <p id="up_name_err" class="error_show"></p>
+          <div class="mb-1">
+            <label class="form-label">Email</label>
+            <input id="up_email" type="text" class="form-control" name="example-text-input" placeholder="Your report email" disabled>
+          </div>
+          <p id="up_email_err" class="error_show"></p>
+          <div class="d-flex gap-2 align-items-center">
+            <div class="col-lg-6">
+              <div class="mb-1">
+                <label class="form-label">Date of Joining</label>
+                <input id="up_doj" type="date" class="form-control">
+              </div>
+              
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="mb-1">
+                <label class="form-label">Date of Birth</label>
+                <input id="up_dob" type="date" class="form-control">
+              </div>
+          
+            </div>
+          </div>
+          <div class="d-flex justify-content-around" >
+
+            <p id="up_doj_err" class="error_show"></p>
+            <p id="up_dob_err"  class="error_show "></p>
+          </div>
+          
+          
+        </div>
+        <div class="mx-3">
+          <div class="mb-1 d-flex justify-content-between align-items-center">
+            <div>
+              <label class="form-selectgroup-item">
+                <input type="radio" name="report-type" value="male" class="form-selectgroup-input" checked>
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="mb-1">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">male</span>
+                  
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div>
+
+              <label class="form-selectgroup-item">
+                <input  type="radio" name="report-type" value="female" class="form-selectgroup-input">
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="mb-1">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">Female</span>
+                  
+                  </span>
+                </span>
+              </label>
+            </div>
+            <div>
+              <label class="form-selectgroup-item">
+                <input type="radio" name="report-type" value="others" class="form-selectgroup-input">
+                <span class="form-selectgroup-label d-flex align-items-center p-3">
+                  <span class="mb-1">
+                    <span class="form-selectgroup-check"></span>
+                  </span>
+                  <span class="form-selectgroup-label-content">
+                    <span class="form-selectgroup-title strong mb-1">Others</span>
+                  
+                  </span>
+                </span>
+              </label>
+
+            </div>
+            
+                        
+          </div>
+        </div>
+        <p id="up_rad_err" class="error_show text-center"></p>
+        <div class="mx-3">
+          <div class="mb-1">
+            <label  for="designation">Designation</label>
+            <select class="form-control" name="up_designation" id="designations2">
+                <option name="desi" class="form-control"  value="Frontend developer">Frontend developer</option>
+                <option name="desi" class="form-control"  value="Backend developer"   >Backend developer</option>
+                <option name="desi"  class="form-control" value="UI/UX designing"  >UI/UX designing</option>
+            </select>
+          </div>
+        </div>
+       
+        
+        
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div>
+                <label class="form-label">Address</label>
+                <textarea id="up_comments" class="form-control" rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p id="up_cmt_err" class="error_show text-center"></p>
+       
+        <div class="modal-footer">
+          <a id="cancel_update_modal" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <button  type="submit" href="javascript:void(0)" class="btn btn-primary ms-auto" >
+            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" /></svg>
+            Update employee
+          </button>
+        </div>
+      </div>
+    </form>
+   
+  </div>
+</div>
+<%- include('./successful_modal.ejs',{id:'update_successfuly',status:"Details Updated"})  %>
+<%- include('./errorModal.ejs',{id:'updateError',status:"Employee email already Exist"})  %>
+<%- include('./errorModal.ejs',{id:'params_not_valid',status:"Params Not valid"})  %>
