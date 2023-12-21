@@ -1,0 +1,442 @@
+ CHANGE_LOG:-
+  tool :- ticketing System
+  requirement : "We need an option to select multiple tickets and close it together in a go, which reduces the time 
+                significantly"
+  Assigned To : Abdul kalam
+  Priority :- high
+---------------------------
+CHANGE_DETAILS:-
+---------------------------
+
+-----------------------------------------------------------------------------------------------------------------------
+
+1.file_name  => custom.js
+  path_name  => media/js/custom.js
+  yourfile   =>  search this class  (all-ticket-checkbox) remove that full (if) part  and replace this code:- 
+                  
+  myFile     =>  search this class (all-ticket-checkbox) copy and replace  (and)  search createUser if statement
+                 then copy this code :-  const updateTicketsState = document.querySelector(".update_tickets_state");
+                 past your file at createUser if statement top said
+
+  purpose    => for client side validation and send to server. selectData
+  code :-👇
+
+--------------------------------------------------------------------------
+
+const updateTicketsState = document.querySelector(".update_tickets_state");
+
+-------------------------------------------------------------------------
+
+if (document.querySelector(".all-ticket-checkbox") !== null) {
+    let ticketsId = [];
+    let selectOptions = {}; 
+    let comments ;
+
+
+    const removeOptions = (e) => {
+            ["statusCategory","assigneeCategory","priorityCategory"].forEach((el) => {
+                if (e.target.name === "comment-box") {
+                if (document.getElementById(el).classList.contains("is-invalid")) {
+                    document.getElementById(el).classList.remove("is-invalid");
+                    updateTicketsState.classList.add("d-none");
+                }
+            } else {
+                document.querySelector(".cmt-length").innerText = "0/300 characters";
+                comments ='';
+                document.querySelector(".comment").value = "";
+                delete selectOptions[document.getElementById(el)?.name];
+                document.getElementById(el).value = "";
+                if (document.getElementById(el).classList.contains("is-valid")) {
+                    document.getElementById(el).classList.remove("is-valid");
+                    updateTicketsState.classList.add("d-none");
+                }
+                if (document.getElementById(el).classList.contains("is-invalid")) {
+                    document.getElementById(el).classList.remove("is-invalid");
+                    updateTicketsState.classList.add("d-none");
+                }
+            }
+        })
+    } 
+
+
+    document.querySelectorAll(".single-ticket-checkbox").forEach((el, i) => {
+        el.addEventListener("change", (e) => {
+            if (el.checked === true) {
+                ticketsId.push(el.parentElement.parentElement.dataset.ticketId);
+            } else {
+                const index = ticketsId.indexOf( el.parentElement.parentElement.dataset.ticketId);
+                if (index > -1) {
+                    ticketsId.splice(index, 1);
+                }
+            }
+            if (ticketsId.length == 0) {
+                removeOptions(e);
+                document.querySelector(".group-category").classList.add("d-none");
+            } else {
+                document.querySelector(".group-category").classList.remove("d-none");
+            }
+        });
+    })
+
+
+    document.querySelector(".all-ticket-checkbox").addEventListener("change", (e) => {
+            if (e.target.checked === true) {
+                document.querySelectorAll(".single-ticket-checkbox").forEach((el, i) => {
+                        ticketsId.push(el.parentElement.parentElement.dataset.ticketId);
+                        ticketsId = [...new Set(ticketsId)];
+                    })
+                document.querySelector(".group-category").classList.remove("d-none");
+            } else {
+                ticketsId = [];
+                document.querySelector(".group-category").classList.add("d-none");
+                removeOptions(e);
+            }
+        });
+
+
+     window.addEventListener("scroll", () => {
+        ((window.scrollY > 200 && window.screen.width > 992 )|| (window.screen.width < 992 && window.scrollY > 720)) ? document.querySelector(".inner-group").classList.add("custom-shadow"):         document.querySelector(".inner-group").classList.remove("custom-shadow");
+    });
+
+
+
+    if (document.querySelector(".input-groups") !== null) {
+        const select_box_class = () => {
+            ["statusCategory", "assigneeCategory", "priorityCategory"].forEach((el) => {
+                    if (document.getElementById(el).classList.contains("is-invalid") === true) {
+                        document.getElementById(el).classList.remove("is-invalid");
+                    }
+                    if (Object.keys(selectOptions).length == 0) {
+                        document.getElementById(el).classList.add("is-invalid");
+                    }
+                })
+        }
+
+        ["statusCategory", "assigneeCategory", "priorityCategory"].forEach((el) => {
+            document.getElementById(el).addEventListener("change", (e) => {
+                let name = document.getElementById(el).name;
+                if (e.target.value.length > 0) {
+                    updateTicketsState.classList.add("d-none");
+                    e.target.classList.add("is-valid");
+                    selectOptions[name] = e.target.value;
+                } else {
+                    e.target.classList.remove("is-valid");
+                    delete selectOptions[name];
+                }
+                if (e.target.classList.contains("is-invalid") === true) {
+                    select_box_class(e);
+                }
+            });
+        })
+
+       ['keyup','keydown'].forEach((event)=>{
+            document.querySelector(".comment").addEventListener(event,(e)=>{
+                getComments(e)
+            })
+        })
+        
+        const getComments=(e)=>{
+            if (e.target.value.trim().length > 0) {
+                removeOptions(e);
+            } 
+            comments = e.target.value.trim();
+            let count = e.target.value.trim().length;
+            document.querySelector(".cmt-length").innerText = `${count}/300 characters`;
+
+            if (e.key === "Backspace" && count > 0) {
+                    document.querySelector(".cmt-length").innerText = `${count}/300 characters`;
+                }
+        }
+
+
+        document.querySelector("#updateTicketsBtn").addEventListener("click", (e) => {
+                const objData = { selectOptions, ticketsId, comments };
+
+                if ( ticketsId.length > 0 &&(Object.keys(selectOptions)?.length > 0 || comments?.length > 0) ){
+
+                    document.querySelector("#modal-confirm").style.display = "block";
+                    document.querySelector("body").style.overflowY = "hidden";
+
+                    document.querySelector(".no-btn").addEventListener("click", (e) => {
+                        document.querySelector("body").style.overflowY = "auto";
+                        document.querySelector("#modal-confirm").style.display = "none";
+                        removeOptions(e);
+                        objData.comments=''
+                    });
+
+                        document.querySelector(".yes-btn").addEventListener("click", async (e) => {
+                            update_tickets(e);
+                        });
+                        const update_tickets = (e) => {
+                        document.querySelector("body").style.overflowY = "auto";
+                        document.querySelector("#modal-confirm").style.display = "none";
+
+                        client.post("/tickets/updateTickets",JSON.stringify(objData),(response, request) => {
+                                updateTicketsState.innerText = "Updated successfully";
+                                updateTicketsState.classList.remove("d-none");
+                                updateTicketsState.classList.add("text-green");
+
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1000);
+                            });
+                    };
+                } else {
+                    select_box_class(e);
+                    updateTicketsState.innerText = "Please select any one of the option";
+                    updateTicketsState.classList.remove("d-none");
+                    updateTicketsState.classList.add("text-red");
+                }
+            });
+    }
+
+}
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+2.file_name  => custom.css
+  path_name  => media/css/custom.css
+  yourfile   =>  serach class (group_category) change the class like this (group-category)
+  myFile     =>  search this class (.custom-shadow and .inner-group ) copy and Write the top of the css file at you file
+  purpose    => for add and remove shadow to inner-group container
+  code :-👇
+
+.inner-group{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ }
+ .custom-shadow{
+    border: 1.5px solid rgb(0, 153, 255) !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
+ }
+ .group-category{
+    position: sticky  !important;
+    top: 0.1rem !important;
+    z-index: 50 !important;
+ }
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+3.file_name => tickets.ejs
+path_name   => templates/views/tickets.ejs
+yourfile    =>  search this class  (group_category)remove that full container replace this code :-
+                search the class (cancel_btn) remove that class replace this class(no-btn) then search the class (update_btn) remove that class replace  this(yes-btn) and serach id (ss) remove that id
+
+myFile      =>  search this class (group-category) copy and replace
+purpose     =>   for Ui 
+code :-👇
+                     <div class="d-none m-auto row group-category w-100 justify-content-center mt-sm-1 mt-lg-0 my-1 check">
+                            <div class="inner-group col-sm-12 col-lg-10 btn-status bg-light rounded-2 py-2 " >
+                                <div class="row row-cols-3 d-flex w-100 input-groups mb-2">
+                                    <div>
+                                        <strong>Status</strong>
+                                        <select class="form-select mt-1 " name="statusId" id="statusCategory">
+                                            <option  value='' selected>--Select--</option>
+                                            <% for(var i = 0; i < status.length; i++) { %>
+                                            <option value="<%= status[i].id%>"><%= status[i].name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <strong>Assignee</strong>
+                                        <select class="form-select mt-1" name="assigneeId" id="assigneeCategory">
+                                            <option value="" selected>--Select--</option>
+                                            <% for(var i = 0; i < users.length; i++) { %>
+                                            <option value="<%=users[i].id%>"><%= users[i].first_name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>  
+                                    <div>
+                                        <strong>Priority</strong>
+                                        <select class="form-select mt-1 " name="priorityId" id="priorityCategory">
+                                            <option value="" selected>--Select--</option>
+                                            <% for(var i = 0; i < priority.length; i++) { %>
+                                            <option value="<%=priority[i].id%>"><%= priority[i].level %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class=" btn_bottom_group row align-items-end justify-content-between mb-sm-1 ">
+                                    <div class="col-sm-10">
+                                        <label class="form-label">Comments</label>
+                                        <textarea class="form-control comment" name="comment-box" maxlength="300" data-bs-toggle="autosize" placeholder="Write your comments..." style="overflow: hidden; overflow-wrap: break-word; resize: none; text-align: start; height: 60px; ;"></textarea>
+                                    </div>
+                                    <div class="col-12 col-sm-2 my-1 my-sm-0" id="updateTicketsBtn">
+                                        <a class="btn btn-outline-primary w-100 ">Update</a>
+                                    </div>
+                                </div>
+                                <span class="text-orange cmt-length fw-medium" style="font-size: 12px;">0/300 characters</span>
+                                <div class="update_tickets_state d-none mt-1">message</div>
+                            </div>
+                        </div>
+ 
+
+code :-👇
+
+<div class="modal modal-blur fade show" id="modal-confirm" tabindex="-1" role="dialog" aria-modal="true" style="display: none;" >
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center py-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M12 9v4"></path>
+                            <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"></path>
+                            <path d="M12 16h.01"></path>
+                        </svg>
+                        <h3>Are you sure you want to update?</h3>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="w-100">
+                            <div class="row">
+                                <div class="col no-btn"><a class="btn w-100" data-bs-dismiss="modal">
+                                    cancel
+                                    </a>
+                                </div>
+                                <div class="col yes-btn" ><a class="btn btn-danger w-100" data-bs-dismiss="modal" data-value="yes">
+                                    confirm
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+--------------------------------------------------------------------------------------------------------------------------------
+
+4.file_name  => tickets.js
+path_name    => src/routes/tickets.js
+yourfile     =>  search this (changeUpdate)remove that full route part 
+myFile       =>  search this class (updateTickets) copy and replace bellow this ('/') single route container at your file:-
+purpose      =>   check sever side validation and send the data to tickets.models file 
+code :-👇
+
+
+router.post('/updateTickets', async (req, res) => {
+    
+    res.locals.user = req.session;
+
+    const {selectOptions,ticketsId,comments} = await req.body;
+    console.log(ticketsId);
+
+    if(ticketsId?.length > 0) {
+
+        ticketsId.forEach(async (ticketId) => {
+
+            const ticketDetails = await tickets_model.getTicketDetailsById(req, ticketId);
+
+            let note = `${res.locals.user.first_name} ${res.locals.user.last_name}`;
+
+            if(selectOptions?.assigneeId)
+            {
+                req.body.assignees = selectOptions.assigneeId
+                const assigneeDetails = await tickets_model.getUserById(req, selectOptions.assigneeId);
+                note += ' assigned the task to ' + assigneeDetails[0].first_name + ' ' + assigneeDetails[0].last_name;
+            };
+
+            if(selectOptions?.statusId) {
+                req.body.status = selectOptions.statusId
+                const currentStatus = await tickets_model.getStatusById(req, selectOptions.statusId);
+                note += ' changed the task status from ' + ticketDetails[0].name + ' to ' + currentStatus[0].name;
+            };
+            if(selectOptions?.priorityId) {
+                req.body.priority = selectOptions.priorityId
+                const currentPriority = await tickets_model.getPriorityById(req, selectOptions.priorityId);
+                note += ' changed the task priority from ' + ticketDetails[0].level + ' to ' + currentPriority[0].level;
+            };
+            if(comments?.length > 0) {
+                var fetchCommentsById = await tickets_model.fetchCommentsById(req, ticketId, 1);
+                fetchCommentsById = Number(fetchCommentsById[0].total_count) + 1;
+                note += ' added comments to the task - Refer #' + fetchCommentsById;
+                req.body.note = comments;
+                tickets_model.addComments(req, ticketId)
+            };
+
+            tickets_model.addActivityEntry(req, ticketId, note);
+
+            if(Object.keys(selectOptions).length > 0) {
+                try {
+                    Promise.all([
+                        tickets_model.updateTicketById(req, ticketId)
+                    ]).then((response) => {  
+                    res.end()
+                    });
+                } catch (error) {
+                    // Handle your error here
+                    console.log(error);
+                };
+            };
+        });
+    };
+    res.end()
+});
+
+--------------------------------------------------------------------------------------------------------------------------------
+5.file_name => tickets.models.js
+path_name   => src/models/tickets.models.js
+yourfile    =>  search  updateAllData (route) remove that full route search this (updateTicketById) remove the full function and replace this code  :-
+myFile      =>  search this class (updateTicketById) copy and replace
+purpose     => update tickets data to (db) tables 
+code :-👇
+
+
+exports.updateTicketById = async (req, ticketId) => {
+    if(!ticketId) {
+        ticketId = req.params.ticketId;
+    }
+    
+    let updateQuery = "";
+    let updatePlaceholders = [];
+
+    const categorys = [
+        {
+            query: "psp_staff_id = ?",
+            category: req.body.assignees
+        },
+        {
+            query: "ticket_status_id = ?",
+            category: req.body.status
+        },
+        {
+            query: "ticket_priority_id = ?",
+            category: req.body.priority
+        }
+    ]
+
+    categorys.forEach(async (data) => {
+        if(data.category !== undefined && data.category != 0) {
+            if(updateQuery != '') {
+                updateQuery += ',';
+            }
+            updateQuery += data.query;
+            updatePlaceholders.push(data.category)
+
+        };
+    });
+    updatePlaceholders.push(ticketId)
+    result = await req.app.get('db').query("UPDATE ticket SET " + updateQuery + " WHERE id = ?", updatePlaceholders);
+    if(result.length) {
+        return result;
+    };
+    return []
+}
+
+-------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

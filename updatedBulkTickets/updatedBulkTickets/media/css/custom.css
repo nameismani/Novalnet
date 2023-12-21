@@ -1,0 +1,175 @@
+
+.inner-group{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+ }
+ .custom-shadow{
+    border: 1.5px solid rgb(0, 153, 255) !important;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px !important;
+ }
+
+.list-group-item:active, .list-group-item:focus, .list-group-item:hover {
+    background-color: white;
+}
+
+.list-group-item.active {
+    background-color: aliceblue;
+}
+
+.page-body {
+    margin-top: 0px !important;
+}
+
+.ticket-page-title {
+    margin-bottom: 0.5rem;
+}
+
+.ticket-status {
+    max-width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    white-space: nowrap;
+    text-align: center;
+    vertical-align: middle;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    height: 22px;
+    line-height: 5px;
+    border-radius: 4px;
+    background-color: rgb(199, 42, 28);
+    color: rgb(255, 255, 255);
+    padding-left: 10px;
+    padding-right: 10px;
+    text-transform: none;
+    font-size: 12px;
+    text-align: center;
+}
+
+.table-ticket-subject {
+    width: 31% !important;
+}
+
+.table-ticket-no {
+	width: 10% !important;
+}
+
+.table-ticket-status {
+	width: 7% !important;
+}
+
+.list-group-item:active, .list-group-item:focus, .list-group-item:hover {
+    background-color: aliceblue;;
+}
+
+.password-span-error
+{
+    border-color: var(--tblr-form-invalid-border-color);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d63939' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cline x1='18' y1='6' x2='6' y2='18'%3e%3c/line%3e%3cline x1='6' y1='6' x2='18' y2='18'%3e%3c/line%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.3571428572em + 0.21875rem) center;
+    background-size: calc(0.7142857143em + 0.4375rem) calc(0.7142857143em + 0.4375rem);
+}
+
+@media (min-width: 992px) {
+.navbar-vertical.navbar-expand-lg {
+    width: 10rem !important;
+} 
+.navbar-expand-lg.navbar-vertical~.navbar, .navbar-expand-lg.navbar-vertical~.page-wrapper {
+    margin-left: 10rem !important;
+}
+
+.markdown>table>:not(caption)>*>*, .table>:not(caption)>*>* {
+	padding: 0.5rem 0.5rem;
+}
+
+.ticket-prev-button {
+	padding-right: 5px;
+}
+
+.ticket-next-button {
+	padding-left: 5px;
+}
+
+.ticket-counts {
+	display: flex;
+    justify-content: end;
+}
+
+.page-item, td {
+	cursor: pointer;
+}
+
+tbody > .ticket-rows:hover {
+	background-color: aliceblue;
+}
+
+td > a {
+	color: rgb(112 112 112);
+    text-decoration: none;
+}
+
+td > a:hover {
+	color: rgb(32,107,196);
+    text-decoration: none;
+}
+
+.ticket-detail-cards {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.assign-tag {
+	font-size: 12px;
+    line-height: 4.7;
+    position: absolute;
+    top: 0px;
+    right: 26px;
+}
+
+.navbar-vertical {
+	background-color: #0080c8;
+	box-shadow: 8px 0px #0080c8 !important;;
+}
+
+.custom-sidebar-navigation {
+--tblr-navbar-active-border-color: white;
+}
+
+.hideblock {
+	display: none;
+}
+
+#ticket_comments:focus {
+	border-color: #90b5e2 !important;
+}
+
+.password-error {
+	border: 1px red solid;
+}
+
+/* height */
+pre::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Track */
+pre::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* Handle */
+pre::-webkit-scrollbar-thumb {
+  background: #0080c8;
+}
+
+/* Handle on hover */
+pre::-webkit-scrollbar-thumb:hover {
+  background: #0080c8;
+  cursor: pointer;
+}
+
+.group-category{
+    position: sticky  !important;
+    top: 0.1rem !important;
+    z-index: 50 !important;
+ }  
+
