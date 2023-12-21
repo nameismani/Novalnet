@@ -1,0 +1,75 @@
+<%- include('./components/head.ejs') %>
+<body>
+    <div class="page-wrapper">
+        <%- include('./components/navbar.ejs') %>
+        
+        <div class="page-body">
+            <div class="container-xl">
+      <%- include('./components/table.ejs') %> 
+   
+      <div class="card my-5">
+        <div class="card-header">
+          <h3 class="card-title">Products</h3>
+        </div>
+      
+      </div>
+      <% if(data.list_of_product.length > 0){%>
+        <div class="row row-deck row-cards"  >
+          <% data.list_of_product.map((value)=>{%>
+              <div class="col-md-6 col-lg-3 card-link-pop">
+                  <div class="card">
+                    <!-- Photo -->
+                    <img   class="img-responsive img-responsive-21x9 card-img-top object-fit-contain"  style="background-image: url('<%=value.img %>')"></img>
+                    <div class="card-body">
+                  
+                      <p class="text-secondary"><%= value.names %></p>
+                    </div>
+                  </div>
+                </div>
+  <% }) %>
+      </div>
+      <%}else{ %>
+        <div class="d-flex justify-content-center">
+          <img width="300px" height="300px" src="assets/images/noproduct.png" alt="Product Not Found" />
+
+        </div>
+      <%} %>
+       
+        <div class="card my-5">
+            <div class="card-header">
+              <h3 class="card-title">Address & Contact details</h3>
+            </div>
+          
+          </div>
+        <% if(data.contact.length > 0){%>
+          <h2>Contact:</h2>
+          <% data.contact.map((value)=>{%>
+            <p>
+                <%= value%>
+           
+            </p>
+        <%}) %>
+       <% } %>
+       <% if(data.address.length >0 ){ %>
+        <h2>Address:</h2>
+        <% data.address.map((value)=>{%>
+            <address>
+                <%= value    %>
+           
+            </address>
+        <%}) %>
+ 
+      
+     <%  } %>
+        
+    </div>
+</div>
+    </div>
+  
+   <script src="jquery/jQuery.js"></script>
+   <script src="assets/bootstrap/js/bootstrap.js"></script>
+   <script src="jquery/demo-theme.js"></script>
+   <script src="jquery/tabler.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

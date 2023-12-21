@@ -1,0 +1,28 @@
+{
+  "name": "socket_practice",
+  "version": "1.0.0",
+  "description": "",
+  "main": "node.js",
+  "scripts": {
+    "start": "nodemon node.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.5.0",
+    "cheerio": "^1.0.0-rc.12",
+    "cookie-parser": "^1.4.6",
+    "cookies": "^0.8.0",
+    "domain-check": "^1.0.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "nodemon": "^3.0.1",
+    "puppeteer": "^21.1.1",
+    "request-promise": "^4.2.6",
+    "socket.io": "^4.7.2",
+    "whois": "^2.14.0",
+    "whois-json": "^2.0.4"
+  }
+}

@@ -1,0 +1,29 @@
+<div class="col-12">
+    <div class="card">
+      <div class="table-responsive">
+        <table class="table table-vcenter card-table table-striped">
+          <thead>
+            <tr>
+              <th>Domain Name</th>
+              <th>Domain Age</th>
+              <th>Domain Status</th>
+              <th>Domain URL</th>
+           
+             
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+             <td><%= data.domain_age.name %></td>
+             <td ><%= data.domain_age.age %></td>
+             <td class=" <%= data.status_code === 200 ? 'badge bg-success' : ' bg-secondary' %>"  > <%= data.status_code %></td>
+             
+            <td id="url"><%= data.url %></td>
+       </tr>
+           
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,62 @@
+<%- include('./components/head.ejs') %>
+<body>
+    <div class="container h-100">
+        <div class="d-flex flex-column  justify-content-center align-items-center  h-50 ">
+            <div class="container d-flex justify-content-center" >
+                <img class="w-50 "  src="assets/images/scrape.png" />
+            </div>
+           
+                <div class="container ">
+                 
+                        <div class="mb-3 d-flex justify-content-center">
+                            <div class="input-group ">
+                                <span class="input-group-text">
+                                  https://
+                                </span>
+                            
+                                <input  id="url_input" name="url_input" type="url" class="form-control" placeholder="Your Domain..." autocomplete="off">
+                                <span id="loadings"  class="input-icon-addon spin">
+                                  <div class="spinner-border spinner-border-sm text-secondary" role="status"></div>
+                                </span>
+                            </input>
+                               <span><button id="submit" type="button"  class="btn btn-primary">Search</button></span> 
+                            </div>
+                        </div>
+                        <p id="err_show" class="mt-4 d-flex justify-content-center w-100 text-danger "></p>
+
+                  
+                   
+                </div>
+            
+        
+        </div>
+        <div id="loader" class="hiddens">
+            <div class="d-flex justify-content-center ">
+                <div class="spinner-border  text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+              <p class="mt-2  text-center">Loading...</p>
+        </div>
+       
+        <div class="d-flex justify-content-center mt-5">
+            <h5 class="text-secondary ">Popular Websites <small class="font_size">click the icon</small></h5>
+        </div>
+        <div class="d-flex justify-content-between">
+        <a class="pointer"  id="flipkart"><img width="100px" height="100px" src="assets/images/flipkart.webp" alt="flipkart"></a>
+
+           <a class="pointer" id="ikea"> <img width="100px" height="100px" src="assets/images/ikea.png" alt="ikea"></a>
+           <a class="pointer" id="meesho"> <img width="100px" height="100px" src="assets/images/meesho.png" alt="Meesho"></a>
+            <a class="pointer" id="paytmmall"><img width="100px" height="100px" src="assets/images/paytmmall.png" alt="PayTmMall"></a>
+            <a class="pointer" id="novalnet"><img width="100px" height="100px" src="assets/images/novalnet.jpg" alt="Novalnet"></a>
+            <a class="pointer" id="mi"><img width="100px" height="100px" src="assets/images/mi.webp" alt="Xioami"></a>
+        </div>
+    </div>
+   
+ 
+    <div id="modal_back" class="modal-backdrop fade hide " style="z-index: -2;"></div>
+   <script src="jquery/jQuery.js"></script>
+   <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
