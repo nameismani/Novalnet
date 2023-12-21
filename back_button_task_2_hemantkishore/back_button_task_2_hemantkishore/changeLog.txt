@@ -1,0 +1,170 @@
+ --------------------------------------------------------------------Back_button_task_2 Change-Log--------------------------------------------------------------------------------------------------------
+===================================================================================================================================================================================
+
+path => media/js/custom.js
+
+=> Search this word 'tableRows' you have 2 occurrence 
+
+ - command the variable decleration on 1st occurrence
+ - And command IF condition on 2nd occurrence
+
+=> Search this word 'submit_filter_form_button' add this code on 2nd occurrence below
+
+   document.querySelector('#filter').value = 1;
+ 
+===================================================================================================================================================================================
+path => src/middleware/utils.js
+
+=> Search this word 'filtersCondition' replace this code on 1st occurrence below
+
+    const isBack = req.session.prev_page.isBack
+    const formData = isBack? req.session.prev_page.formData : req.body
+   
+     var page = isBack ? Number(req.session.prev_page.formData.page) : req.body.page;
+
+     var sortBy = formData.sortBy 
+    var sortField = formData.sortField 
+    let filters = new Object()
+    const ticket_no = formData.ticket_no 
+    const subject =  formData.subject 
+    const filter_date_range = formData.filter_date_range
+    const filter_date = formData.filter_date 
+    const assignees = formData.assignees 
+    const status = formData.status 
+    const priority =formData.priority 
+    const application = formData.application 
+    const server = formData.server 
+    const subTickets = formData.subTickets 
+    var to_date = ""; var from_date = '';
+
+=> Search this word 'paginationRule' add this code on 1st occurrence below, you have page variable on next line add this code
+
+ if(req.session.prev_page.isBack){
+        page = Number(req.session.prev_page.formData.page)
+    }
+
+===================================================================================================================================================================================
+path => src/router/tickets.js
+
+=> Go to router.all('/'), Inside the try block add this code on initialy
+
+ if(req.body.back!="back"){
+            req.session.prev_page ={
+                isBack:false,
+                status:null,
+            }
+        }    
+            if(req.body && req.body.page){
+    
+                req.session.prev_page.isBack = true
+                req.session.prev_page.formData = req.body
+                req.session.save()
+            }
+
+            if(req.body.filter==1){
+              
+                req.session.prev_page= {
+                    isBack:true,
+                    formData:req.body,                   
+                }
+                req.session.save()
+            
+            }
+
+=> Go to router.all("/:status_name") add this on before try block initialize
+
+    req.session.prev_page.status = status_name
+    req.session.prev_page.isBack = false
+    req.session.prev_page.formData = null
+
+=> Go to router.all("/:status_name") add this on after try block initialize
+    
+    if(req.body.page){
+        req.session.prev_page.isBack = true;
+        req.session.prev_page.formData = req.body;
+        req.session.save()
+    }
+
+=> Go to router.all('/detail/:ticketId') add this code on before try block initialize
+
+  const previous_url = req.headers.referer
+    const url = previous_url.includes(req.session.prev_page.status) ? previous_url : null
+   
+    if(url!=null){
+        req.session.prev_page.status_url = url
+        req.session.save()
+    }
+
+=> Search this word 'no_of_comments_pages' add this code on 3rd occurrence below
+
+  previous_url:req.session.prev_page.status_url
+
+===================================================================================================================================================================================
+
+path => templates/views/tickets_detail.ejs
+
+=> Search this word ('card-header') replace this code on 1st occurrence entire div
+
+ <div class="card-header d-flex flex-column flex-md-row justify-content-md-between gap-1">
+                <div class="d-flex flex-column flex-md-row gap-1">
+                <% for(var j=0; j < status.length; j++) { if(status[j].id == ticket.ticket_status_id) { %>
+                  <div class="col-xxl-auto col-xl-auto col-lg-auto col-md-auto me-sm-1">
+                    <a href="#" class="btn btn-info active w-100 ticket-status px-4" title="<%= status[j].name %>" style="background-color:#<%= status[j].hex_code %>;">
+                        <%= status[j].name %>
+                    </a>
+                  </div>
+                <% } } %>
+                <div class="col-xxl-auto col-xl-2 col-lg-2 col-md-3">
+                  <strong>Ticket No: #<%= (ticket) ? ticket.ticket_no: '' %></strong><span class="badge bg-azure ms-1" title="No of sub tickets"><%= sub_tickets.length %></span>
+                </div>
+                <div class="col-xxl-9 col-xl-8 col-lg-8 col-md-6 text-wrap" id="ticket_desc">
+                  <strong class="ms-sm-1" title="ticket subject">  - <%= ticket.subject %><% if (ticket.subject.includes(util.formatDateTime(ticket.creation_date)) == false) { %> - <%= util.formatDateTime(ticket.creation_date) %><% } %></strong>
+                </div>
+                </div>
+                  <!-- Back button -->
+                  <div class="back_button">
+                    <form action=<%= previous_url ? previous_url : "/tickets"%> method="post">
+                      <input type="hidden" value="back" name="back"/>
+                      <button class="btn btn-outline-primary back_button" type="submit">
+                        <span class="middle">
+                          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M15 6l-6 6l6 6"></path>
+                     </svg></span>Back</button>
+                    </form>
+                   </div>
+
+              </div>
+===================================================================================================================================================================================
+
+path => templates/views/tickets.ejs
+
+=> Search this word 'hidden' add this code on 1st occurrence below
+
+ <input type="hidden" name="filter" id="filter" value="0" />
+
+===================================================================================================================================================================================
+
+path => media/css/custom.css
+
+=> Last line add this code
+
+@media (max-width:1530px) {
+    #ticket_desc{
+        max-width: 750px;
+    }
+}
+
+@media (min-width:992px) {
+    #ticket_desc{
+        min-width: 600px;
+    }
+}
+
+@media (max-width:1180px) {
+    #ticket_desc{
+        max-width: 400px;
+    }
+}
+
+========================================================================================================================================================================================
