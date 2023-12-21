@@ -1,0 +1,337 @@
+<%- include('../partials/header_after_login.ejs') %>
+<div class="d-flex justify-content-between align-items-center p-2 flex-wrap">
+   <h2 class=" text-center mt-3 flex-fill">Feedbacks</h2>
+   <a href="/tickets" class="btn btn-primary">
+      <span class="middle">
+         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chevron-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M15 6l-6 6l6 6"></path>
+         </svg>
+      </span>
+      Back
+   </a>
+</div>
+<!-- feedback detail -->
+<div class="container-xl px-0 ">
+   <%- include('../partials/notification.ejs',{id:'feedback_mail_sent_success',responseText:'mail_success_text',className:'alert-success text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <%- include('../partials/notification.ejs',{id:'feedback_mail_failure',responseText:'mail_failure_text',className:'alert-danger text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <%- include('../partials/notification.ejs',{id:'feedback_delete_success',responseText:'feedback_delete_success_text',className:'alert-success text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <%- include('../partials/notification.ejs',{id:'feedback_delete_failure',responseText:'feedback_delete_failure_text',className:'alert-danger text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <%- include('../partials/notification.ejs',{id:'feedback_update_success',responseText:'feedback_update_success_text',className:'alert-success text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <%- include('../partials/notification.ejs',{id:'feedback_update_failure',responseText:'feedback_update_failure_text',className:'alert-danger text-wrap email-alert-style alert-dismissible my-2 position-fixed',progress:'false'}) %>
+   <div class="card">
+      <div class="row my-3 mx-0">
+         <div class="col-lg-9 col-xl-10 col-md-8 ps-3 pe-3 ">
+            <form action="/feedback" method="post" name="feedbackDataForm" id="feedbackDataForm"  >
+               <div class="d-flex justify-content-lg-between flex-wrap align-items-center mt-2">
+                  <div class="d-flex  justify-content-center  align-items-center  mb-3 order-md-1 order-2 gap-2" >
+                     <label class="form-label align-baseline pt-2" for="feedback_show_list">Show</label>
+                     <select class="form-select" name="show" id="feedback_show_list">
+                        <option value="10"<% if(show == "10") { %> selected <%}%> >10</option>
+                        <option value="20" <% if(show == "20") { %> selected <%}%>>20 </option>
+                        <option value="30" <% if(show == "30") { %> selected <%}%> >30 </option>
+                        <option value="50" <% if(show == "50") { %> selected <%}%>> 50 </option>
+                     </select>
+                  </div>
+                  <!-- <h2><%= (filters.status == "Resolved") ? "Resolved" : filters.status == "Openend" ? "Openend" : filters.status == "Progress" ? "Progress" : "Total"  %> Feedback Count <%= total_count %></h2> -->
+                  <div class="d-flex  justify-content-lg-center  justify-content-md-start align-items-center flex-wrap gap-2 mb-3 order-md-2 order-1 ">
+                     <div class="d-flex  justify-content-lg-center  align-items-center   gap-2" >
+                        <label class="form-label align-baseline pt-2" for="feedback_list_status">Status</label>
+                        <select class="form-select" name="status" id="feedback_list_status">
+                           <option value="All">All</option>
+                           <option value="Openend" <% if('Openend' == filters.status) { %> selected <%}%>> Openend </option>
+                           <option value="Progress" <% if('Progress'== filters.status) { %> selected <%}%>>Progress </option>
+                           <option value="Resolved" <% if('Resolved'== filters.status) { %> selected <%}%>> Resolved </option>
+                        </select>
+                     </div>
+                     <div class="d-flex justify-content-lg-center flex-wrap align-items-center gap-2 " >
+                        <label class="form-label align-baseline pt-2 filter-label  position-relative" for = "feedback-datepicker-icon-prepend" >Date</label>
+                        <div class="input-icon  position-relative filter-date-div">
+                           <span class="input-icon-addon">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                 <rect x="4" y="5" width="16" height="16" rx="2"></rect>
+                                 <line x1="16" y1="3" x2="16" y2="7"></line>
+                                 <line x1="8" y1="3" x2="8" y2="7"></line>
+                                 <line x1="4" y1="11" x2="20" y2="11"></line>
+                                 <line x1="11" y1="15" x2="12" y2="15"></line>
+                                 <line x1="12" y1="15" x2="12" y2="18"></line>
+                              </svg>
+                           </span>
+                           <input class="form-control filter_date" readonly name="filter_date" id="feedback-datepicker-icon-prepend" placeholder="Select a date" value="<%= filters.filter_date %>">
+                        </div>
+                        <button class="btn btn-primary align-self-center position-relative filter-button "   id="submit_feedback_filter_form_button"> Filter</button>
+                        <button class="btn btn-secondary align-self-center position-relative reset-button" id="reset_filter_feedback_button"> Reset</button>
+                     </div>
+                  </div>
+                  <input type="hidden" name="feedbackPage" id="feedbackPage" value="<%= current %>"  />
+                  <input type="hidden" name="feedbackActivityPage" id="feedbackActivityPage" value="<%= currentActivity %>"  />
+               </div>
+            </form>
+         </div>
+         <div class=" col-lg-3 col-xl-2 col-md-4 my-auto  " >
+            <h2 class="text-center text-muted fw-normal" >Activites</h2>
+         </div>
+      </div>
+      <div class="row my-1 mb-3 mx-0 " >
+         <div class="col-lg-9 col-xl-10 col-md-8 ps-3  order-2 order-md-1" >
+            <div class="card">
+               <div id="table-default" class="table-responsive">
+                  <table class="table card-table table-vcenter rounded  text-nowrap datatable " id="table-sort">
+                     <thead class="bg-success" >
+                        <tr>
+                           <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
+                           <th class="w-1">
+                              <button class="table-sort"> Id</button>
+                           </th>
+                           <th><button class="table-sort"> Type</button></th>
+                           <th>User Name</th>
+                           <th>Comment</th>
+                           <th><button class="table-sort"> Date</button></th>
+                           <th >
+                              <button class="table-sort"> Status</button>
+                           </th>
+                           <th class="text-center">Action</th>
+                           <th>Image</th>
+                        </tr>
+                     </thead>
+                     <tbody class="tbody">
+                        <% if(feedbacks.length > 0) {%>
+                        <% feedbacks.forEach((feedback)=>{%>
+                        <tr class="feedback-row">
+                           <td><input class="form-check-input m-0 align-middle getclass" type="checkbox" aria-label="Select invoice" value="<%= feedback.id %>"></td>
+                           <td><span class="text-secondary"><%= feedback.id %></span></td>
+                           <td><%= feedback.category %></td>
+                           <td>
+                              <%= feedback.Assigne_name %>
+                              <!-- <span class="d-none"> <%= feedback.Assignee_id %></span> -->
+                           </td>
+                           <td class=" <%= feedback.feedback.length >52 ? 'view-feedback-text':''%> text-truncate text-muted table-cell color-tooltip" style="max-width: 250px; " data-bs-toggle="tooltip"  data-bs-custom-class="color-tooltip" data-bs-placement="top" <% if(feedback.feedback.length > 52){%>  data-bs-title="click on text to view full comment"
+                              <%}%>>
+                              <%= feedback.feedback %>
+                           </td>
+                           <td>
+                              <%= feedback.creation_date %>
+                           </td>
+                           <td >
+                              <span class="text-white w-100 btn feedback-status" style=" background-color:<%= feedback.status == 'Openend' ? '#D63939' : feedback.status == 'Progress' ? '#4299E1': '#2FB344' %>;">
+                              <%= feedback.status == 'Openend' ? 'Openend' : feedback.status == 'Progress' ? 'Progress': 'Resolved'%></span>
+                           </td>
+                           <td class="text-center " >
+                              <div class="d-flex justify-content-center align-items-center" >
+                                 <% if(feedback.status == "Resolved"){%>
+                                 <button class="btn btn-ghost-success text-center feedback-email-button me-6" data-bs-custom-class="color-tooltip"  data-assigneeid = '<%= feedback.Assignee_id %>'  data-feedback-id = '<%= feedback.id %>' data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Send email to user" <% if(feedback.isdisabled == "1") { %> disabled <%}%>
+                                    >
+                                    <div class="spinner-border spinner-border-sm d-none"></div>
+                                    <svg xmlns="http://www.w3.org/2000/svg"class="icon icon-tabler  icon-tabler-send" style="margin-left: auto; margin-right:auto;" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                       <path d="M10 14l11 -11"></path>
+                                       <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"></path>
+                                    </svg>
+                                 </button>
+                                 <%} else{%>
+                                 <span class="dropdown ">
+                                    <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown" 
+                                       <% if(feedback.status == 'Resolved') { %> disabled <%}%>>Actions</button>
+                                    <div class="dropdown-menu dropdown-menu-end feedback-edit-button"  >
+                                       <a class="dropdown-item" href="#" data-feedback-id = '<%= feedback.id %>'  <% if(feedback.status == 'Openend') { %> hidden <%}%> >
+                                       Openend
+                                       </a>
+                                       <a class="dropdown-item" href="#" data-feedback-id = '<%= feedback.id %>' <% if(feedback.status == 'Progress') { %> hidden <%}%>>
+                                       Progress
+                                       </a>
+                                       <a class="dropdown-item" href="#" data-feedback-id = '<%= feedback.id %>' <% if(feedback.status == 'Resolved') { %> hidden <%}%>>
+                                       Resolved
+                                       </a>
+                                    </div>
+                                 </span>
+                                 <%}%>
+                                 <button class="btn btn-ghost-danger feedback-delete-button ms-2"  data-bs-toggle="modal" data-bs-target="#modal_delete_feedback"    data-feedback-id = '<%= feedback.id %>'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler text-center icon-tabler-trash" style=" margin-left:auto; margin-right:auto;" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                       <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                       <path d="M4 7l16 0"></path>
+                                       <path d="M10 11l0 6"></path>
+                                       <path d="M14 11l0 6"></path>
+                                       <path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"></path>
+                                       <path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"></path>
+                                    </svg>
+                                 </button>
+                              </div>
+                           </td>
+                           <td>
+                              <span class="avatar avatar-sm">
+                              <img
+                                 src="img/<%= feedback.image.trim().split(',')[0]%>"
+                                 alt="Feedback Image"
+                                 lazyload
+                                 style="width: 100%; height: 100%;  background-size: cover;
+                                 background-position: center; cursor:<%= feedback.image != 'null.png' ? '' : 'default'%>;"
+                                 data-feedback-id = '<%= feedback.id %>'
+                                 class="<%= feedback.image != 'null.png' ? 'show-full-feedback-image' : ''%>"
+                                 data-bs-toggle="tooltip"  data-bs-custom-class="color-tooltip" data-bs-placement="top" <% if(feedback.image != 'null.png'){%>  data-bs-title="click on image to view clearly"
+                                 <%}%>
+                                 /></span>
+                           </td>
+                        </tr>
+                        <%})%>
+                        <%} else {%>
+                        <td colspan="9" class="text-center text-muted p-5">No data found</td>
+                        <%}%>
+                     </tbody>
+                  </table>
+                  <% if(no_of_sub_pages > 1){ %>
+                  <div class="card-footer d-flex align-items-center flex-wrap ">
+                     <p class="m-0 text-muted">Showing <span><%= ((page_limit != 0)?(page_limit+1):1) %></span> to <span><%= (((page_limit + Number(show)) > total_count)?total_count:(page_limit + Number(show))) %></span> of <span><%= total_count %></span> tickets</p>
+                     <ul class="pagination m-0 ms-md-auto">
+                        <% if (current == 1) { %>
+                        <li class="page-item feedback-prev-button disabled">
+                           <a class="feedback_nav_link page-link" data-feedbackpagetoload="1" tabindex="-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                 <polyline points="15 6 9 12 15 18" />
+                              </svg>
+                              first
+                           </a>
+                        </li>
+                        <% } else { %>
+                        <li class="page-item feedback-prev-button">
+                           <a class="feedback_nav_link page-link" data-feedbackpagetoload="1" tabindex="-1">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                 <polyline points="15 6 9 12 15 18" />
+                              </svg>
+                              first
+                           </a>
+                        </li>
+                        <% } %>
+                        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                        <% if (i !== 1) { %>
+                        <li class="page-item disabled"><a>...</a></li>
+                        <% } %>
+                        <% for (; i <= (Number(current) + 4) && i <= no_of_sub_pages; i++) { %>
+                        <% if (i == current) { %>
+                        <li class="page-item active"><a data-feedbackpagetoload="<%= i %>" class="feedback_nav_link page-link" ><%= i %></a></li>
+                        <% } else { %>
+                        <li class="page-item"><a data-feedbackpagetoload="<%= i %>" class="feedback_nav_link page-link" ><%= i %></a></li>
+                        <% } %>
+                        <% if (i == Number(current) + 4 && i < no_of_sub_pages) { %>
+                        <li class="page-item disabled"><a>...</a></li>
+                        <% } %>
+                        <% } %>
+                        <% if (current == no_of_sub_pages) { %>
+                        <li class="page-item ticket-next-button disabled">
+                           <a class="feedbacl_nav_link page-link" data-feedbackpagetoload="<%= no_of_sub_pages %>">
+                              last
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                 <polyline points="9 6 15 12 9 18" />
+                              </svg>
+                           </a>
+                        </li>
+                        <% } else { %>
+                        <li class="page-item ticket-next-button">
+                           <a class="feedback_nav_link page-link" data-feedbackpagetoload="<%= no_of_sub_pages %>">
+                              last
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                 <polyline points="9 6 15 12 9 18" />
+                              </svg>
+                           </a>
+                        </li>
+                        <% } %>
+                        </li>
+                     </ul>
+                  </div>
+                  <% } %>
+               </div>
+            </div>
+         </div>
+         <div class="col-md-4 col-lg-3 col-xl-2 ps-md-0 pe-3 ps-3 mb-2 mb-sm-0  order-1 order-md-2">
+            <div class="card ms-sm-0 position-sticky top-0" style="height:590px;">
+               <div class="overflow-scroll" style="height:90%"  >
+                  <div class="list-group list-group-flush list-group-hoverable fs-5">
+                     <% for(let i= 0  ; i < Number(activites.length) ; i++){%>
+                     <div class="list-group-item ">
+                        <div class="row align-items-center">
+                           <div class="d-block text-muted mt-n1">
+                              <%= activites[i].note %>
+                              <div class="text-end pull-right mt-4"><%= activites[i].date %></div>
+                           </div>
+                        </div>
+                     </div>
+                     <%}%>
+                  </div>
+               </div>
+               <% if( no_of_activitysub_pages > 1){ %>
+               <div class="card-footer d-flex align-items-center flex-wrap ">
+                  <!-- <p class="m-0 text-muted">Showing <span><%= ((activity_page_limit != 0)?(activity_page_limit+1):1) %></span> to <span><%= (((activity_page_limit + 10) > total_activity_count)?total_activity_count:(activity_page_limit + 10)) %></span> of <span><%= total_activity_count %></span> Activites</p> -->
+                  <ul class="pagination m-0 ms-md-auto">
+                     <% if (currentActivity == 1) { %>
+                     <li class="page-item feedback-prev-button disabled">
+                        <a class="feedback_activity_nav_link page-link" data-feedbackactivitypagetoload="1" tabindex="-1">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <polyline points="15 6 9 12 15 18" />
+                           </svg>
+                           first
+                        </a>
+                     </li>
+                     <% } else { %>
+                     <li class="page-item feedback-prev-button">
+                        <a class="feedback_activity_nav_link page-link" data-feedbackactivitypagetoload="1" tabindex="-1">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <polyline points="15 6 9 12 15 18" />
+                           </svg>
+                           first
+                        </a>
+                     </li>
+                     <% } %>
+                     <% var i = (Number(currentActivity) > 5 ? Number(currentActivity) - 4 : 1) %>
+                     <% if (i !== 1) { %>
+                     <li class="page-item disabled"><a>...</a></li>
+                     <% } %>
+                     <% for (; i <= (Number(currentActivity) + 4) && i <=  no_of_activitysub_pages; i++) { %>
+                     <% if (i == currentActivity) { %>
+                     <li class="page-item active"><a data-feedbackactivitypagetoload="<%= i %>" class="feedback_activity_nav_link page-link" ><%= i %></a></li>
+                     <% } else { %>
+                     <li class="page-item"><a data-feedbackactivitypagetoload="<%= i %>" class="feedback_activity_nav_link page-link" ><%= i %></a></li>
+                     <% } %>
+                     <% if (i == Number(currentActivity) + 4 && i <  no_of_activitysub_pages) { %>
+                     <li class="page-item disabled"><a>...</a></li>
+                     <% } %>
+                     <% } %>
+                     <% if (currentActivity ==  no_of_activitysub_pages) { %>
+                     <li class="page-item ticket-next-button disabled">
+                        <a class="feedbacl_nav_link page-link" data-feedbackactivitypagetoload ="<%=  no_of_activitysub_pages %>">
+                           last
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <polyline points="9 6 15 12 9 18" />
+                           </svg>
+                        </a>
+                     </li>
+                     <% } else { %>
+                     <li class="page-item ticket-next-button">
+                        <a class="feedback_activity_nav_link page-link" data-feedbackactivitypagetoload ="<%=  no_of_activitysub_pages %>">
+                           last
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <polyline points="9 6 15 12 9 18" />
+                           </svg>
+                        </a>
+                     </li>
+                     <% } %>
+                     </li>
+                  </ul>
+               </div>
+               <% } %>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+<%- include('../partials/modal.ejs',{id:'modal_edit_feedback',modal_id:'feedback_modal_edit_button',buttonText:'Yes',responseText:'You want to change the feedback status',className:'btn-primary'}) %>
+<%- include('../partials/modal.ejs',{id:'modal_delete_feedback',modal_id:'feedback_modal_delete_button',buttonText:'Yes',responseText:'You want to delete feedback',className:'btn-danger'}) %>
+<script src="/js/libs/litepicker/litepicker.js" defer ></script>
+<%- include('../partials/footer_after_login.ejs') %>

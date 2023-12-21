@@ -1,0 +1,112 @@
+<%- include('../partials/header_after_login.ejs') %>
+  <div class="page-wrapper px-4">
+
+    <div class="alert alert-important alert-dismissable position-relative  start-50 translate-middle mt-6 w-75 ms-4  mb-0 invisible" id="response_alert"
+      role="alert">
+    </div>
+    <div class="page-header d-print-none mt-0">
+    
+      <div class="container-xl">
+      
+        <div class="row g-2 align-items-center">
+        
+          <div class="col mb-4">
+            <h2 class="page-title">
+              Account Settings
+            </h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Page body -->
+    <div class="page-body">
+      <div class="container-xl">
+        <div class="card">
+          <div class="row g-0">
+            <div class="col-12 col-md-3 border-end">
+              <div class="card-body">
+
+                <div class="list-group list-group-transparent">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active">My Account</a>
+
+                </div>
+
+              </div>
+            </div>
+            <div class="col-12 col-md-9 d-flex flex-column">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                  <h2 class="mb-4">My Account</h2>
+                  <button id="edit_btn" type="button" class="btn btn-ghost-primary px-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                      <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z"></path>
+                    </svg>
+                    <span class="ms-1">Edit</span>
+                  </button>
+                  
+                </div>
+                <h3 class="card-title">Profile Details</h3>
+                <div class="row align-items-center px-2">
+                  <div class="col-auto px-0"><span class="avatar avatar-xl"
+                      style="background-image: url(./static/avatars/000m.jpg)" id="abbreviation_avatar">
+                      <%= user.abbreviation %>
+                    </span>
+                    <div class="form-label visually-hidden" id="abbreviation_label">Abbrevation</div>
+                    <input type="text" class="form-control visually-hidden" value=<%= user.abbreviation %>  id="abbreviation_field">
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-md-3 p-0">
+                      <div class="form-label">First Name</div>
+                      <input type="text" class="form-control" value="<%=user.first_name %>" id="first_name" disabled>
+                    </div>
+                    <div class="col-md-3 ms-md-2 p-0">
+                      <div class="form-label">Last Name</div>
+                      <input type="text" class="form-control" value=<%=user.last_name %> id="last_name" disabled>
+                    </div>
+                  </div>
+                  <h3 class="card-title mt-4 mb-0 p-0">Email</h3>
+                    <div class="row g-2 p-0">
+                      <div class="col-md-6">
+                        <input type="text" class="form-control" value=<%=user.email %> id="user_email" disabled>
+                      </div>
+                  </div>
+                  <h3 class="card-title mt-4 mb-0 p-0">Password</h3>
+                  <div class="row g-2 p-0">
+                    <div class="col-md-6">
+                    <input type="password" class="form-control" value=<%=userDetails.password%> id="password" disabled>         
+                    </div>
+                    <div class="col-md-3">
+                      <div class="input-icon mb-4 ">
+                        <button id="rest_btn" class="btn btn-ghost-primary w-100">
+                          Reset password
+                        </button>
+                        <span class="input-icon-addon">
+                          <div class="spinner-border spinner-border-sm text-white invisible " id="loadingSpinner" role="status">
+                          </div>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-transparent mt-auto">
+                <div class="btn-list justify-content-end">
+                  <button type="button" class="btn invisible" id="cancel_btn">
+                    Cancel
+                  </button>
+                  <button type="button" class="btn btn-primary invisible" id="update_btn">
+                    Update Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+  <%- include('../partials/footer_after_login.ejs') %>

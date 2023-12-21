@@ -1,0 +1,33 @@
+<div
+  class="modal modal-blur fade"
+  id="<%= id %>"
+  tabindex="-1"
+  aria-hidden="true"
+  style="display: none"
+>
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-title">Are you sure?</div>
+        <div><%= responseText %></div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-link link-secondary me-auto"
+          data-bs-dismiss="modal"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          class="btn <%= className %>"
+          data-bs-dismiss="modal"
+          id="<%= modal_id %>"
+        >
+          <%= buttonText %>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/libs/bootstrap.min.css" rel="stylesheet" />
+    <title>Document</title>
+    <style>
+      h5 {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f8f8;
+      }
+      .card {
+        margin: 80px;
+        background-color: white;
+        width: 50vw;
+        text-align: justify;
+        height: auto;
+        /* border: 1px solid lightgray; */
+        padding: 20px;
+        font-size: 16px;
+        /* color: rgba(24, 36, 51, 0.75); */
+        color: black;
+        /* box-shadow: 2 4 5 rgb(0,0,0); */
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h2>Hi <%= userName %></h2>
+      <p>
+        <%= category == "Optimization"?" Optimization": category == "Issue" ?
+        "Thank you for bringing the issue to our attention. Our team has
+        promptly addressed and resolved the problem, and the updated version
+        will be available in the live environment shortly. We encourage you to
+        continue providing feedback for our application in the future. Our
+        Ticketing System team remains dedicated to enhancing the application's
+        user-friendliness. Your feedback is greatly appreciated.": category ==
+        "Improvement" ? "Thank you for your valuable feedback and suggestions
+        for improvement. We have promptly addressed these areas and are in the
+        process of implementing the necessary changes in our live system. Your
+        continued feedback on our application is highly encouraged, as it helps
+        us enhance the user experience. The Ticketing System team extends their
+        gratitude for your valuable input. Thank you for your contribution.":
+        "else" %>
+      </p>
+      <h5>Thank you</h5>
+      <h5>Ticketing System Team</h5>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,600 @@
+---------> Date 20/09/23 <----------------
+
+-------added tow new files in partials -----------
+ file 1 successalert.ejs
+ file 2 dangeralert.ejs 
+ insetaed of above tow files i am added modal.ejs file
+
+ ----------custom.js-------------
+
+ in custome js file added jquery code in 20th line and ended code in 23rd line
+ in 244 line added jquery code for status response based on success and failure and code ended in 260 line 
+
+ ---------tickets_detail.ejs--------
+
+ added ejs include function in 280 and 281 line for modal popup component
+
+ ---------**********---------------------
+
+
+ ----------> Date 21/09/23 <----------------
+
+ -------modifed custom css ------------
+ stated in line 37 to line 69 ---> line to add loader functionality in alert 
+
+ ----additionally made some change in comments page --------
+ changes done to show last 10 comments and we can see one by one using changing pagination. to implement this i made changes in below files
+
+
+ ----------tickets.model.js----------------
+ 
+ modified line from 125 to 129
+
+ ----------tickets.js ----------
+  
+added one line in 172 ---comment_page_limit---
+
+---------tried to add texteditor option in textarea using CKEDITOR plugin -------
+But after adding that unable to submit the comment so i commented that code 
+
+---------*******----------------
+
+--------> Date 22/09/23 <---------------
+
+ ---------tickets_detail.ejs--------
+
+ modified line 194 added this line 
+ <%= i+1 + ((Number(currentCommentPage)-1) * 10) %> - <%= comments[i].comment_note %>
+
+ ----------********------------------
+ 
+-------> Date 25/09/23 <------------
+
+------tickets_detail.ejs-------
+added a div with a class name show div in line 130 and closed the div in line 133
+modified line 128 for loop condition to show ticket details in descending order 
+for (var i = ticket_detail.length-1; i >= 0; i--) 
+modified line 200 to fix a height for div and to add scroll option
+added line 308 to 311 to show how many comments are available in comment area 
+
+added view all button line from 117 to 119
+added view more and view less button from line 138 to 141
+modified line 166 for loop condition to show subticket details tab in descending order 
+for(var i= sub_tickets.length - 1; i >= 0 ; i--) 
+
+--------- header_after_login.ejs------------
+added line 31 to 39
+
+--------- custom.js ----------
+added line 19
+added line 197 to 264 for view all,view more and view less button
+
+
+ <div class="dropdown">
+  <button  class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Open dropdown</button>
+  <div class="dropdown-menu" style="">
+   
+    <button class="dropdown-item btn btn-primary">
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon icon-tabler icon-tabler-settings" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z"></path>
+        <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+      </svg>
+      Edit
+    </button>
+    <button class="dropdown-item btn btn-danger" >
+      <svg xmlns="http://www.w3.org/2000/svg" class="icon dropdown-item-icon icon-tabler icon-tabler-pencil" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M4 20h4l10.5 -10.5a1.5 1.5 0 0 0 -4 -4l-10.5 10.5v4"></path>
+        <path d="M13.5 6.5l4 4"></path>
+      </svg>
+      Delete 
+    </button>
+  </div>
+</div>
+
+
+let feedback_type, feedback_type_checked = false;
+let feedback_type_list = document.getElementsByName("feedback_type");
+const fileInput = document.querySelector('input[name="files"]');
+const errorMessage = document.querySelector(".feedback-error-message");
+
+if (document.querySelector("#feedback_form") != undefined) {
+   feedback_type_list.forEach((element) => {
+      element.addEventListener("click", (e) => {
+         const files = fileInput.files;
+         if (e.target.checked) {
+            feedback_type = element.value;
+               feedback_type_checked = true;
+               handleFeedbackTypeSelection(files);
+         }
+      });
+   });
+
+   fileInput.addEventListener("change", (e) => {
+      const files = fileInput.files;
+    handleFeedbackTypeSelection(files);
+   });
+
+   document
+      .querySelector("#feedback_form")
+      .addEventListener("click", (event) => {
+         const formData = new FormData();
+         formData.append("note", document.querySelector("#user_feedback").value);
+         formData.append("type", feedback_type);
+
+         const files = fileInput.files;
+         handleFileSelection(files, formData);
+      });
+
+
+}
+
+function handleFeedbackTypeSelection(files) {
+   if (files.length <= 5) {
+     if (feedbackTypeChecked && !errorMessage.classList.contains("invisible")) {
+       errorMessage.classList.add("invisible");
+     }
+     if (!feedbackTypeChecked) {
+       errorMessage.innerText = "Please select any one Feedback type";
+     }
+   }
+ }
+ 
+ async function handleFileSelection(files, formData) {
+   if ((files.length > 5 && !feedbackTypeChecked) || (!feedbackTypeChecked)) {
+     showError("Please select any one Feedback type. Only 5 Images are allowed");
+   }
+ 
+   if (document.querySelector("#user_feedback").value.trim() == "") {
+     animateError("#user_feedback");
+   }
+ 
+   if (files.length <= 5 && document.querySelector("#user_feedback").value.trim() != "" && feedbackTypeChecked) {
+     for (let i = 0; i < files.length; i++) {
+       formData.append("files", files[i]);
+     }
+ 
+     try {
+       const response = await fetch('/feedback/post', { method: 'POST', body: formData });
+ 
+       if (response.ok) {
+         document.querySelector('.feedback-animation').classList.add('success-animation');
+         setTimeout(() => window.location.reload(), 1500);
+       } else {
+         console.error('Error sending feedback:', response.statusText);
+       }
+     } catch (error) {
+       console.error('Error sending feedback:', error.message);
+     }
+   }
+ }
+ 
+ function showError(message) {
+   errorMessage.classList.remove("invisible");
+   errorMessage.innerText = message;
+ }
+ 
+ function animateError(selector) {
+   document.querySelector(selector).classList.add("error-animation");
+   setTimeout(() => document.querySelector(selector).classList.remove("error-animation"), 1000);
+ }
+textAreaAutosize();
+
+function textAreaAutosize() {
+   var text = $("#user_feedback");
+   text.each(function () {
+      $(this).attr("rows", 1);
+      resize($(this));
+   });
+   text.on("input", function () {
+      resize($(this));
+   });
+
+   function resize($text) {
+      $text.css("height", "auto");
+      $text.css("height", $text[0].scrollHeight + "px");
+   }
+}
+
+if (document.querySelector(".feedback-custom-btn2") != undefined) {
+   document
+      .querySelector(".feedback-custom-btn2")
+      .addEventListener("click", () => {
+         document.querySelector(".feedback-custom-btn2").classList.add("boom");
+         setTimeout(() => {
+            document
+               .querySelector(".feedback-custom-btn2")
+               .classList.remove("boom");
+         }, 1000);
+      });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+   var tooltip = new bootstrap.Tooltip(
+      document.querySelector(".feedback-min-btn"), {
+         placement: "top",
+      }
+   );
+
+   document
+      .querySelector(".feedback-min-btn")
+      .addEventListener("click", function () {
+         if (
+            !document
+            .querySelector(".feedback-min-max")
+            .classList.contains("active")
+         ) {
+            document.querySelector(".feedback-min-max").classList.add("active");
+            document
+               .querySelector(".feedback-custom-btn")
+               .classList.remove("hover");
+         } else {
+            document.querySelector(".feedback-min-max").classList.remove("active");
+            setTimeout(() => {
+               document.querySelector(".feedback-custom-btn").classList.add("hover");
+            }, 1000);
+         }
+
+         if (tooltip._config.title === "Close Feedback") {
+            tooltip._config.title = "Open Feedback";
+         } else {
+            tooltip._config.title = "Close Feedback";
+         }
+
+         setTimeout(() => {
+            tooltip.hide();
+         }, 10);
+
+         // tooltip.show();
+      });
+});
+
+$(".feedback-popout .feedback-custom-btn").click(function () {
+   $(this).toggleClass("active");
+   $(".feedback-popout .feedback-custom-btn2").removeClass("d-none");
+   $(".feedback-min-btn").addClass("d-none");
+   $(this)
+      .closest(".feedback-popout")
+      .find(".feedback-panel")
+      .toggleClass("active");
+});
+
+$("#feedback_close_btn").click(function () {
+   $(".feedback-popout .feedback-panel").removeClass("active");
+   $(".feedback-popout .feedback-custom-btn2").addClass("d-none");
+   $(".feedback-min-btn").removeClass("d-none");
+   $(".feedback-popout .feedback-custom-btn").removeClass("active");
+   if (
+      !document
+      .querySelector(".feedback-error-message")
+      .classList.contains("invisible")
+   ) {
+      document
+         .querySelector(".feedback-error-message")
+         .classList.add("invisible");
+   }
+   document.querySelector("#user_feedback").value = "";
+   document.querySelector('input[name="files"]').value = "";
+   feedback_type_list.forEach((element) => {
+      if (element.checked) {
+         element.checked = false;
+      }
+      feedback_type_checked = false;
+   });
+});
+$(".feedback-popout .feedback-panel").click(function (event) {
+   event.stopPropagation();
+});
+$(".feedback-popout .feedback-custom-btn").click(function (event) {
+   event.stopPropagation();
+});
+
+
+document.querySelectorAll(".view-feedback-text")?.forEach((element) => {
+   element.addEventListener("click", (e) => {
+      let id = e.target.closest(".feedback-row").children[1].innerText;
+      client.get(`/feedback/${id}`, (response, request) => {
+         response = JSON.parse(response);
+         // console.log(response.data.feedback)
+         document.querySelector(".check-modal").innerText = response.data.feedback;
+      });
+      $("#modal-view-text").modal("show");
+   });
+});
+
+document.querySelectorAll(".show-full-feedback-image")?.forEach((element) => {
+   element.addEventListener("click", (e) => {
+      // console.log(e.target.getAttribute('data-feedback-id'))
+      let id = e.target.getAttribute("data-feedback-id");
+      client.get(`/feedback/${id}`, (response, request) => {
+         response = JSON.parse(response);
+
+         const modalBody = document.querySelector(".modal-append");
+         modalBody.innerHTML = "";
+
+         const imageFiles = response.data.image.trimEnd().split(" ");
+         imageFiles.forEach((imageName) => {
+            // Create image element
+            const divElement = document.createElement("div");
+            divElement.classList.add("d-block", "w-100");
+            const figureElement = document.createElement("figure");
+            figureElement.classList.add("zoom", "d-block", "mx-auto", "mb-0");
+            figureElement.style.backgroundImage = `url(img/${imageName})`;
+            const imgElement = document.createElement("img");
+            imgElement.src = `img/${imageName}`;
+            imgElement.alt = "Image";
+            // imgElement.style.width = "100%";
+            // imgElement.style.height = '100%';
+
+            imgElement.classList.add("img-1");
+            imgElement.setAttribute("data-bs-toggle", "tooltip");
+            imgElement.setAttribute("data-bs-placement", "top");
+            imgElement.setAttribute("data-bs-title", "Click on image to download");
+            imgElement.setAttribute("data-bs-zoom", "true");
+
+            // imgElement.title = "Click on image to download"
+            imgElement.classList.add("d-block", "mx-auto", "feedback-image");
+            divElement.append(figureElement);
+            figureElement.append(imgElement);
+            modalBody.appendChild(divElement);
+            const downloadLink = document.createElement("a");
+            downloadLink.href = `img/${imageName}`;
+            downloadLink.download = imageName;
+            downloadLink.textContent = "";
+            downloadLink.style.display = "none";
+
+            modalBody.appendChild(downloadLink);
+
+            imgElement.addEventListener("click", () => {
+               downloadLink.click();
+            });
+            new bootstrap.Tooltip(imgElement);
+
+            modalBody.appendChild(document.createElement("br"));
+         });
+         document.querySelectorAll(".zoom").forEach((ele) => {
+            ele.addEventListener("mousemove", (e) => {
+               let offsetX;
+               let offsetY;
+               let x;
+               let y;
+               var zoomer = e.currentTarget;
+               if (e.target.naturalWidth >= 500) {
+                  offsetX = e.offsetX ?
+                     e.offsetX :
+                     e.touches ?
+                     e.touches[0].pageX :
+                     null;
+                  offsetY = e.offsetY ?
+                     e.offsetY :
+                     e.touches ?
+                     e.touches[0].pageX :
+                     null;
+                  x = (offsetX / zoomer.offsetWidth) * 100;
+                  y = (offsetY / zoomer.offsetHeight) * 100;
+                  zoomer.style.backgroundPosition = x + "% " + y + "%";
+               }
+            });
+         });
+      });
+
+      $("#modal-view-image").modal("show");
+   });
+});
+
+
+if (document.querySelector(".feedback-delete-button") !== undefined) {
+   document.querySelectorAll(".feedback-delete-button").forEach((element) => {
+      element.addEventListener("click", (e) => {
+         const id = e.currentTarget.getAttribute("data-feedback-id");
+         document
+            .querySelector("#feedback_modal_delete_button")
+            ?.addEventListener("click", () => {
+               client.delete(
+                  "/feedback/delete",
+                  JSON.stringify({
+                     id: id,
+                  }),
+                  (response, request) => {
+                     response = JSON.parse(response);
+                     console.log(response);
+                     if (request.status == 200) {
+                        $("#feedback_delete_success").show("slow");
+                        $("#feedback_delete_success_text").text(
+                           response.message ?
+                           response.message :
+                           `feedback deleted successfully`
+                        );
+                        setTimeout(() => {
+                           $("#feedback_delete_success").hide("slow");
+                           window.location.reload();
+                        }, 1500);
+                     } else {
+                        $("#feedback_delete_failure").show("slow");
+                        $("#feedback_delete_failure_text").text(
+                           response.message ? response.message : `some error occured`
+                        );
+                        setTimeout(() => {
+                           $("#feedback_delete_failure").hide(1500);
+                        }, 1000);
+                     }
+                  }
+               );
+            });
+      });
+   });
+}
+
+if (document.querySelector(".feedback-edit-button") !== undefined) {
+   document.querySelectorAll(".feedback-edit-button").forEach((element) => {
+      element.addEventListener("click", (e) => {
+         const id = e.target.getAttribute("data-feedback-id");
+         const status = e.target.innerText;
+         console.log(id, e.target.innerText);
+         $("#modal_edit_feedback").modal("show");
+         if (document.querySelector("#feedback_modal_edit_button")) {
+            document
+               .querySelector("#feedback_modal_edit_button")
+               .addEventListener("click", () => {
+                  client.patch(
+                     "/feedback/patch",
+                     JSON.stringify({
+                        id: id,
+                        status: status,
+                     }),
+                     (response, request) => {
+                        response = JSON.parse(response, request);
+                        // console.log(response)
+                        if (request.status == 200) {
+                           $("#feedback_update_success").show("slow");
+                           $("#feedback_update_success_text").text(
+                              response.message ?
+                              response.message :
+                              `feedback updated successfully`
+                           );
+                           setTimeout(() => {
+                              $("#feedback_update_success").hide("slow");
+                              window.location.reload();
+                           }, 1500);
+                        } else {
+                           $("#feedback_update_failure").show("slow");
+                           $("#feedback_update_failure_text").text(
+                              response.message ? response.message : `some error occured`
+                           );
+                           setTimeout(() => {
+                              $("#feedback_update_failure").hide(1500);
+                           }, 1000);
+                        }
+                     }
+                  );
+               });
+         }
+      });
+   });
+}
+
+function sortTableByColumn(table, column, asc = true) {
+   const dirModifier = asc ? 1 : -1;
+   const tBody = table.tBodies[0];
+   const rows = Array.from(tBody.querySelectorAll("tr"));
+
+   // Sort each row
+   const sortedRows = rows.sort((a, b) => {
+      const aColText = a
+         .querySelector(`td:nth-child(${column + 1})`)
+         .textContent.trim();
+      const bColText = b
+         .querySelector(`td:nth-child(${column + 1})`)
+         .textContent.trim();
+
+      // Convert values to numbers for numeric columns
+      const aValue = isNaN(aColText) ? aColText : parseFloat(aColText);
+      const bValue = isNaN(bColText) ? bColText : parseFloat(bColText);
+
+      return aValue > bValue ?
+         1 * dirModifier :
+         aValue < bValue ?
+         -1 * dirModifier :
+         0;
+   });
+
+   // Remove all existing TRs from the table
+   while (tBody.firstChild) {
+      tBody.removeChild(tBody.firstChild);
+   }
+
+   // Re-add the newly sorted rows
+   tBody.append(...sortedRows);
+
+   // Remember how the column is currently sorted
+   table
+      .querySelectorAll("th")
+      .forEach((th) => th.classList.remove("th-sort-asc", "th-sort-desc"));
+   table
+      .querySelector(`th:nth-child(${column + 1})`)
+      .classList.toggle("th-sort-asc", asc);
+   table
+      .querySelector(`th:nth-child(${column + 1})`)
+      .classList.toggle("th-sort-desc", !asc);
+}
+
+[
+   "table-sort th:nth-child(7)",
+   "table-sort th:nth-child(2)",
+   "table-sort th:nth-child(3)",
+   "table-sort th:nth-child(6)",
+].forEach((field) => {
+   document.querySelectorAll(`#${field}`).forEach((headerCell) => {
+      headerCell.addEventListener("click", () => {
+         const tableElement = headerCell.parentElement.parentElement.parentElement;
+         const headerIndex = Array.prototype.indexOf.call(
+            headerCell.parentElement.children,
+            headerCell
+         );
+         const currentIsAscending = headerCell.classList.contains("th-sort-asc");
+
+         sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+      });
+   });
+});
+
+if (document.querySelector(".feedback-email-button") != undefined) {
+   document.querySelectorAll(".feedback-email-button").forEach((element) => {
+      let count = 0;
+      element.addEventListener("click", (e) => {
+         count++;
+         let feedback_category =
+            e.currentTarget.closest(".feedback-row").children[2].innerText;
+         let assignee_id = e.currentTarget.getAttribute("data-assigneeid");
+         let feedback_id = e.currentTarget.getAttribute("data-feedback-id");
+         e.currentTarget.children[0].classList.remove("d-none");
+         e.currentTarget.children[1].classList.add("d-none");
+         if (count == 1) {
+            if (!e.currentTarget.disabled) {
+               client.post(
+                  "feedback/email",
+                  JSON.stringify({
+                     category: feedback_category,
+                     id: assignee_id,
+                  }),
+                  (response, request) => {
+                     response = JSON.parse(response);
+                     if (request.status != 200) {
+                        $("#feedback_mail_failure").show("slow");
+                        document.getElementById("mail_failure_text").innerText =
+                           response.message ? response.message : "Some error occured";
+                        setTimeout(() => {
+                           $("#feedback_mail_failure").hide("slow");
+                        }, 2000);
+                     } else {
+                        $("#feedback_mail_sent_success").show("slow");
+                        document.getElementById("mail_success_text").innerText =
+                           response.message ? response.message : "Email sent succefully";
+                        setTimeout(() => {
+                           $("#feedback_mail_sent_success").hide("slow");
+                        }, 2000);
+
+                        client.patch(
+                           "/feedback/patch",
+                           JSON.stringify({
+                              id: feedback_id,
+                              isdisabled: 1,
+                           }),
+                           (response, request) => {
+                              response = JSON.parse(response, request);
+                              if (request.status == 200) {
+                                 setTimeout(() => {
+                                    window.location.reload();
+                                 }, 2100);
+                              }
+                           }
+                        );
+                     }
+                  }
+               );
+            }
+         }
+      });
+   });
+}

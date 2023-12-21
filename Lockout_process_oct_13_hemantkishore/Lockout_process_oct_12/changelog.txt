@@ -1,0 +1,465 @@
+----------------------------------------------------------------------------------------------------
+                              Lockout_process_if_user_inactive
+                              =================================
+file => templates/views/lock_screen.ejs
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Created new ejs file for lock page & add this below code- 
+
+<%- include('../partials/header_before_login.ejs') %>
+        <div class="card card-md">
+          <div class="card-body">
+            <div class="d-flex flex-column justify-content-center align-items-center gap-1">
+              <div class="lock-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"></path>
+                  <path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"></path>
+                  <path d="M8 11v-4a4 4 0 1 1 8 0v4"></path>
+               </svg>
+              </div>
+              <h2 class="h2 text-center mb-4">Your account has been locked!</h2>
+              <h3 class="form-label text-center">For being inactive for the last 30 minutes, <strong><%= user.email %></strong> please enter the valid password to continue</h3>
+            </div>
+           <form id="lockScreenForm" method="post" autocomplete="off" novalidate>
+              <div class="mb-2">
+                <div class="input-group input-group-flat">
+                  <input type="password" class="form-control" id="user_password" name="user_password" placeholder="Your password"  autocomplete="off">
+                  <span id="show-password" class="input-group-text">
+                    <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                    </a>
+                  </span>
+                  <div id="password_error" class="invalid-feedback"></div>
+                </div>
+              </div> 
+              <div class="form-footer d-flex flex-column align-items-center gap-2">
+                <button type="submit" class="btn btn-primary w-100" id="unlock_button"><span class="ms-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-key" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M16.555 3.843l3.602 3.602a2.877 2.877 0 0 1 0 4.069l-2.643 2.643a2.877 2.877 0 0 1 -4.069 0l-.301 -.301l-6.558 6.558a2 2 0 0 1 -1.239 .578l-.175 .008h-1.172a1 1 0 0 1 -.993 -.883l-.007 -.117v-1.172a2 2 0 0 1 .467 -1.284l.119 -.13l.414 -.414h2v-2h2v-2l2.144 -2.144l-.301 -.301a2.877 2.877 0 0 1 0 -4.069l2.643 -2.643a2.877 2.877 0 0 1 4.069 0z"></path>
+                    <path d="M15 9h.01"></path>
+                 </svg>
+                </span>Unlock</button>
+                <a href="/api/user/logout" class="text-decoration-none">Back to login</a>
+              </div>
+            </form>
+          </div>
+        </div> 
+<%- include('../partials/footer_before_login.ejs') %>
+
+----------------------------------------------------------------------------------------------------
+  
+file => media/css/custom.css
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Add this css code for lock icon -
+
+/* Lock-icon */
+.lock-icon{
+    border-radius: 50%; 
+    border: 1px solid rgba(4, 32, 69, 0.14);
+    padding: 1rem;
+}
+
+.lock-icon svg {
+    width: 2rem;
+    height: 2rem;
+}
+
+----------------------------------------------------------------------------------------------------
+
+file => media/js/custom.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Add this code on end of the custom.js file -
+
+//Lockout process
+let lastActivityTimestamp;
+
+const updateLastActivity = () =>{
+    lastActivityTimestamp = Date.now()
+}
+setInterval(()=>{
+  const currentTime = Date.now()
+  const inActiveTime = currentTime - lastActivityTimestamp
+
+  if(inActiveTime >= 30 * 60 * 1000){
+  client.post("/lockout",JSON.stringify({"userInActive":true}),(req,res)=>{
+    if(res.status == 200){
+     window.location.href = "/lockout/page"
+}  
+})
+  }
+}, 60000)
+ 
+window.addEventListener("DOMContentLoaded",updateLastActivity)
+window.addEventListener("mousemove",updateLastActivity)
+window.addEventListener("keydown",updateLastActivity)
+window.addEventListener("wheel",updateLastActivity)
+
+----------------------------------------------------------------------------------------------------
+
+file => media/js/login.js
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Change No: 1
+~~~~~~~~~~~~~
+- Search this word 'password_span' after the 1st occurence Add this code - 
+
+const unlock_button = document.querySelector("#unlock_button")
+
+Change No: 2
+~~~~~~~~~~~~~
+- Add this code end of the login.js file for unlock_button -
+
+//  Unlock button
+
+if(unlock_button != undefined){
+
+    unlock_button.addEventListener("click",(event)=>{
+        event.preventDefault();
+       
+        if(user_password != undefined && user_password.value == '')
+        {
+            user_password.classList.add("is-invalid");
+            password_span.classList.add("password-span-error");
+            return false;
+        }
+        
+        client.post('/api/user/verify', JSON.stringify({'password' : user_password.value}), (response, request) => {
+            response = JSON.parse(response);
+            if (request.status == 200)
+            {     
+                // console.log(response)        
+                window.location.href = response.url
+            } else{
+                showErrorMessage(response);
+            }
+        });
+      })
+    }
+
+----------------------------------------------------------------------------------------------------
+
+file => 'src/init.js'
+~~~~~~~~~~~~~~~~~~~~~
+Change No: 1
+~~~~~~~~~~~~~
+- Search this word 'sessionAuth', 1st occurence that function below add this code -
+
+const checkUserActivity = (req,res,next) => {
+   if(req.session.checkUserActivity.inActiveUser){
+    console.log("user_inactive")
+    res.writeHead(301, { location: "/lockout/page"  });
+    res.end()
+   }else{
+       next()
+   }
+}
+
+Change No: 2
+~~~~~~~~~~~~~
+- End of the file export the checkUserActivity function - 
+
+module.exports = {
+    "app": app,
+    "sessionAuth": sessionAuth,
+    "checkUserActivity":checkUserActivity,
+}
+
+----------------------------------------------------------------------------------------------------
+
+file => 'src/emticket.js'
+~~~~~~~~~~~~~~~~~~~~~~~~
+Change No: 1
+~~~~~~~~~~~~~
+- Add this code on initially for importing the function -
+
+const checkUserActivity = init.checkUserActivity
+
+Change No: 2
+~~~~~~~~~~~~~
+- Add middleware 'checkUserActivity' for already written routers -
+
+// Dashboard
+app.use('/dashboard', sessionAuth,checkUserActivity, dashboard)
+
+// Tickets
+app.use('/tickets', sessionAuth,checkUserActivity, tickets)
+
+// Users
+app.use('/users', sessionAuth,checkUserActivity, users)
+
+Change No: 3
+~~~~~~~~~~~~~
+- Add additional router for Lockout process - 
+
+//Lockout process
+app.use("/lockout",sessionAuth, lockout_page)
+
+----------------------------------------------------------------------------------------------------
+
+file => src/middleware/auth.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Change No :1
+~~~~~~~~~~~~~
+- Search this word 'request.session.loggedin' add this code on below 1st occurence
+
+ request.session.checkUserActivity = {
+                        inActiveUser : false,
+                        lockPage:1
+                    };
+                    request.session.prev_page = {
+                        isBack:false,
+                        status:null,
+                        formData:null,
+                        url:null,
+                    }
+
+Change No: 2
+~~~~~~~~~~~~~
+- Add this code on 'passwordReset' function below -
+
+const checkLockScreenUser = async(request, response) =>{
+   try {
+    const email = request.session.email
+    const { password } = request.body
+    console.log(request.session.prev_page.url,"bhb");
+    const rows = await request.app.get('db').query("SELECT * FROM psp_staff WHERE email = ? ORDER BY ID DESC LIMIT 1", [email]);
+
+    if (rows === null || rows.length == 0)
+        {
+            response.status(400).json({
+                field: "email_address",
+                message: "Kindly, Please login to continue.",
+            });
+        }else{
+            const result = rows[0]
+            bcrypt.compare(password,result.password,function(err,res){
+                if (res == false) {
+                    response.status(400).json({
+                        field: "password",
+                        message: "The password that you've entered is incorrect.",
+                    });
+                }else{                    
+                    request.session.checkUserActivity.inActiveUser = false;
+                    response.status(200).json({
+                        message:"unlocked",
+                        url:request.session.prev_page.url,
+                })
+                }
+            })
+        }
+
+   } catch (error) {
+    response.status(500).json({
+        message: "An error occured",
+    });
+    console.log(error);
+   }
+}
+
+----------------------------------------------------------------------------------------------------
+
+file => src/routes/api.js
+~~~~~~~~~~~~~~~~~~~~~~~~~
+change No: 1
+~~~~~~~~~~~~~
+- Import the functions initialy  replace this below code -
+
+const { authenticateLogin, createUser, passwordReset, checkLockScreenUser } = require('../middleware/auth');
+
+Change No: 2
+~~~~~~~~~~~~~
+- Add this code on before logout router in api.js file -
+
+router.post("/user/verify",checkLockScreenUser)
+
+----------------------------------------------------------------------------------------------------
+
+Create new file name as 'lockout_page.js' on path 'src/routes/lockout_page.js'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+var express = require('express');
+var router = express.Router();
+
+
+router.all('/',async function(req, res, next) {
+  
+ try {
+  const {userInActive} = req.body
+
+  if(userInActive){
+  req.session.checkUserActivity.inActiveUser = true
+  req.session.prev_page.url = req.headers.referer
+
+  res.status(200).json({
+    message:"locked"
+  })
+}  
+ } catch (error) {
+  console.log(error);
+ }
+});
+
+router.all("/page",function(req,res,next){
+ 
+  
+  if(req.session.prev_page.formData != null && req.session.prev_page.url != null){
+    
+    req.session.checkUserActivity.lockPage = 0
+    req.session.save()
+  }
+
+  if(req.session.checkUserActivity.inActiveUser){
+   res.render("lock_screen",{title:"lock_screen"})
+  }else{
+    res.redirect("/")
+  }
+})
+
+
+
+
+module.exports = router;
+
+----------------------------------------------------------------------------------------------------
+
+file => 'src/routes/tickets.js'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Replace this code on router 'router.all("/")' -
+
+router.all('/', async (req, res, next) => {
+    res.locals.user = req.session;
+    res.locals.active_tab = 'tickets';
+    res.locals.active_menu = '';
+
+    try {
+        //  "filtering or pagination when you hit home page its will give home"
+        if(req.session.prev_page.isBack == false && req.session.checkUserActivity.lockPage == 0){
+            req.session.checkUserActivity.lockPage = 1
+        }
+
+        // "Initial Run"
+        if(req.body.back != "back" && req.session.checkUserActivity.lockPage == 1 ){
+            req.session.prev_page.isBack = false
+        }
+
+        // "user stays on select page"
+        if(req.body.back != "back" && req.session.checkUserActivity.lockPage == 0 ){
+            req.session.checkUserActivity.lockPage = 1
+            req.session.prev_page.isBack = true
+        }
+
+        // "when you click back on tickets_detail page"
+        if(req.body.back=="back" && req.session.checkUserActivity.lockPage == 0){
+            req.session.prev_page.isBack = true
+            req.session.checkUserActivity.lockPage = 1           
+        }
+        
+            if(req.body && req.body.page){
+    
+                req.session.prev_page.isBack = true
+                req.session.prev_page.formData = req.body
+                 req.session.save()
+            }
+
+            if(req.body.filter==1){
+              
+                req.session.prev_page= {
+                    isBack:true,
+                    formData:req.body,                   
+                }
+                 req.session.save()
+            
+            }
+           
+        Promise.all([
+            tickets_model.fetchTickets(req),
+            tickets_model.fetchTickets(req, 1),
+            tickets_model.fetchAllTicketCounts(req),
+            tickets_model.fetchStatus(req),
+            tickets_model.fetchPriority(req),
+            tickets_model.fetchUsers(req),
+            tickets_model.fetchApplication(req),
+            tickets_model.fetchServer(req),
+        ]).then((response) => {
+            let[page, total_count, sortBy, sortField, displayFilter, page_limit, no_of_sub_pages] = util.paginationRule(req, response);
+                   
+            res.render('tickets', {
+                active_menu: '',
+                tickets: response[0][0],
+                filters: response[0][1],
+                status: response[3],
+                priority: response[4],
+                users: response[5],
+                application: response[6],
+                server: response[7],
+                total_count: total_count,
+                current: page,
+                sortBy: sortBy,
+                sortField: sortField,
+                displayFilter: displayFilter,
+                util: util,
+                page_limit: page_limit,
+                no_of_sub_pages: no_of_sub_pages,
+                total_tickets: total_count,
+                tickets_counts: response[2],
+                
+            });
+
+        });
+   
+    } catch (error) {
+        // Handle your error here
+        console.log(error);
+        res.end();
+    }
+
+
+})
+
+----------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

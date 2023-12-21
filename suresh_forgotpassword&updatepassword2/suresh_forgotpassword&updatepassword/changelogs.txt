@@ -1,0 +1,370 @@
+-->project : emticketing system   
+-->Task: forgotpassword and update password
+
+
+
+ 1. added mailtemplate folder in which added mail.ejs template for sending email
+
+===========================================================================================================================================================================
+
+
+ 2. changes in src/routes/api.js
+
+    ---> search for following line of code   
+        
+	const { authenticateLogin, createUser, passwordReset } = require('../middleware/auth');
+
+        then replace it with  this below code   
+
+	const { authenticateLogin, createUser, resetPassword,forgotpasswordController } = require('../middleware/auth');
+
+        below that line add following 3 lines
+                          1.const flag = 1
+                          2.const fs = require("fs")
+                          3.const path = require("path")
+
+
+    --->search for this route    
+	
+	router.post('/auth/login', authenticateLogin);
+
+       and below that route add following 5 routes
+       
+        1.  router.get("/forgotpassword", (req, res) => {
+              res.render("forgotpassword")
+            })
+
+
+     2. router.get("/resetpassword", async (request, response) => {
+        try {
+        const { token } = request.query
+        if (!token) {
+            if (flag == 0) {
+                return response.redirect('/api/forgotpassword')
+            }
+            if (request.session.loggedin) {
+                return response.render("resetpassword", { title: "Update password" })
+            }
+            return response.redirect("/")
+
+        }
+        // check if token in databasee or not
+        const [tokendetails] = await request.app.get('db').query('select * from password_reset_token where token = ?', [token])
+        if (!tokendetails || tokendetails.token !== token) {
+            return response.redirect("/api/tokenexpire")
+
+        }
+        return response.render("resetpassword", { title: "Reset password" })
+      } catch (err) {
+
+        return response.json({
+
+            message: err.message,
+            status: "500"
+        })
+     }
+     })
+
+
+    3. router.put("/resetpassword", resetPassword)
+
+    4. router.post("/forgotpassword", forgotpasswordController)
+
+    5. router.get("/tokenexpire", (req, res) => {
+    	res.render("error.ejs")
+    })
+
+
+==============================================================================================================================================================================================
+
+  3.changes in  src/routes/user.js
+
+
+  ---->  add the following router
+
+                        router.get("/profile",async(req,res)=>{
+                        res.locals.active_tab = 'users';
+                        res.render("profile")
+
+                        })
+
+==============================================================================================================================================================================================
+ 4. changes in src/middleware/auth.js
+
+      --> search for users_model (first occurance) 3rd line, from next line  add below lines codes
+ 
+             const path = require('path')
+              const crypto = require("crypto");
+       
+
+
+ --> search for authenticateLogin function and below that function place the following function (forgotpasswordController)
+
+            const forgotpasswordController = async (request, response) => {
+            
+
+                try {
+                    const [user] = await request.app.get("db").query('select * from psp_staff where email = ?',[request.body.email])
+                
+                    if (!user) {
+                        return response.json({
+                            message: "No user found with these email address",
+                            status: "400"
+                        })
+                    }
+                    const userEmail = user.email
+                    request.id = user.id
+
+                    // check user having token or not, if exist then remove
+                    const [resetToken] = await request.app.get("db").query("select token from password_reset_token where psp_staff_id = ?", [user.id])
+
+                    if (resetToken) {
+                        await users_model.removeToken(request)
+                    }
+
+                    // create and insert the token
+
+                    const resetpasswordToken = crypto.randomBytes(32).toString('hex');
+                    const expiryTime = new Date(Date.now() + 30 * 60 * 1000);
+                    const query = "INSERT INTO password_reset_token (psp_staff_id, token, expiry_time) values(?,?,?)"
+                    const result = await request.app.get("db").query(query, [user.id, resetpasswordToken, expiryTime])
+
+                    request.app.get('nmp_ejs').renderFile(path.join(__dirname, "/../../mailtemplate/mail.ejs"),
+                        {
+                            token: resetpasswordToken,
+                            email: userEmail,
+                            name: user.first_name + " " + user.last_name,
+                        })
+                        .then(result => {
+                            emailTemplate = result;
+                            request.app.get("mailer").sendMail({
+                                from: '"Novalnet Ticketing Team" charles_a@novalnetsolutions.com',
+                                //~ to: staff_result.email,
+                                to: userEmail,
+                                subject: 'Reset password link',
+                                html: emailTemplate
+                            }, function (err, info) {
+                                if (err) {
+                                    response.json({ message: err.message, status: "400" })
+                                } else {
+                                    return response.json({
+                                        message: "We have sent a reset password link to your email.please check",
+                                        status: "200"
+                                    })
+                                }
+                            });
+                        })
+                        .catch(err => {
+                            response.json({ message: err.message, status: "400" })
+                        });
+                }
+                catch (error) {
+                    return response.json({
+                        status: "500",
+                        message: error.message
+                    })
+                }
+            }
+
+   ---> search for passwordReset function and replace with following function (resetPassword) for updating users password
+
+            const resetPassword = async (request, response) => {
+                try {
+                    const { newpassword, confirmPassword } = request.body
+                    const { token } = request.query
+
+                    
+
+                    if (!newpassword || !confirmPassword) {
+                        return response.json({
+                            message: "all fields are mandatory",
+                            status: "400"
+                        });
+                    }
+                    // check newpassword with confirmpassword
+                    if (newpassword !== confirmPassword) {
+                        return response.json({
+                            message: "Newpassword and confirmpassword are not same",
+                            status: "400"
+
+                        });
+                    }
+                    if (token == "null") {
+                        // sometimes loggin user coming directly to updatepassword with out token based on the flag value
+                        // check if session contains email or not
+                        // if no email in session, then user is not login user
+                        const {email} = request.session
+                        if(!email){
+                            return response.json({
+                                message: "Unauthorized user",
+                                status: "401"
+                            });
+                        }
+                        // if email is in session then update the password
+                        const hashedpassword = await bcrypt.hash(newpassword, 10)
+                        const updatepassword = await request.app.get("db").query("UPDATE psp_staff SET password = ? WHERE email = ?",[hashedpassword,email])
+                        return response.json({
+                            message: "Password updated successfully",
+                            status: "200"
+                        });
+                    }
+                    // check token exists in database or not
+                    const [tokendetails] = await request.app.get("db").query("select * from password_reset_token  where token = ?",[token])
+                    if (!tokendetails) {
+                        return response.json({
+                            message: "Unauthorized user",
+                            status: "401"
+                        })
+                    }
+
+                    request.id = tokendetails.psp_staff_id
+                    const [result] = await request.app.get("db").query("select psp_staff_id, token, expiry_time   from password_reset_token  where psp_staff_id = ?", [tokendetails.psp_staff_id])
+                    const currentTime = new Date(Date.now()).getTime()
+                    const expiredTime = new Date(result.expiry_time).getTime()
+                    if (currentTime > expiredTime) {
+                        await users_model.removeToken(request)
+                        return response.json({
+                            message: "Link is expired",
+                            status: "400"
+                        })
+                    }
+                    //update password and remove the token
+                    const updatepassword = await users_model.updateUserPassword(request)
+                    await users_model.removeToken(request)
+                    return response.json({
+                        message: "Password reset successfully",
+                        status: "200"
+
+                    })
+
+                }
+                catch (error) {
+                    return response.json({
+                        status: "500",
+                        message: error.message
+                    })
+                }
+            }
+
+
+
+   --->search for module.exports and inside that object remove the passwordReset and add the  forgotpasswordController,resetPassword
+
+
+
+=====================================================================================================================================================================
+
+
+ 5.changes in src/models/users.models.js
+
+   --> search for createUser function , below that function add following code
+ 
+        exports.getUserByMail = async (req) => {
+            const email = req.session.email || req.body.email
+            const query = "select * from psp_staff where email = ? "
+            const result = await req.app.get('db').query(query, [email]);
+            if (result.length > 0) {
+                return result
+
+            }
+            return []
+
+        }
+
+
+        exports.updateUserPassword = async (request, response) => {
+            const user_id = request.id
+            if (!user_id) {
+                return undefined
+            }
+            const { newpassword } = request.body
+            const hashedpassword = await bcrypt.hash(newpassword, 10)
+            const query = `UPDATE psp_staff SET password = ? where id = ?`
+            const result = await request.app.get("db").query(query, [hashedpassword, user_id])
+            return result
+        }
+
+
+
+        exports.removeToken = async (request, response) => {
+            const user_id = request.id
+            const query = 'DELETE from password_reset_token where psp_staff_id = ?'
+            const result = await request.app.get("db").query(query, [user_id])
+            return result
+        }
+
+
+
+
+=====================================================================================================================================================================
+
+
+
+    6. changes in src/init.js
+  
+  -->search for this app.set('view engine', 'ejs'), below these add following line
+     app.set("nmp_ejs",ejs)
+
+ 
+    7. changes in templates/partials/headerafterlogin.js
+
+       --->search for code  <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+        replace that entire div container with following code
+
+        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+               
+                    <a href="/users/
+" class="dropdown-item d-flex align-items-center  g-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user-circle" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                        <path d="M12 10m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0"></path>
+                        <path d="M6.168 18.849a4 4 0 0 1 3.832 -2.849h4a4 4 0 0 1 3.834 2.855"></path>
+                     </svg>
+                     <p class="mb-0 ms-1">Profile</p>
+                   
+                    </a>
+              
+
+                  <a href="/api/user/logout" class="dropdown-item dropdown-item d-flex align-items-center  g-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-logout" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                    <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2"></path>
+                    <path d="M9 12h12l-3 -3"></path>
+                    <path d="M18 15l3 -3"></path>
+                 </svg>
+                 <p class="mb-0 ms-1">Logout</p>
+                 </a>
+             
+                </div>
+
+
+========================================================================================================================================================================================================
+
+
+   8.changes in templates/partials/footerbeforelogin.js
+ 
+  --->   search for following line 
+       <script src="/js/login.js" type="module" integrity="sha384-ixOiZex5FOCY+/9+P/lrfzMgnC95RTUqKmXkzuMMK9K2D+IVfqSBBkGEy+fZnwxC" ></script>
+       below this line add following script
+       <script src="/js/forgotpassword.js" type="module" integrity="sha384-ixOiZex5FOCY+/9+P/lrfzMgnC95RTUqKmXkzuMMK9K2D+IVfqSBBkGEy+fZnwxC"  ></script>
+
+========================================================================================================================================================================================================
+
+  9.changes in media/js
+
+    --> added forgotpassword.js file
+
+
+10.added forgotpassword.ejs,  profile.ejs, error.ejs  Move this files to templates/views folder
+
+
+
+
+
+
+
+js countdown link
+
+https://medium.com/geekculture/23-javascript-countdown-timer-for-website-273efc2f5618

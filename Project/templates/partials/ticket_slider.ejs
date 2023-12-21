@@ -1,0 +1,216 @@
+<div class="col-lg-2">
+  <div class="row row-cards position-sticky top-0">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Status</h3>
+        </div>
+        <div
+          class="list-group list-group-flush list-group-hoverable text-center"
+        >
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == '') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets"
+                  class="list-group-item list-group-item-action"
+                  >All Tickets<span
+                    class="badge bg-blue ms-2"
+                    title="Total Number of tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].total_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'mytickets') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/mytickets"
+                  class="list-group-item list-group-item-action"
+                  >My Tickets<span
+                    class="badge bg-blue ms-2"
+                    title="No. of my tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].user_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'iresolved') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/iresolved"
+                  class="list-group-item list-group-item-action"
+                  >My Resolved Tickets<span
+                    class="badge bg-blue ms-2"
+                    title="No. of my resolved tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].user_resolved_tickets %> <% } }
+                    %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'open') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/open"
+                  class="list-group-item list-group-item-action"
+                  >Open<span
+                    class="badge bg-blue ms-2"
+                    title="No. of total open tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_open_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'assigned') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/assigned"
+                  class="list-group-item list-group-item-action"
+                  >Assigned<span
+                    class="badge bg-blue ms-2"
+                    title="No. of all assinged pending tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_assigned_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'progress') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/progress"
+                  class="list-group-item list-group-item-action"
+                  >In-Progress<span
+                    class="badge bg-blue ms-2"
+                    title="No. of all in-progress tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_progress_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'waiting') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/waiting"
+                  class="list-group-item list-group-item-action"
+                  >Waiting<span
+                    class="badge bg-blue ms-2"
+                    title="No. of recent updated tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_waiting_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'hold') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/hold"
+                  class="list-group-item list-group-item-action"
+                  >On-Hold<span
+                    class="badge bg-blue ms-2"
+                    title="No. of recent updated tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_hold_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'resolved') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/resolved"
+                  class="list-group-item list-group-item-action"
+                  >Resolved<span
+                    class="badge bg-blue ms-2"
+                    title="No. of recent updated tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_resolved_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="list-group-item text-start py-0 px-0 <% if (active_menu == 'falsepositive') { %> active <% } %>"
+            style="border: 0px"
+          >
+            <div class="row align-items-center">
+              <div class="col text-truncate">
+                <a
+                  href="/tickets/falsepositive"
+                  class="list-group-item list-group-item-action"
+                  >False Positives<span
+                    class="badge bg-blue ms-2"
+                    title="No. of recent updated tickets"
+                    ><% for(var i=0; i < tickets_counts.length; i++) { for(var
+                    j=0; j < tickets_counts[i].length; j++) { %> <%=
+                    tickets_counts[i][j].all_false_tickets %> <% } } %></span
+                  ></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

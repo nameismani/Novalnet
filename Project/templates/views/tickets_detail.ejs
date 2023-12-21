@@ -1,0 +1,409 @@
+<%- include('../partials/header_after_login.ejs') %>
+    <!-- Navbar -->
+    <!-- <%- include('../partials/bck/navigation_header.ejs') %> -->
+    <div class="page-wrapper">
+        <!-- Page body -->
+        <div class="page-body">
+  
+     
+</div>
+            <input type="hidden" name="ticketId"  id="ticketId" value="<%= ticket.id %>">
+            <div class="card">
+                <div class="card-header">
+                  <% for(var j=0; j < status.length; j++) { if(status[j].id == ticket.ticket_status_id) { %>
+                    <div class="col-xl-1 me-sm-3">
+                      <a href="#" class="btn btn-info active w-100 ticket-status" title="<%= status[j].name %>" style="background-color:#<%= status[j].hex_code %>;">
+                          <%= status[j].name %>
+                      </a>
+                    </div>
+                  <% } } %>
+                    <strong>Ticket No: #<%= (ticket) ? ticket.ticket_no: '' %></strong><span class="badge bg-azure ms-1" title="No of sub tickets"><%= sub_tickets.length %></span>
+                    <strong class="ms-sm-1" title="ticket subject">  - <%= ticket.subject %><% if (ticket.subject.includes(util.formatDateTime(ticket.creation_date)) == false) { %>  -  <%= util.formatDateTime(ticket.creation_date) %><% } %></strong>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-xl-2 col-xs-12 col-md-12">
+                            <div class="col-md-6 col-xl-12">
+                                <div class="mb-3">
+                                    <div class="form-label">Assignee*</div>
+                                    <select class="form-select" name="assignees" id="assignees">
+                                        <option value="0">-</option>
+                                        <% for(var i=0; i < users.length; i++) { %>
+                                            <option value="<%= users[i].id %>" <% if(users[i].id == ticket.psp_staff_id) { %> selected <%}%>><%= users[i].first_name %></option>
+                                        <% }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-xs-12 col-md-12">
+                            <div class="col-md-6 col-xl-12">
+                                <div class="mb-3">
+                                    <div class="form-label">Status</div>
+                                    <select class="form-select" name="status" id="status">
+                                        <% for(var i=0; i < status.length; i++) { %>
+                                            <option value="<%= status[i].id %>" <% if(status[i].id == ticket.ticket_status_id) { %> selected <%}%>><%= status[i].name %></option>
+                                        <% }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-xs-12 col-md-12">
+                            <div class="col-md-6 col-xl-12">
+                                <div class="mb-3">
+                                    <div class="form-label">Priority</div>
+                                    <select class="form-select" name="priority" id="priority">
+                                        <% for(var i=0; i < priority.length; i++) { %>
+                                            <option value="<%= priority[i].id %>" <% if(priority[i].id == ticket.ticket_priority_id) { %> selected <%}%>><%= priority[i].level %></option>
+                                        <% }%>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-xs-12 col-md-12">
+                          <div class="col-md-6 col-xl-12">
+                              <div class="mb-3">
+                                  <div class="form-label">Server</div>
+                                    <% for(var i=0; i < server.length; i++) { if(server[i].id == ticket.server_id) { %>
+                                        <div class="form-control-plaintext"><%= server[i].name %></div>
+                                    <% } } %>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-xl-1 col-xs-12 col-md-12">
+                        <div class="col-md-6 col-xl-12">
+                            <div class="mb-3">
+                                <div class="form-label">Source</div>
+                                <% if ( ticket.source == 1) { %>
+                                  <div class="form-control-plaintext">API</div>
+                                <% } else { %>
+                                  <div class="form-control-plaintext">Manual</div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="col-xl-1 col-xs-12 col-md-12">
+                            <div class="col-md-6 col-xl-12">
+                                <div class="mb-3">
+                                    <div class="form-label">Application</div>
+                                      <% for(var i=0; i < application.length; i++) { if(application[i].id == ticket.ticket_application_id) { %>
+                                          <div class="form-control-plaintext"><%= application[i].name %></div>
+                                      <% } } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-xs-12 col-md-12">
+                            <div class="col-md-6 col-xl-12">
+                                <div class="mb-3">
+                                    <div class="form-label">Group</div>
+                                      <% for(var i=0; i < group.length; i++) { if(group[i].id == ticket.ticket_group_id) { %>
+                                        <div class="form-control-plaintext"><%= group[i].name %></div>
+                                      <% } } %>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-1 col-xs-12 col-md-12">
+                          <div class="col-md-6 col-xl-12">
+                              <div class="mb-3">
+                                  <div class="form-label">Last Updated</div>
+                                    <div class="form-control-plaintext"><%= util.formatDateTime(ticket.last_updated) %></div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                    <div class="row row-cards px-2">
+                        <div class="col-md-6 col-lg-9 ticket-detail-cards">
+                           <!-- <span class="d-none" id="eyeclose">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-eye-off" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                     <path d="M10.585 10.587a2 2 0 0 0 2.829 2.828"></path>
+                               <path d="M16.681 16.673a8.717 8.717 0 0 1 -4.681 1.327c-3.6 0 -6.6 -2 -9 -6c1.272 -2.12 2.712 -3.678 4.32 -4.674m2.86 -1.146a9.055 9.055 0 0 1 1.82 -.18c3.6 0 6.6 2 9 6c-.666 1.11 -1.379 2.067 -2.138 2.87"></path>
+                                    <path d="M3 3l18 18"></path>
+                                </svg>
+                               </span> -->
+                        <div class="card">
+                             <% if(ticket_detail.length > 3 ){ %>
+                                <button class="btn btn-outline-primary  mt-2 me-2 ms-auto d-block" id="view_all_tickets"  style="width: 150px;"> 
+                                <span id="eye_icon" >
+                                  <svg xmlns="http://www.w3.org/2000/svg"  class="icon icon-tabler icon-tabler-eye-off m-0" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                                <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6"></path>
+                               </svg></span>
+                               <span class="view-text">View all</span></button>
+                             <% } %>
+                                 <div class="card-header">
+                                  <div class="card-title text-muted text-break" style="width: 100%">
+                                    <% if (ticket_detail.length == 1) { %>
+                                      <% for (var i = 0; i < ticket_detail.length; i++) { %>
+                                        <p class="fs-4">Ticket Description - <%= util.formatDateTime(ticket_detail[i].creation_date) %></p>
+                                        <pre id= "ticketDescription" title="Ticket Description"><code><%- (ticket_detail[i]) ? ticket_detail[i].description.replace(/(<style[\w\W]+style>)/g, "") : '' %></code></pre>
+                                      <% } %>
+                                    <%} else { %>
+                                        <% for (var i = ticket_detail.length-1; i >= 0; i--) { %>
+                                       <% if(ticket_detail[i]){ %>
+                                       <div class="show-tickets" >
+                                         <p class="fs-4">Ticket Description #<%= i+1 %> - <%= util.formatDateTime(ticket_detail[i].creation_date) %></p>
+                                        <pre id= "ticketDescription<%= i+1 %>" title="Ticket Description <%= i+1 %>"><code><%- (ticket_detail[i]) ? ticket_detail[i].description.replace(/(<style[\w\W]+style>)/g, "") : '' %></code></pre>
+                                       </div>
+                                      <% } %>
+                                      <%}%>
+                                    <% } %>
+                               
+                             <% if(ticket_detail.length > 3){%>
+                               <div class="d-flex justify-content-center align-items-center gap-2">
+                                 <button class="btn btn-outline-primary m-auto mt-2  d-block" id="view_more_tickets"  style="width:150px;">
+                                   <span>View More</span>
+                                  <span class="m-1 ps-2"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-chevron-down" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                   <path d="M15 11l-3 3l-3 -3"></path>
+                                   <path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0 -18z"></path>
+                                   </svg></span>
+                                </button>
+                               <button class="btn btn-outline-primary m-auto mt-2 d-none  d-block" id="view_less_tickets"  style="width: 150px;"><span>View Less</span>
+                               <span class="m-1 ps-2">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-chevron-up" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                                    <path d="M9 13l3 -3l3 3"></path>
+                                   <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
+                                   </svg> 
+                               </span>
+                              </button>
+                              </div>
+                              <%}%>
+                               </div>
+                              </div>
+                                <div class="card-body">
+                                    <% if (sub_tickets.length == 0) { %>
+                                      <div class="card">
+                                        <div class="card-header">
+                                          <h3 class="card-title">No sub tickets involved in this task</h3>
+                                        </div>
+                                      </div>
+                                    <% } else { %>
+                                      <div class="card">
+                                        <div class="card-header subtickets-header" style="background-color: #f1f1f1;">
+                                          <h3 class="card-title">Subtickets - <span class="badge bg-azure" title="No of sub tickets"><%= sub_tickets.length %></span></h3>
+                                        </div>
+                                        <div class="list-group list-group-flush subtickets-body" style="display: none;">
+                                          <% if (ticket_detail.length == 1) { %>
+                                            <% for(var i=0; i < sub_tickets.length; i++) { %>
+                                              <a class="list-group-item list-group-item-action">
+                                                #<%= i+1 %> <%= ticket.subject %>
+                                                <strong class="text-muted d-block float-end fs-5"><small><%= util.formatDateTime(sub_tickets[i].creation_date) %></small></strong>
+                                              </a>
+                                            <% } %>
+                                          <%} else { %>
+                                            <% for(var i= sub_tickets.length - 1; i >= 0 ; i--) { %>
+                                              <a class="list-group-item list-group-item-action">
+                                                #<%= i+1 %> <%= ticket.subject %>
+                                                <% var count = 1; %>
+                                                <% for (var j = 0; j < ticket_detail.length; j++) { if (ticket_detail[j].ticket_sub_link_ids != null && ticket_detail[j].ticket_sub_link_ids.includes(sub_tickets[i].id)) { %> <% count = count + j; %> <% } } %>
+                                                <strong class="text-muted d-block float-end fs-5"><small>Refer Description #<%= count %> - <%= util.formatDateTime(sub_tickets[i].creation_date) %></small></strong>
+                                              </a>
+                                            <% } %>
+                                          <% } %>
+                                        </div>
+                                      </div>
+                                    <% } %> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 ticket-detail-cards">
+                            <div class="card border-bottom-0">
+                                <div class="card-header">
+                                  <ul class="nav nav-tabs card-header-tabs" data-bs-toggle="tabs">
+                                    <li class="nav-item ticket-ca-block" data-tab-type="comments">
+                                      <a href="#tabs-comments" class="nav-link active" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+                                        Comments
+                                      </a>
+                                    </li>
+                                    <li class="nav-item ticket-ca-block" data-tab-type = "activity">
+                                      <a href="#tabs-activity" class="nav-link" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/user -->
+                                          <!-- Download SVG icon from http://tabler-icons.io/i/activity -->
+                                          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12h4l3 8l4 -16l3 8h4" /></svg>
+                                        Task activities  
+                                      </a>
+                                    </li>
+                                  </ul> 
+                                </div>
+                                <div class=" px-0 ticket_comments overflow-scroll"  style="  transition: height 3s ease-out; height: 33vh;">
+                                  <div class="tab-content">
+                                    <div class="tab-pane chart active show" id="tabs-comments">
+                                      <ul class="timeline timeline-simple fs-5">
+                                        <% var commentCount = comments.length; for(var i=0; i < comments.length; i++) { %>
+                                          <li class="timeline-event">
+                                          <div class="card">
+                                            <div class="card-body">
+                                              <p class="text-muted">#<%= i+1 + ((Number(currentCommentPage)-1) * 10) %> - <%= comments[i].comment_note %></p>
+                                              <div class="d-block text-muted text-break mt-2">
+                                                <% for(var j=0; j < users.length; j++) { if(comments[i].psp_staff_id == users[j].id) { %>
+                                                  <%= users[j].first_name %> <%= users[j].last_name %>
+                                                <% } } %>
+                                                <div class="text-muted float-end">
+                                                  <%= util.formatDateTime(comments[i].creation_date) %>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                          </li>
+                                        <% commentCount-- } %>
+                                      </ul>                                      
+                                    </div>
+                                    
+                                    <div class="tab-pane" id="tabs-activity">
+                                      <div class="list-group list-group-flush list-group-hoverable fs-5">
+                                        <% for(var i=0; i < activities.length; i++) { %>
+                                          <div class="list-group-item">
+                                              <div class="row align-items-center">
+                                                <div class="d-block text-muted mt-n1"><%= activities[i].note %><div class="text-end pull-right mt-4"><%= util.formatDateTime(activities[i].creation_date) %></div></div>
+                                              </div>
+                                          </div>
+                                        <% } %>
+                                      </div>
+                                    </div>
+                                  </div>
+                                 
+                                 
+                                </div>
+                                <div class="my-2">
+                                  <form class="ticket-comments-field" id="commentsForm" method="post" action="/tickets/detail/<%= ticket.id %>">
+                                    <% if(no_of_comments_pages > 1){%>
+                                       <p class="text-muted pagination m-0 mt-3 mb-2 ms-2 pull-left h6 font-weight-normal"> Showing <%= ((comments_page_limit  != 0)?(comments_page_limit +1):1) %> to <%= (((comments_page_limit + 10) > total_comments_count)?total_comments_count:(comments_page_limit + 10)) %> of <%= total_comments_count  
+                                    %> Comments</p>
+                                      <%}%>
+                                    <ul class="pagination m-0 mt-2 mb-2 ms-auto pull-right">
+                                      <% if (no_of_comments_pages > 1) { %>
+                                        <ul class="pagination text-center">
+                                          <% if (currentCommentPage == 1) { %>
+                                            <li class="page-item ticket-prev-button disabled">
+                                                <a class="comments_nav_link page-link" data-pagetoload="1" tabindex="-1">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
+                                                  First
+                                                </a>
+                                              </li>
+                                          <% } else { %>
+                                            <li class="page-item ticket-prev-button">
+                                              <a class="comments_nav_link page-link" data-pagetoload="1" tabindex="-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
+                                                First
+                                              </a>
+                                            </li>
+                                          <% } %>
+                                          <% var i = (Number(currentCommentPage) > 5 ? Number(currentCommentPage) - 4 : 1) %>
+                                          <% if (i !== 1) { %>
+                                              <li class="page-item disabled"><a>...</a></li>
+                                          <% } %>
+                                          <% for (; i <= (Number(currentCommentPage) + 4) && i <= no_of_comments_pages; i++) { %>
+                                              <% if (i == currentCommentPage) { %>
+                                                  <li class="page-item active"><a data-pagetoload="<%= i %>" class="comments_nav_link page-link" ><%= i %></a></li>
+                                              <% } else { %>
+                                                  <li class="page-item"><a data-pagetoload="<%= i %>" class="comments_nav_link page-link" ><%= i %></a></li>
+                                              <% } %>
+                                              <% if (i == Number(currentCommentPage) + 4 && i < no_of_comments_pages) { %>
+                                                  <li class="page-item disabled"><a>...</a></li>
+                                              <% } %>
+                                          <% } %>
+                                          <% if (currentCommentPage == no_of_comments_pages) { %>
+                                            <li class="page-item ticket-next-button disabled">
+                                                <a class="comments_nav_link page-link" data-pagetoload="<%= no_of_comments_pages %>">
+                                                  Last
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
+                                                </a>
+                                            </li>
+                                          <% } else { %>
+                                            <li class="page-item ticket-next-button">
+                                                <a class="comments_nav_link page-link" data-pagetoload="<%= no_of_comments_pages %>">
+                                                  Last
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
+                                                </a>
+                                            </li>
+                                          <% } %>
+                                        </ul>
+                                      <% } %>
+                                    </ul>
+                                    <input type="hidden" name="commentPage" id="commentPage" value="<%= currentCommentPage %>" />
+                                    <input type="hidden" name="limit" id="limit" value="<%= ticket_detail_limit %>" />
+                                  </form>
+                                </div>
+                                <label class="form-label px-2 ticket-comments-field">Comments</label>
+                                <div class="card-footer py-0 px-0">
+                                  <div class="ticket-comments-field">
+                                    <div class="mb-0 position-relative">
+                                      <textarea rows="6" class="form-control" id="ticket_comments" name="ticket_comments" placeholder="Write your comment"></textarea>
+                                        <%- include('../partials/notification.ejs',{id:'alert_success_comments',responseText:'comment_success',className:'alert-success alert-style alert-dismissible  my-2 position-absolute',progress:'true'}) %>
+                                        <%- include('../partials/notification.ejs',{id:'alert_failure_comments',responseText:'comment_failure',className:'alert-danger alert-style alert-dismissible  my-2 position-absolute ',progress:'true'}) %>
+                                    </div>
+                                  </div>
+                                  <form class="ticket-activity-field hideblock" id="activityForm" method="post" action="/tickets/detail/<%= ticket.id %>#tabs-activity">
+                                    <ul class="pagination m-0 mt-2 mb-2 ms-auto pull-right">
+                                      <% if (no_of_activity_pages > 1) { %>
+                                        <ul class="pagination text-center">
+                                          <% if (currentActivityPage == 1) { %>
+                                            <li class="page-item ticket-prev-button disabled">
+                                                <a class="activity_nav_link page-link" data-pagetoload="1" tabindex="-1">
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
+                                                  First
+                                                </a>
+                                              </li>
+                                          <% } else { %>
+                                            <li class="page-item ticket-prev-button">
+                                              <a class="activity_nav_link page-link" data-pagetoload="1" tabindex="-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
+                                                First
+                                              </a>
+                                            </li>
+                                          <% } %>
+                                          <% var i = (Number(currentActivityPage) > 5 ? Number(currentActivityPage) - 4 : 1) %>
+                                          <% if (i !== 1) { %>
+                                              <li class="page-item disabled"><a>...</a></li>
+                                          <% } %>
+                                          <% for (; i <= (Number(currentActivityPage) + 4) && i <= no_of_activity_pages; i++) { %>
+                                              <% if (i == currentActivityPage) { %>
+                                                  <li class="page-item active"><a data-pagetoload="<%= i %>" class="activity_nav_link page-link" ><%= i %></a></li>
+                                              <% } else { %>
+                                                  <li class="page-item"><a data-pagetoload="<%= i %>" class="activity_nav_link page-link" ><%= i %></a></li>
+                                              <% } %>
+                                              <% if (i == Number(currentActivityPage) + 4 && i < no_of_activity_pages) { %>
+                                                  <li class="page-item disabled"><a>...</a></li>
+                                              <% } %>
+                                          <% } %>
+                                          <% if (currentActivityPage == no_of_activity_pages) { %>
+                                            <li class="page-item ticket-next-button disabled">
+                                                <a class="activity_nav_link page-link" data-pagetoload="<%= no_of_activity_pages %>">
+                                                  Last
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
+                                                </a>
+                                            </li>
+                                          <% } else { %>
+                                            <li class="page-item ticket-next-button">
+                                                <a class="activity_nav_link page-link" data-pagetoload="<%= no_of_activity_pages %>">
+                                                  Last
+                                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
+                                                </a>
+                                            </li>
+                                          <% } %>
+                                        </ul>
+                                      <% } %>
+                                    </ul>
+                                    <input type="hidden" name="activityPage" id="activityPage" value="<%= currentActivityPage %>" />
+                                  </form>
+                                </div>
+                            </div>
+                            <div class="card-footer px-0 text-end">
+                              <div class="d-flex">
+                                <button id="addComment" type="submit" class="btn btn-primary ms-auto ticket-comments-field">Add Comment</button>
+                              </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </form>
+        </div>
+<%- include('../partials/footer_after_login.ejs') %> 
+
+
+
+
