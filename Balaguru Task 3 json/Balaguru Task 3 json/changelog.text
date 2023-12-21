@@ -1,0 +1,242 @@
+--------------------**************************----------------------------------
+
+filename: custom.js
+path    : media-->js-->custom.js
+
+search loginAlertMail (in new file)
+
+Add anywhere in the file a const and a function
+
+
+loginAlertMail.addEventListener('change',  function () {
+    let login_mail_checkbox_checked = loginAlertMail.checked ? 1 : 0;
+    loginAlertMail.disabled = true;
+    setTimeout(() => {
+      client.post('/api/mail/loginAlert', JSON.stringify({ "checked": login_mail_checkbox_checked }), (request, response) => {
+        if (response.status !== 200) {
+          console.error(response);
+        }
+        loginAlertMail.disabled = false;
+      });
+    }, 1000);
+});
+
+
+--------------------**************************----------------------------------
+
+filename: auth.js
+path    : src-->routes-->auth.js
+
+
+---> Add the function anywhere before module.exports
+
+added
+const mailLoginAlert = async (request, response) => {
+    try{
+          const user_data = { email: request.session.email, mailLoginALert: request.body.checked }
+          let jsonFile = JSON.parse(fs.readFileSync('./media/mailalert.json', 'utf-8'))
+          const existingData = jsonFile.findIndex((obj) => obj.email === user_data.email);
+          if (existingData !== -1) {
+            jsonFile[existingData] = user_data;
+          } else {
+            jsonFile.push(user_data);
+          }
+          const updatedJsonString = JSON.stringify(jsonFile, null, 2);
+          fs.writeFileSync('./media/mailalert.json', updatedJsonString);
+           response.status(200).json({
+            message: "success",
+            });
+        } catch (error) {
+        response.status(500).json({
+            message: "An error occured",
+          });
+        }
+}
+
+
+---> search module.exports and modify 
+
+
+Before   
+  module.exports = {
+    authenticateLogin,
+    createUser,
+    passwordReset,
+
+};
+
+After    
+module.exports = {
+    authenticateLogin,
+    createUser,
+    passwordReset,
+    mailLoginAlert
+};
+
+--->  Add at top of the file
+
+const ipinfo = require('ipinfo');
+var fs = require('fs');
+const date = require('date-and-time');
+
+--->  search             request.session.save(); , below that add the following
+
+                    let session_mail=request.session.email
+                    const matchedUser = JSON.parse(fs.readFileSync("./media/mailalert.json", 'utf8')).find(user => user.email === session_mail && user.mailLoginALert === 1);
+                    if (matchedUser) {
+                        const mail_template = fs.readFileSync("./mailtemplate/login_mail.ejs", 'utf-8');
+
+                        ipinfo((err, data) => {
+                            if (err) {
+                                console.error(err);
+                            } else {
+                                const location = `${data.city},${data.region}, ${data.country}`
+                                const loginInfo = { first_name: result.first_name, last_name: result.last_name, ip: data.ip, location: location, login_time: date.format((new Date()), 'DD.MM.YYYY HH:mm:ss') }
+                                const compiledTemplate = request.app.get('nmp_ejs').compile(mail_template);
+                                const emailContent = compiledTemplate(loginInfo)
+                                request.app.get("mailer").sendMail({
+                                    from: 'Novalnet Ticketing System charles_a@novalnetsolutions.com',
+                                    to: session_mail,
+                                    subject: "Ticketing System Account Login Alert Mail",
+                                    html: emailContent,
+
+                                }, function (error, info) {
+                                    if (error) {
+                                        console.log(error);
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+
+
+
+--------------------**************************----------------------------------
+
+filename: header_after_login.ejs
+path    : templates -->partials-->header_after_login.ejs
+
+
+ search                  <a href="/api/user/logout" class="dropdown-item">Logout</a>    and below that   add
+
+     <label class="dropdown-item form-switch"> Login alert mail
+        <input class="form-check-input m-0 ms-2" type="checkbox" id="login-alert-mail" name="login-alert-mail" <% if (matched_user_checked) { %>checked<% } %>>
+     </label>
+
+--------------------**************************----------------------------------
+
+filename: api.js
+path    : src-->routes-->api.js
+   
+   add anywhere     router.post('/mail/loginAlert', mailLoginAlert);  
+
+--------------------**************************----------------------------------
+
+filename: init.js
+path    : src-->init.js
+
+Add any where
+
+const ejs = require('ejs');
+app.set("nmp_ejs",ejs)
+
+--------------------**************************----------------------------------
+
+filename: emticket.js
+path    : src-->emticket.js
+
+search           app.use("*", (req, res) => {    res.render('404')})
+and replace it with 
+
+
+
+         app.use("*", (req, res) => {
+                                     res.locals.user = req.session;
+                                     let matched_user = JSON.parse(fs.readFileSync("./media/mailalert.json", 'utf8')).find(user => user.email === req.session.email && user.    mailLoginALert === 1);
+                                     res.render('404', {matched_user_checked: matched_user})
+         })
+
+
+filename: users.js
+path    : src-->routes-->users.js
+
+---> Add at top of the file 
+
+const fs = require("fs")
+
+--->   search       var page = req.body.page;
+ 1 line above that  add 
+
+    let matched_user = JSON.parse(fs.readFileSync("./media/mailalert.json", 'utf8')).find(user => user.email === req.session.email && user.mailLoginALert === 1);
+
+---> search   current: page, and below that add line
+
+          matched_user_checked: matched_user
+
+  before 
+         res.render('users', {
+          users: response[0],
+          total_count: response[1][0].total_count,
+          current: page,
+          page_limit: page_limit,
+          no_of_sub_pages: no_of_sub_pages,
+
+        });
+
+after
+        res.render('users', {
+          users: response[0],
+          total_count: response[1][0].total_count,
+          current: page,
+          matched_user_checked: matched_user,
+          page_limit: page_limit,
+          no_of_sub_pages: no_of_sub_pages,
+
+        });
+
+        --------------------**************************----------------------------------
+
+filename: tickets.js
+path    : src-->routes-->tickets.js
+
+--->  Add at top of the file
+      const fs = require("fs")
+
+---> search     res.render('tickets', {  and on both the instances , before that  line, add
+
+            let matched_user = JSON.parse(fs.readFileSync("./media/mailalert.json", 'utf8')).find(user => user.email === req.session.email && user.mailLoginALert === 1);
+
+---> search                 tickets_counts: response[2],
+ and on  both the two instances , below that line  add
+
+                matched_user_checked: matched_user
+
+
+---> search  var activityPage = req.body.activityPage;  before that line add
+
+             let matched_user = JSON.parse(fs.readFileSync("./media/mailalert.json", 'utf8')).find(user => user.email === req.session.email && user.mailLoginALert === 1);
+
+
+    
+--->   search    no_of_comments_pages: no_of_comments_pages, below that line add
+
+
+                matched_user_checked: matched_user
+
+
+        --------------------**************************----------------------------------
+
+Added files   
+
+1)mailalert.json 
+
+path media-->mailalert.json 
+
+Added folder and file 
+
+folder-->mailtemplate
+file-->login_mail.ejs
+
+mailtemplate-->login_mail.ejs

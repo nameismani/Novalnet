@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login mail alert</title>
+ <style>
+.login_mail_text{
+    margin:2rem 0;
+}
+table{
+    margin-bottom:2rem;
+}
+.login_mail_subhead
+{
+    text-decoration:underline;
+    margin-bottom:2rem
+}
+
+.login_mail_name{
+    margin-top: 1rem;
+}
+ </style>
+</head>
+<body>
+<p class="login_mail_name">Dear  <%= first_name %> <%= last_name %> ,</p>
+
+<p class="login_mail_text">We would like to inform you about recent login activity on your account to help you stay updated and ensure its security.</p>
+<p class="login_mail_subhead"><b>Login Information:</b></p>
+<table>
+    <tr>
+        <td>IP Address</td>
+        <td >:</td>
+        <td> <%= ip %></td>
+
+    </tr> 
+    <tr>
+        <td>Location</td>
+        <td >:</td>
+        <td><%=location %></td>
+
+    </tr>
+    <tr>
+        <td>Date and Time</td>
+        <td > :</td>
+        <td> <%= login_time %></td>
+
+    </tr>
+</table>
+
+<p class="login_mail_text">If this login was you, please disregard this email. It indicates successful access to your account, or if you suspect any unauthorized access, please change your password to a strong and unique one.</p>
+<p>  Best Regards,</p>
+<p>Ticketing System Team</p>
+</body>
+</html>
+
+
+
+

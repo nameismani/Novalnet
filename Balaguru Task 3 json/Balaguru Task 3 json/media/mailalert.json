@@ -1,0 +1,22 @@
+[
+  {
+    "email": "dev5@novalnetsolutions.com",
+    "mailLoginALert": "0"
+  },
+  {
+    "email": "dev6@novalnetsolutions.com",
+    "mailLoginALert": 0
+  },
+  {
+    "email": "dev10@novalnetsolutions.com",
+    "mailLoginALert": 1
+  },
+  {
+    "email": "dev8@novalnetsolutions.com",
+    "mailLoginALert": "1"
+  },
+  {
+    "email": "sureshkumar_u@novalnetsolutions.com",
+    "mailLoginALert": "1"
+  }
+]
