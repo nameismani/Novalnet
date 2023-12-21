@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-1">
+    <head>
+        <meta charset="utf-8">
+        <link href="/dist/images/logo.svg" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Novalnet Monitoring Portal</title>
+        <link rel="stylesheet" href="/css/app.css" />
+        <style>
+       .drag_remove_enter{
+          background-color: red !important;
+        }
+        .error_border{
+            border: 1px solid red !important;
+        }
+        .remove_image{
+            position: absolute;
+            left:-5px;
+            top: -5px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            border-radius: 50%;
+            background-color: #E48F45;
+            padding: 3px;
+        }
+        .drag_events_receive{
+            overflow: hidden;
+            cursor: pointer;
+            line-height:340px;      
+        }
+        .border-color{
+            border-color: rgba(0, 81, 255, 0.5) !important;
+            background-color: #2195f327;
+        }
+        .drag_events_receive > p {
+            width: 100%;
+            height: inherit;
+            vertical-align: middle;
+            opacity: 0.6    ;
+            border: 2px dashed #ddd;
+        }
+        .displayToogle input{
+            color: black;
+        }
+        .drag_events_receive > p::after{
+            content: url('/images/addIcon.svg');
+            position: absolute;
+            top: 40%; /*-25 */
+            left: 50%;
+            transform: translate(-50%,-50%);
+        }
+
+        ::-webkit-scrollbar {
+            display: none;
+        }
+        .side-nav .box{
+            background-color: transparent;
+        }
+        #widget{
+            display: block !important;
+            width: 260px;
+            transition: all 0.3s ease;
+        }
+        .searchDisplay{
+            display: none;
+        }
+        .d-block{
+            display: block;
+        }
+        .displayToogle{
+            transition: all 0.3s ease;
+        }
+
+
+        .list_widget{
+            height: 72vh;
+            overflow-y: scroll;
+        }
+        @media screen and (min-width:1536px) {
+            .sticky {
+                position: fixed;
+                top:80px;
+                right: 22px;
+            }
+
+        }
+        @media screen and (max-width:767px) {
+            #widget{
+                display: none !important;
+            }
+        }
+
+         #widget .side-nav .box{
+                margin: 0px 1.25rem;
+            }
+            .list_widget li{
+                margin-bottom: 10px;
+            } 
+
+    .toggle {
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .toggle-switch {
+      display: inline-block;
+      background: #ccc;
+      border-radius: 16px;
+      width: 38px;
+      height: 18px;
+      position: relative;
+      vertical-align: middle;
+      transition: background 0.25s;
+    }
+    .toggle-switch:before, .toggle-switch:after {
+      content: "";
+    }
+    .toggle-switch:before {
+      display: block;
+      background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+      width: 12px;
+      height:12px;
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      transition: left 0.25s;
+    }
+    .toggle:hover .toggle-switch:before {
+      background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+    }
+    .toggle-checkbox:checked + .toggle-switch {
+      background: #56c080;
+    }
+    .toggle-checkbox:checked + .toggle-switch:before {
+      left: 23px;
+    }
+
+    .toggle-checkbox {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .toggle-label {
+      margin-left: 3px;
+      position: relative;
+      top: 2px;
+    }
+
+    /* bala */
+
+
+    .timer_icon {
+      animation: timer 0.3s linear;
+    }
+
+    .timer_div {
+      width: 54px;
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 999;
+      height: 54px;
+      color: white;
+
+    }
+
+    .opacity_timer {
+
+      display: block !important;
+
+    }
+
+    #close_timer {
+      position: relative;
+      top: -75px;
+      right: 5px;
+      width: fit-content;
+      border-radius: 50%;
+      /* border: 1px solid #fff; */
+      cursor: pointer;
+      display: none;
+      transition: all 2s linear;
+
+    }
+
+    .text_opacity {
+      opacity: 1 !important;
+    }
+
+    #clock {
+      position: fixed;
+      z-index: 9999;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #fff;
+      border-radius: 50%;
+      right: 22px;
+      bottom: 22px;
+      cursor: pointer;
+      transition: all 0.1s linear;
+
+    }
+
+    #timer_text {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      font-size: 20px;
+      padding-left: 25px;
+      opacity: 0;
+      font-weight: bold;
+    }
+
+    @keyframes timer {
+      0% {
+        transform: scale(0);
+      }
+
+      25% {
+        transform: scale(0.7);
+      }
+
+      50% {
+        transform: scale(1.3);
+      }
+
+      75% {
+        transform: scale(1.2);
+      }
+
+      100% {
+
+        transform: scale(1);
+      }
+    }
+
+    .bg-danger#clock::before {
+      background-color: red;
+
+    }
+
+    #clock::before {
+      content: '';
+      background-color: #0f6391;
+      border-radius: 50%;
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      transform: scale(0.001, 0.001);
+    }
+
+    #clock.boom::before {
+      animation: effect_dylan 0.8s 0s ease-out;
+    }
+
+    #clock.timer_effect::before {
+      animation: effect_dylan 0.8s 0s ease-out;
+
+    }
+    .cursor_blocked{
+      cursor:no-drop !important;
+    }
+    @keyframes effect_dylan {
+      50% {
+        transform: scale(1.5, 1.5);
+        opacity: 0;
+      }
+
+      99% {
+        transform: scale(0.001, 0.001);
+        opacity: 0;
+      }
+
+      100% {
+        transform: scale(0.001, 0.001);
+        opacity: 1;
+      }
+    }
+
+    #clock:hover {
+      transform: scale(0.95);
+    }
+
+    .clock:after {
+      position: absolute;
+      width: 0px;
+      height: 7px;
+      display: block;
+      border-left: 2px solid #fff;
+      content: '';
+      left: 23px;
+      top: 18px;
+      animation-duration: 15s;
+    }
+
+    .clock:before {
+      position: absolute;
+      width: 0px;
+      height: 7px;
+      display: block;
+      border-left: 2px solid #fff;
+      content: '';
+      left: 23px;
+      top: 18px;
+      animation-duration: 60s;
+
+    }
+
+    .clock:before,
+    .clock:after {
+      transform-origin: bottom;
+      animation-name: dial;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    @keyframes dial {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+        </style>
+    </head>
+    
+    <body class="py-5 md:py-0">
+        <div id="session_clock">
+
+            <div id="clock">
+              <div style="display: flex;justify-content: center;align-items: center;height: 100%;">
+        
+                <svg style="width: 32px;height: 32px;color: white;margin-bottom: 5px;" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" class="lucide lucide-timer timer_icon">
+                  
+        
+                  <circle cx="12" cy="14" r="8" />
+                </svg>
+                <div class="clock"></div>
+                <div style="position: absolute;background-color:white;width: 2px;height: 2px;border-radius: 50%;top:24px">
+        
+              </div>
+        
+            </div>
+                  
+            </div>
+            <div class="timer_div bg-white rounded-full border-2 ">
+              <div id="timer_text" class="text-primary">
+        
+                <span id="session_hours"></span>
+                <span id="session_mins"></span>
+                <span id="session_seconds"></span>
+              </div>
+              <div id="close_timer" class="">
+        
+              </div>
+            </div>
+            <input type="hidden" id="session_time" value="<%= session_time%>">
+        
+          </div>
+          <%- include('../partials/warn_modal.ejs') %>
+          <%- include('../partials/success_modal.ejs') %>
+          <%- include('../partials/session_expire_modal.ejs',{modalname:"session-modal",cancel_btn:"session_logout_btn",save_btn:"session_extend_confirm"}) %>
+          <%- include('../partials/confirm_popup.ejs',{modalname:"confirm-modal",error_text:"You Want to Go Back Without Saving Dashboard",cancel_btn:"backbtn_cancel",save_btn:"confirm",dash_name:false}) %>
+
+        <%- include('../partials/mobile_menu.ejs') %>
+        <%- include('../partials/top_navigation.ejs') %>
+
+        <div class="flex overflow-hidden">
+        <%- include('../partials/side_navigation.ejs') %>

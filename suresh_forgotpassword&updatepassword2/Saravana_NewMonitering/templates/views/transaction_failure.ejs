@@ -1,0 +1,53 @@
+<%- include('../partials/header_login.ejs') %>
+ <!-- BEGIN: Content -->
+<div class="content">
+    <div class="grid grid-cols-12 gap-6 mt-5 intro-y">
+        <div class="col-span-12">
+            <div class="mt-5 intro-y box">
+                <div class="flex flex-col items-center p-5 border-b sm:flex-row border-slate-200/60 dark:border-darkmode-400">
+                    <h2 class="mr-auto text-base font-medium">Transaction Failures</h2>
+                </div>
+                <div id="boxed-tab" class="flex flex-col p-5">
+                    <div class="preview">
+                        <ul class="nav nav-boxed-tabs flex flex-col sm:flex-row sm:items-end xl:items-start" role="tablist" aria-orientation="horizontal">
+                            <li id="recent_failed_transaction_tab" class="nav-item flex-1" data-tab="recent_failed_transaction" role="presentation">
+                                <button class="nav-link w-full py-2 active" data-tw-toggle="pill" data-tw-target="#recent_failed_transaction" type="button" role="tab" aria-controls="recent_failed_transaction_tab" aria-selected="true" > Recent Failed Transaction (Last 50) </button>
+                            </li>
+                            <li id="failed_transaction_payment_type_tab" class="nav-item flex-1" data-tab="failed_transaction_payment_type" role="presentation">
+                                <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#failed_transaction_payment_type" type="button" role="tab" aria-controls="failed_transaction_payment_type_tab" aria-selected="false" > Failed Transactions Per Payment Type </button>
+                            </li>
+                            <li id="failed_transaction_status_code_tab" class="nav-item flex-1" data-tab="failed_transaction_status_code" role="presentation">
+                                <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#failed_transaction_status_code" type="button" role="tab" aria-controls="failed_transaction_status_code_tab" aria-selected="true" > Failed Transactions Per Status Code </button>
+                            </li>
+                            <li id="failed_transaction_merchant_tab" class="nav-item flex-1" data-tab="failed_transaction_merchant" role="presentation">
+                                <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#failed_transaction_merchant" type="button" role="tab" aria-controls="failed_transaction_merchant_tab" aria-selected="true" > Failed Transactions Per Merchant </button>
+                            </li>
+                            <li id="failed_transaction_fraud_modules_tab" class="nav-item flex-1" data-tab="failed_transaction_fraud_modules" role="presentation">
+                                <button class="nav-link w-full py-2" data-tw-toggle="pill" data-tw-target="#failed_transaction_fraud_modules" type="button" role="tab" aria-controls="failed_transaction_fraud_modules_tab" aria-selected="true" > Failed transactions per fraud modules </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-5">
+                            <div id="recent_failed_transaction" class="tab-pane leading-relaxed active" role="tabpanel" aria-labelledby="example-3-tab"> 
+                                <%- include('../partials/transaction_failure_header.ejs', {id: 'recent_failed_transaction', name: 'Recent Failed Transaction (Last 50)'}) %>
+                            </div>
+                            <div id="failed_transaction_payment_type" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-4-tab"> 
+                                <%- include('../partials/transaction_failure_header.ejs', {id: 'failed_transaction_payment_type', name: 'Failed Transactions Per Payment Type'}) %>
+                            </div>
+                            <div id="failed_transaction_status_code" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-4-tab"> 
+                                <%- include('../partials/transaction_failure_header.ejs', {id: 'failed_transaction_status_code', name: 'Failed Transactions Per Status Code'}) %>
+                            </div>
+                            <div id="failed_transaction_merchant" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-4-tab"> 
+                                <%- include('../partials/transaction_failure_header.ejs', {id: 'failed_transaction_merchant', name: 'Failed Transactions Per Merchant'}) %>
+                            </div>
+                            <div id="failed_transaction_fraud_modules" class="tab-pane leading-relaxed" role="tabpanel" aria-labelledby="example-4-tab"> 
+                                <%- include('../partials/transaction_failure_header.ejs', {id: 'failed_transaction_fraud_modules', name: 'Failed transactions per fraud modules'}) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END: Content -->
+<%- include('../partials/footer_login.ejs') %>

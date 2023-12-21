@@ -1,0 +1,92 @@
+<%- include('../partials/header_before_login.ejs') %>
+<div class="login">
+    <div class="container sm:px-10">
+        <div class="block xl:grid grid-cols-2 gap-4">
+            <!-- BEGIN: Login Info -->
+            <div class="hidden xl:flex flex-col min-h-screen">
+                <a href="" class="-intro-x flex items-center pt-5">
+                    <img alt="Novalnet AG" class="w-50" src="/images/Novalnet-Logo-white.svg">
+                </a>
+                <div class="my-auto">
+                    <img alt="Novalnet Monitoring Portal" class="-intro-x w-1/2 -mt-16" src="/images/verify_otp.svg">
+                    <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                        Please enter your <br> verification code.
+                    </div>
+                </div>
+            </div>
+            <div class="hidden">
+                <input id="otp_time" type="text" value="<%= time %>">
+    
+            </div>
+            <!-- END: Login Info -->
+            <!-- BEGIN: Login Form -->
+            <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-2/4">
+                    <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                        <%= lang("verification_code") %>
+                    </h2>
+                    <div class="flex items-center justify-start mt-2 text-slate-600 dark:text-slate-300"><%= lang("otp_verify_desc") %></div>
+                    <input type="hidden" id="token" value="<%= token %>" />
+                    <div class="alert alert-danger flex items-center my-4 display_none" role="alert" id="error_otp_verification_block"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="alert-octagon" data-lucide="alert-octagon" class="lucide lucide-alert-octagon w-6 h-6 mr-2 inline"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span id="error_otp_verification"></span></div>
+                    <div class="relative border rounded-md mt-5 px-5 py-4 border-success text-success dark:border-success flex mb-2 flex-col display_none" role="alert" id="resend_code_success_block">
+                        <div class="flex items-center">
+                            <div class="font-medium text-lg"><%= lang("resent_code_suc_msg1") %></div>                            
+                        </div>
+                    </div>
+                    <div  class="intro-x mt-8">
+                        
+                        <div id="otp-container" class="mb-4 otp_textbox_block text-center digit-group ">
+                            <input type="text" id="digit-1" class="form-control otp_digits_textbox intro-x shadow-sm mx-2" name="digit-1" data-next="digit-2" required="" autofocus="" maxlength="1">
+                            <input type="text" id="digit-2" class="form-control otp_digits_textbox intro-x shadow-sm mx-2" name="digit-2" data-next="digit-3" data-previous="digit-1" required="" maxlength="1">
+                            <input type="text" id="digit-3" class="form-control otp_digits_textbox intro-x shadow-sm mx-2" name="digit-3" data-next="digit-4" data-previous="digit-2" required="" maxlength="1"> 
+                            <input type="text" id="digit-4" class="form-control otp_digits_textbox intro-x shadow-sm mx-2" name="digit-4" data-previous="digit-3" required="" maxlength="1">
+                        </div>
+                        <!-- <input type="text" class="intro-x login__input form-control py-3 px-4 block" placeholder="<%= lang("user_name") %>" id="username" name="username">
+                        <input type="password" class="intro-x login__input form-control py-3 px-4 block mt-4" placeholder="<%= lang("password") %>" id="password" name="password"> -->
+                    </div>
+                   
+                    <br>
+                   
+                    <div class="text-slate-600 dark:text-slate-300 text-secondary mt-1">
+                        It may take a minute to receive your code.
+                        <% if(resend !=0){ %>
+                            <span id="remove_para"  >
+                                Haven't received it?
+                                <span id="times" >  
+                                    Please wait
+                                    <span class="" id="minutes"></span><span class=" " id="seconds"></span>
+                                </span>
+                                <span class="resend_loader"></span>
+                                    <a id="otp_resend_code" class="resend text-primary cursor-pointer" style="display: none;"><%= lang("resend_code") %></a>
+                            </span> 
+                      <%  } %>
+                      
+                        <p id="resend_time"></p>
+                        <p id="limit" class="mt-4">
+                            <% if(resend ==0){ %>
+                                <span class="text-danger">* You reach your maximum attempt</span>
+                          <%  } else if(resend < 3){ %>
+                            You can still try <span class="text-danger"><%= resend %> </span>times to send otp
+                          <% } %></p>
+                      </div>
+                      
+                    <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                        <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" type="button" id="otp_verify_submit">
+                            <span class="flex display_none" id="verify_loader">
+                                <span class="loader"></span>
+                                Loading...
+                            </span>
+                            <span id="verigy_text"><%= lang("verify") %></span>
+                            
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Login Form -->
+        </div>
+    </div>
+</div><!-- Success Modal start -->
+
+
+<!-- Success Modal End -->
+<%- include('../partials/footer_before_login.ejs') %>

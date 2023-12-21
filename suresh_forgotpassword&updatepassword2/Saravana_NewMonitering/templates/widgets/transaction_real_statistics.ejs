@@ -1,0 +1,48 @@
+<div class="intro-y flex items-center h-10">
+    <h2 class="text-lg font-medium truncate mr-5">
+        Transactions
+    </h2>
+    <a href="" class="ml-auto text-primary truncate">View all</a> 
+</div>
+<div class="report-box-2 intro-y mt-5">
+    <div class="box p-5">
+        <div class="flex items-center">
+            Realtime statistics 
+            <div class="dropdown ml-auto">
+                <a class="dropdown-toggle w-5 h-5 block -mr-2" href="javascript:;" aria-expanded="false" data-tw-toggle="dropdown"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="more-vertical" data-lucide="more-vertical" class="lucide lucide-more-vertical w-5 h-5 text-slate-500"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg> </a>
+                <div class="dropdown-menu w-40">
+                    <ul class="dropdown-content">
+                        <li>
+                            <a class="dropdown-item"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="file-text" data-lucide="file-text" class="lucide lucide-file-text w-4 h-4 mr-2"><path d="M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg> Export </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="text-2xl font-medium mt-2" id="nn_real_time_transaction_data">82</div>
+        <div class="border-b border-slate-200 flex pb-2 mt-4">
+            <div class="text-slate-500 text-xs">Transaction volume per second</div> 
+        </div>
+        <div class="mt-2 border-b broder-slate-200">
+            <div class="-mb-1.5 -ml-2.5">
+                <div class="h-[110px]">
+                    <canvas id="report-bar-chart" width="250" height="110" style="display: block; box-sizing: border-box; height: 110px; width: 250px;"></canvas>
+                </div>
+            </div>
+        </div>  
+        <div class="w-52 sm:w-auto mx-auto mt-5">
+            <div class="flex items-center">
+                <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                <span class="truncate">Success</span> <span class="font-medium ml-auto" id="nn_genSucPerc">86%</span> 
+            </div>
+            <div class="flex items-center mt-4">
+                <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                <span class="truncate">Hold</span> <span class="font-medium ml-auto" id="nn_genHoldPerc">1%</span> 
+            </div>
+            <div class="flex items-center mt-4">
+                <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                <span class="truncate">Failed</span> <span class="font-medium ml-auto" id="nn_genFailedPerc">13%</span> 
+            </div>
+        </div>
+    </div>
+</div>

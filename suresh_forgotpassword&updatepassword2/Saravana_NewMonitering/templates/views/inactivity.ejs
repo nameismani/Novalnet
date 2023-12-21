@@ -1,0 +1,38 @@
+<%- include('../partials/header_before_login.ejs') %>
+    <div class="login">
+        <div class="container sm:px-10">
+            <div class="block xl:grid grid-cols-2 gap-4">
+                <!-- BEGIN: Login Info -->
+                <div class="hidden xl:flex flex-col min-h-screen">
+                    <a href="" class="-intro-x flex items-center pt-5">
+                        <img alt="Novalnet AG" class="w-50" src="/images/Novalnet-Logo-white.svg">
+                    </a>
+                    <div class="my-auto">
+                        <img alt="Novalnet Monitoring Portal" class="-intro-x w-1/2 -mt-16" src="/images/account_lock.svg">
+                        <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                            Account locked
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Login Info -->
+                <!-- BEGIN: Login Form -->
+                <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                    <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-2/4">
+                        <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                            <%= lang("account_locked") %>
+                        </h2>
+                        <div class="flex items-center justify-start mt-2 text-slate-600 dark:text-slate-300"><%= lang("please_unlock_msg") %></div>
+                        <div class="alert alert-danger alert-dismissible flex items-center my-4" role="alert" id="error_lockout_form_block"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="alert-octagon" data-lucide="alert-octagon" class="lucide lucide-alert-octagon w-6 h-6 mr-2 inline"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span id="error_account_lock_form"></span></div>
+                        <div class="intro-x mt-8">
+                            <input type="password" id="user_password" name="user_password" class="intro-x login__input form-control py-3 px-4 block mt-4" placeholder="<%= lang('password') %>&hellip;" />
+                        </div>
+                        <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                            <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" type="button" id="unlock_account"><%= lang("unlock") %></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Login Form -->
+            </div>
+        </div>
+        
+<%- include('../partials/footer_before_login.ejs') %>

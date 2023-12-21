@@ -1,0 +1,81 @@
+<div id="widget">
+    <nav  class="side-nav " style="padding-left: 0px;"  >
+        <div class="fixed" >
+
+            <div class="w-full flex cursor-pointer py-3 intro-y px-5" style="justify-content: space-between;">
+                <div >
+                    <img class="text-end searchDisplay" id="setting" src="/images/setting.svg">
+                 </div>
+                <div>
+                    <img id="close-widget" src="/images/trash.svg" alt="close">
+                </div>
+            </div>
+
+
+  <div class="displayToogle">
+    <div class="intro-y pr-1 mb-5 flex">
+        <div class="box">
+            <div class="relative text-slate-500">
+                <input type="text" value="" id="widgetsearch" class="form-control py-3 px-4 border-transparent bg-slate-100 pr-10 widgetsearch" placeholder="Search Widget..">
+                <i class="w-4 h-4 hidden sm:absolute my-auto inset-y-0 mr-3 right-0" data-lucide="search"></i> 
+            </div>
+            <!-- <button id="searchBtn" type="button" class="btn btn-primary w-full mt-3">Search Widgets</button> -->
+        </div>
+    </div>
+    
+ <% let data = [{id :1,img:"/images/general_report.png",icon:"trending-up",size:"12,6", name: "General Report"}, {id :2,size:"12,6,4,3",img:"/images/transaction_statistics.png",icon:"pie-chart", name: "Transaction Statistics"}, {id :3,size:"12,6,4,3",img:"/images/transaction_real_statistics.png",icon:"activity", name: "Transaction Real Statistics"},
+  {id :4,size:"12,6,4,3",img:"/images/suspicious_transactions.png",icon:"activity", name: "Suspicious Transactions"},{id :5,size:"12,6,4,3",img:"/images/transaction_per_payment_type.png",icon:"bar-chart-2", name: "Transaction per Payment Type"},{id :6,size:"12,6,4,3",img:"/images/transaction_failure_per_status.png",icon:"trending-down", name: "Transaction Failure per Status"}] %>
+       
+  <% let datas = [] %>
+  <% widget_ids.filter((row, rindex)=> { %>
+      <% row.custom_col.filter((col,cindex)=>{ %>
+              <% datas.push(Number(col)) %>
+        
+          <% }) %>
+     
+      <% }) %>
+     
+    <ul class="list_widget">
+     
+            <div class="intro-y hidden widgetnotFound">
+                <div class="box px-2 py-2 mb-3 flex items-center" style="box-shadow: none;">
+                    <div class="w-8 h-8 ml-3 mt-2 image-fit rounded-md overflow-hidden">
+                        <span class=""><i data-lucide="alert-octagon"></i>
+                        </span>                        
+                    </div>
+                    <div class="ml-4 mr-auto">
+                        <div class="font-medium">Widget Not Found!</div>
+                    </div> 
+                </div>
+            </div>       
+        
+         <% data.forEach((item) => { %>
+            
+            <div class="intro-y subElement <%= datas.includes(item.id)==false ? 'drag_start_events' : '' %>" draggable="<%= datas.includes(item.id)==false ? 'true' : 'false' %>" data-img-src="<%= item.img %>" data-chart-src="<%= item.id %>" data-width-attr="<%= item.size %>" >
+                <div class="box px-2 py-2 mb-3 flex items-center <%= datas.includes(item.id)==false ? 'zoom-in' : 'cursor_blocked' %>">
+                    <div class="w-8 h-8 image-fit rounded-md overflow-hidden">
+                        <span><i data-lucide="<%= item.icon %>" class="w-6 h-6 mt-1"></i></span>                        
+                    </div>
+                    <div class="ml-4 mr-auto">
+                        <div class="font-medium"><%= item.name %></div>
+                    </div>
+                    <% if(datas.includes(item.id)==false){ %>
+                        <div class="widget_lock" style="display: none;border-radius: 50%;padding: 3px;background-color: #E48F45;">
+                            <i  style="width: 10px;height:10px;color:white;stroke-width: 3px" data-lucide="lock"></i>
+                        </div>
+                   <% }else{ %>
+                    <div class="widget_lock flex items-center" style="border-radius: 50%;padding: 3px;background-color: #E48F45;">
+                        <i style="width: 10px;height:10px;color:white;stroke-width: 3px;" data-lucide="lock"></i>
+                    </div>
+                    
+                <% } %>
+                    
+                </div>
+            </div>          
+        
+            <% }) %>
+     </ul>
+  </div>
+</div>
+</nav>
+</div>
