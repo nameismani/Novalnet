@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../../create_page.css">
+</head>
+<body>
+    <div class="position_dashboard">
+        <a class="dash_btn"  href="/dash/view/admin" >Back to </a>
+    </div>
+    <h4  id="show_success"></h4>
+    <div class="center">
+        
+        <div class="container">
+            <h1>User Updated Form</h1>
+            
+                <form  id="form">
+                    <div class="input_fields ">
+                        <div class="flex_input">
+                            <label for="name" >Name<span>  *</span></label>
+                            <input class="inputs" type="text" name="name" id="name" placeholder="your name">
+                        
+                        </div>
+                        <p class="show_err"   id="err_name"></p>
+                        <div class="flex_input" >
+                            <label for="date">DOB<span>  *</span></label>
+                            <input class="inputs" type="date"   name="date" id="dob" >
+
+                        </div>
+                        <p class="show_err"    id="err_dob"></p>
+                       <div class="flex_input">
+ 
+                        <label for="doj">Date of Joining<span>  *</span></label>
+                        <input class="inputs" type="date" name="doj" id="doj" placeholder="DOj">
+                       
+                       </div>
+                       <p class="show_err"   id="err_doj"></p>
+                       <div class="flex_input">
+                        <label for="gender">Gender<span>  *</span></label>
+                     
+                       </div>
+                       
+                       <div class="flex_input">
+                        
+                        <input type="radio" name="gender" value="male" id="male" >
+                        <label for="male">Male</label>
+                        <input type="radio" name="gender" value="female" id="female" >
+                        <label for="female">Female</label>
+                        <input type="radio" name="gender" value="others" id="others">
+                        <label for="others">Others</label>
+                       </div>
+                       <p  class="show_err"   id="err_gen"></p>
+                       <div id="result"></div>
+                       <div class="flex_input">
+                        <label  for="designation">Designation</label>
+                        <select class="inputs" name="designation" id="designation">
+                            <option >Frontend developer</option>
+                            <option >Backend developer</option>
+                            <option >UI/UX designing</option>
+                        </select>
+                       
+                       </div>
+                       <div class="flex_input">
+                        <label for="comment">Comment</label>
+                        <textarea placeholder="Write your comment here..." class="inputs" name="comment" id="comment"></textarea>
+                       
+            
+                       </div>
+                       
+                      
+                    </div>
+                    <div class="button_div">
+                        <button id="btn" class="btn" type="submit">Submit</button>
+                    </div>
+                 
+                </form>
+            
+           
+
+        </div>
+
+    </div>
+    <script src="../../updated_form.js"></script>
+</body>
+</html>

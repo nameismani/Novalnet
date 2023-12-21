@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../table_view.css">
+    
+    <title>Document</title>
+</head>
+<body>
+
+<div class="position_dashboard">
+    <button class="dash_btn" id="dash_btn" >Dashboard</button>
+</div>
+    <div class="flex">
+        <p id="show_success"></p>
+    </div>
+    <div class="space">
+        <h1 class="text_align">Users Lists and Details</h1>
+        <% if(token === 'admin'){%>
+            <button  class="select_multiple"  id="select_multiple">Delete Selected</button>
+         
+
+       <% } %>
+        
+    </div>
+    <div class="center">
+        <button class="select_multiple none" id="delete_all">Delete record</button>
+    </div>
+   
+    <div class="table">
+        <table id="tb">
+            <thead>
+                <tr>
+                    <th class="none">select</th>
+                    <th>id</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>DOJ</th>
+                    <th>Gender</th>
+                    <th>Designation</th>
+                    <th>Comments</th>
+                    <% if(token === 'admin'){%>
+                        <th>Action</th>
+    
+                   <% } %>
+                    
+            </tr>
+
+            </thead>
+          <tbody id='body'>
+
+          </tbody>
+          
+            
+        </table>
+        <div id="noData">
+
+        </div>
+    </div>
+
+    
+    
+    
+</body>
+<script src="../../jQuery.js"></script>
+<script src="../../table_view.js"></script>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="forms.css" />
+</head>
+
+<body>
+    <div class="login-container">
+        <img id="image" class="panda_img" src="panda.png" />
+
+        <div class="input_fields">
+            <h1>Singup Page</h1>
+            <div class="margins2">
+                <form action="/dashboard" method="post" id="signup_form">
+                    <div class="radio_flex">
+                        <div>
+                            <label  for="users"></label>
+                            <input name="portal" id="user" value="user" type="radio"  class="portal"/>User
+                            
+
+                        </div>
+                        <div>
+                            <label  for="admin"></label>
+                            <input name="portal" id="admin"  type="radio" value="admin" class="portal" />Admin
+                     
+
+                        </div>
+                       
+                  </div>
+                    <div id="forms" class="form2_flex">
+                        
+                        <div>
+                            <label class="gaps" for="first_name">First Name</label>
+                            <input name="first_name" placeholder="First Name" id="first_name" class="gaps inputs" />
+                     
+                        </div>
+                        <div>
+
+                            <label class="gaps" for="email">Last Name</label>
+                            <input name="last_name" placeholder="Last Name" id="last_name" class="gaps inputs" />
+                          
+                        </div>
+                    </div>
+
+                    <label class="gaps" for="email">Email</label>
+                    <input name="email" placeholder="Email" id="email" class="gaps inputs" type="email" />
+                    
+                    <div class="form2_flex">
+                        <div>
+                            <label class="gaps" for="password">Password</label>
+                            <input name="password" placeholder="Password" id="password" class="gaps inputs" type="password" />
+                           
+                        </div>
+                        <div>
+                            <label class="gaps" for="password">Confirm Password</label>
+                            <input name="confirm_password" placeholder="Confirm Password" id="confirm_password" class="gaps inputs"
+                                type="password" />
+                                <small id="err_conf_pass"></small>
+                        </div>
+                    </div>
+
+                    <p id="para"></p>
+                    <input id="showPassword" type="checkbox" class="gaps" > Show Password
+                    <div class="centered_button">
+                        <button id="btn" class="submit_button" type="submit">Sign Up</button>
+
+                    </div>
+                </form>
+            </div>
+            <div class="text_align">
+                <p>Already have an account ? <a href="./login">Login</a></p>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="home">
+        <h3><a class="a_tag" href="/"> < Return to Home page</a></h3>
+    </div>
+    <script src="signup_form.js"></script>
+</body>
