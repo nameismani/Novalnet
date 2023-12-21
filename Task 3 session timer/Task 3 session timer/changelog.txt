@@ -1,0 +1,117 @@
+Task-3 >> showing  session timer 
+ 
+ In media > js > login.js
+    In /api/auth/login post call, inside the else block  attach the below three lines to store the session expiry time in localstorage and a cookie to monitor user is active are not
+
+                var countDownDate =new Date(Date.now() +(15* 1000 * 60) ).getTime() ;
+                localStorage.setItem("expirytime",countDownDate)
+                document.cookie = "useractive=true";
+
+              
+ In media > js > custom .js
+ ---write this code at end of the page for the countdown timer---
+
+const expirytime = localStorage.getItem("expirytime")
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+  // Get today's date and time
+  var now = Date.now();
+
+  // Find the distance between now and the count down date
+  var distance = expirytime - now;
+
+  // Time calculations for days, hours, minutes and seconds'
+//   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+  
+  hours = hours.toString().padStart(2, '0');   
+  minutes = minutes.toString().padStart(2, '0');
+  seconds = seconds.toString().padStart(2, '0');
+
+  // Display the result in the elements
+  document.getElementById("hours").innerHTML =hours;
+  document.getElementById("mins").innerHTML = minutes ;
+  document.getElementById("secs").innerHTML = seconds;
+
+  if (seconds == '00' && hours == '00' && minutes === '00' || hours < 0) {
+    clearInterval(x);
+    client.get('/api/user/logout', (response, request) => {  
+        if (request.status != 200)
+        {
+            showErrorMessage(response);
+        } else {
+            window.location.replace('/');
+        
+        }
+    });
+    
+  }
+}, 1000);
+
+
+
+In  src > routes > ticket.js 
+   
+  search  in router.all('/) route created an if else statement to check the cookie is there or not 
+    if cookie  is not active redirect to logout
+     else write the try catch block
+
+       const session_auth=req.cookies
+    if(!session_auth.useractive){
+      res.redirect('/api/user/logout')
+    }else{
+
+    }
+
+In templates > partials > footer_after_login.ejs
+   In footer tag, inside of container and row div create another column div to show  the timer
+     
+       <div id="ses" class="d-none col-12 col-lg-auto mt-3 mt-lg-0 d-flex align-items-center  justify-content-between " style="width: 250px;">
+            <div>
+                <span style="font-weight: bold;">Logout in</span>
+            </div> 
+            <div style="display: flex; background-color: #343a40; padding: 5px; width: 150px; justify-content: center; border-radius: 2px;">
+              <div class="count">
+                <span id="hours" class="timer">--</span><span style="color: white;">:</span>
+                <p>Hrs</p>
+              </div>
+    
+              <div class="count">
+                <span id="mins" class="timer">--</span><span style="color: white;">:</span>
+                <p>Mins</p>
+              </div>
+    
+              <div class="count">
+                <span id="secs" class="timer">--</span>
+                <p>Sec</p>
+              </div>
+            </div>
+          </div>
+
+  In media > css > custom.css 
+    
+    add css property at the end of the custom.css file
+
+      .timer{
+    display: inline-block;
+      border-radius: 5px;
+      width: 40px;
+      font-size: 16px;
+      font-weight: bold;
+      color: white ;
+      text-align: center;
+} 
+
+.count p{
+    color: white;
+    text-align: center;
+    margin-bottom: 0;
+    font-size: 8px;
+    font-weight: bold;
+    padding: 0;
+
+}         

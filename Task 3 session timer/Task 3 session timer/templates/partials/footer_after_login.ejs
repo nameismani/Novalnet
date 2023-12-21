@@ -1,0 +1,207 @@
+    <footer class="footer footer-transparent d-print-none">
+      <div class="container-xl">
+        <div class="row text-center align-items-center flex-row-reverse">
+          <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+            <ul class="list-inline list-inline-dots mb-0">
+              <li class="list-inline-item">
+                &copy;
+                <a href="https://novalnet.com" class="link-secondary" target="_blank">Novalnet</a>
+                2023
+              </li>                  
+            </ul>
+          </div>
+          <div id="ses" class="d-none col-12 col-lg-auto mt-3 mt-lg-0 d-flex align-items-center  justify-content-between " style="width: 250px;">
+            <div>
+                <span style="font-weight: bold;">Logout in</span>
+            </div> 
+            <div style="display: flex; background-color: #343a40; padding: 5px; width: 150px; justify-content: center; border-radius: 2px;">
+              <div class="count">
+                <span id="hours" class="timer">--</span><span style="color: white;">:</span>
+                <p>Hrs</p>
+              </div>
+    
+              <div class="count">
+                <span id="mins" class="timer">--</span><span style="color: white;">:</span>
+                <p>Mins</p>
+              </div>
+    
+              <div class="count">
+                <span id="secs" class="timer">--</span>
+                <p>Sec</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
+<div class="modal modal-blur fade" id="modal-user" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post" class="form-control">
+          <div class="mb-3">
+            <div class="form-label">Company</div>
+            <select class="form-select" name="company" id="company">
+              <option value="1">Novalnet AG</option>
+              <option value="2">Novalnet e-solutions</option>
+              <option value="3">Novalnet Ltd</option>
+              <option value="4">Novalnet Payment Corp</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" name="first_name" id="first_name" class="form-control" required>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" name="last_name" id="last_name" class="form-control" required>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="form-floating mb-3">
+              <input type="email" name="email" id="email" class="form-control" autocomplete="off" required>
+              <label for="email">Email address</label>
+              <div id="email_error" class="invalid-feedback"></div>
+            </div>
+            <div class="input-group input-group-flat">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Your password"  autocomplete="off">
+              <span id="show-password" class="input-group-text">
+                <a href="#" class="link-secondary" title="Show password" data-bs-toggle="tooltip"><!-- Download SVG icon from http://tabler-icons.io/i/eye -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" /></svg>
+                </a>
+              </span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Abbreviation</label>
+            <input type="text" name="abbreviation" id="abbreviation" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-check">
+              <input class="form-check-input" type="checkbox" name="admin" id="admin">
+              <span class="form-check-label">Admin</span>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+          Cancel
+        </a>
+        <button class="btn btn-primary ms-auto create-user">Create</button>
+      </div>
+  </div>
+</div>
+</div>
+<div class="modal modal-blur fade" id="modal-ticket" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">New ticket</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+              <div class="form-label">Application</div>
+              <select class="form-select" >
+                <option value="Gateway Server">Gateway Server</option>
+                <option value="Processing Server">Processing Server</option>
+                <option value="Application Server">Application Server</option>
+                <option value="Bookkeeping Server">Bookkeeping Server</option>
+                <option value="Seamless Payment Form">Seamless Payment Form</option>
+                <option value="Extapi Server">Extapi Server</option>
+              </select>
+          </div>
+          <div class="row">
+              <div class="col-lg-6">
+                  <div class="mb-3">
+                      <div class="form-label">Type</div>
+                      <select class="form-select">
+                        <option value="Issue">Issue</option>
+                        <option value="Requirement">Requirement</option>
+                        <option value="Question">Question</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="mb-3">
+                      <div class="form-label">Priority</div>
+                      <select class="form-select">
+                        <option value="Low">Low</option>
+                        <option value="Normal">Normal</option>
+                        <option value="High">High</option>
+                        <option value="Urgent">Urgent</option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+          <div class="mb-3">
+              <div class="form-label">Assignes</div>
+              <select class="form-select">
+              </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-control" name="example-text-input" placeholder="Your subject">
+          </div>
+
+          <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea class="form-control" data-bs-toggle="autosize" placeholder="Ticket Description"></textarea>
+          </div>
+
+          <div class="mb-3">
+              <label class="form-label">Deadline</label>
+              <div class="input-icon mb-2">
+                <input class="form-control " placeholder="Select a date" id="datepicker-icon" value="2023-07-03">
+                <span class="input-icon-addon"><!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"></path><path d="M16 3v4"></path><path d="M8 3v4"></path><path d="M4 11h16"></path><path d="M11 15h1"></path><path d="M12 15v3"></path></svg>
+                </span>
+              </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div>
+              <label class="form-label">Additional information</label>
+              <textarea class="form-control" rows="3" placeholder=""></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+            Cancel
+          </a>
+          <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+            Create
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- Libs JS -->
+<!-- <script src="/js/libs/tinymce/tinymce.min.js?1684106062" defer integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" ></script>
+<script src="/js/libs//list.js/dist/list.min.js?1684106062" defer integrity="sha384-FhEOA/pIE4BfDuwGksHaZD8ms5j+dfB9QIWo7naDMzAVoCE1My4G2iu8/n/R3AAH" ></script> -->
+<!-- Tabler Core -->
+<!-- <script src="/js/custom.js" type="module" integrity="sha384-7LFKVrxXrXfS2/xS3wIgdrmK3SOsE44r90oS55+U4ZkcIZvLqgRUokxZAYf1doxw" ></script>
+<script src="/js/libs/tabler.min.js?1684106062" defer integrity="sha384-DnBu3uHMkeDdH3JZaljVS533JqQjgcRVO+uZ3YiBXQYcYITM6HER+4+RPGobVEEZ" ></script>
+<script src="/js/libs/demo.min.js?1684106062" defer integrity="sha384-k4L9IJ8+0+I//R0JYBMs1NZtq1eltub4dJWdi9XuO0AWKAAIsEInCaNw7VZiSGFi" ></script> -->
+
+<script src="/js/libs/tinymce/tinymce.min.js?1684106062" defer ></script>
+<script src="/js/libs//list.js/dist/list.min.js?1684106062" defer ></script>
+<!-- Tabler Core -->
+<script src="/js/custom.js" type="module"  ></script>
+<script src="/js/libs/tabler.min.js?1684106062" defer ></script>
+<script src="/js/libs/demo.min.js?1684106062" defer ></script>
+</body>
+</html>
