@@ -1,0 +1,50 @@
+<style>
+    .replace_show{
+        display: block !important;
+    }
+    #modal-card{
+        transition: all 0.5s ease-in-out;
+    }
+</style>
+
+<div id="<%= modalname %>" class="show_successmodal shadow-md"
+    style="position: fixed;z-index:99999;height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.295);display: none;">
+    <div style="position: relative;  height: 245px;display: flex;
+    justify-content: center;align-items: center">
+        <div id="modal-card" class="intro-x flex flex-col justify-end"
+            style="height: 230px;top:100px;transform: translate(0%,-20%);margin: 25px;width: 400px;display: flex;flex-direction: column;padding:13px 20px;background-color: white;border-radius: 10px;">
+            <div class="flex justify-center items-center btn-rounded text-white bg-primary"
+                style="position: absolute; top: 0px;left: 50%;transform: translate(-50%,-50%) ;height: 70px;width: 70px;">
+                <span class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                  
+
+                </span>
+            </div>
+
+            <div class="flex justify-center items-center flex-col mt-5">
+                <h1 class="font-bold" style="letter-spacing: 1.2px;font-size: 22px;">Confirmation</h1>
+                <p class="mt-4">
+                <span class="ml-2 text-center">
+                    <%= error_text %>
+                    <% if(dash_name == true){%>
+                     <span id="dash_name" class="text-danger"></span>
+                     <span>dashboard?</span>
+                   <% } %>
+                   
+                    </span>  
+                </p>
+
+            </div>
+
+            <div style="padding: 10px 0px;">
+                <button id="<%= save_btn %>" class="btn btn-primary w-full">Confirm</button>
+                <button class="btn w-full mt-2 btn-outline-warning <%= cancel_btn %>">Cancel</button>
+            </div>
+        </div>
+        
+    </div>
+<input type="hidden" id="hidden_event">
+
+</div>
+

@@ -1,0 +1,566 @@
+<%- include('../partials/header_login.ejs') %>
+
+<div class="content">
+    <!-- BEGIN: Notification -->
+    <div class="col-span-12 mt-6 -mb-6 intro-y"> 
+        <div class="relative border rounded-md px-5 py-4 border-danger text-danger dark:border-danger flex items-center mb-2" role="alert">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 w-6 h-6 mr-2"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> Hard disk space on the home page server reaches 85%<button type="button" class="text-slate-800 py-2 px-3 absolute right-0 my-auto mr-2 btn-close" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 w-4 h-4"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+        </div>
+
+        <button class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-secondary/70 border-secondary/70 text-slate-500 dark:border-darkmode-400 dark:bg-darkmode-400 dark:text-slate-300 [&amp;:hover:not(:disabled)]:bg-slate-100 [&amp;:hover:not(:disabled)]:border-slate-100 [&amp;:hover:not(:disabled)]:dark:border-darkmode-300/80 [&amp;:hover:not(:disabled)]:dark:bg-darkmode-300/80 w-60 mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 block mx-auto"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Custom Dashboard</button>
+
+    </div>
+    <!-- END: Notification -->
+    <div class="grid grid-cols-12 gap-6 mt-5 intro-y">
+        <div class="col-span-12 lg:col-span-12">
+            <div class="grid grid-cols-12 gap-6">
+                <!-- BEGIN: Top 20 Category -->
+
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Category 
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box">
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-category" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Category -->
+                <!-- BEGIN: Top 20 Payment types -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Payment types
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-payments" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Payment types -->
+                <!-- BEGIN: Top 20 Currency -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Currency
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-currency" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Currency --> 
+                <!-- BEGIN: Top 20 Projects -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Projects 
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-projects" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Projects -->
+                <!-- BEGIN: Top 20 Merchants -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Merchants
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-merchants" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Merchants -->
+                <!-- BEGIN: Top 20 Transaction status -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 Transaction status
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-trans-status" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 Transaction status --> 
+
+
+
+                <!-- BEGIN: Top 20 country -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Top 20 country
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-t20-country-status" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Top 20 country -->
+                <!-- BEGIN: Redirect Payments Error -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Redirect Payments Error
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-redirect-payments-error-status" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Redirect Payments Error -->
+                <!-- BEGIN: Chargeback -->
+                <div class="col-span-12 lg:col-span-6 xl:col-span-4 mt-2">
+                    <div class="intro-y block sm:flex items-center h-10">
+                        <h2 class="text-lg font-medium truncate mr-5">
+                            Chargeback
+                        </h2>
+                        <a href="" class="ml-auto text-primary truncate">View all</a> 
+                    </div>
+                    <div class="report-box-2 intro-y mt-12 sm:mt-5">
+                        <div class="box"> 
+                            <div class="px-8 py-12 flex flex-col justify-center flex-1 border-t sm:border-t-0 sm:border-l border-slate-200 dark:border-darkmode-300 border-dashed">
+                                <div style="height:400px">
+                                    <canvas id="horizontal-bar-chart-chargeback-status" width="452" height="400" style="display: block; box-sizing: border-box; height: 400px; width: 452px;"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END: Chargeback -->
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5 intro-y">
+        <!-- BEGIN: per payment types -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                    Per Payment Types
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="pre-payment-type-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-pre-payment-types" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_pre_payment_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Payments</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">Credit Card</span> <span class="font-medium ml-auto" id="nn_ccPerc">68%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                    <span class="truncate">PAYPAL</span> <span class="font-medium ml-auto" id="nn_paypalPerc">59%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <span class="truncate">GOOGLE PAY</span> <span class="font-medium ml-auto" id="nn_gpayPerc">68%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
+                                    <span class="truncate">APPLE PAY</span> <span class="font-medium ml-auto" id="nn_applepaydPerc">60%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: per payment types --> 
+        <!-- BEGIN: per fraud modules -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                Per Fraud Modules
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="pre-fraud-modules-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-pre-fraud-modules" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_fraud_modules_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Fraud</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <span class="truncate">Luhan Check</span> <span class="font-medium ml-auto" id="nn_luhanCheckPerc">38%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">IP Blockade</span> <span class="font-medium ml-auto" id="nn_IPBlockadePerc">25%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                    <span class="truncate">Email Validate</span> <span class="font-medium ml-auto" id="nn_EmailValidatePerc">81%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: per fraud modules --> 
+        <!-- BEGIN: per currency -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                Per Currency
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="pre-currency-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-pre-currency" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_currency_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Currency</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-primary rounded-full mr-3"></div>
+                                    <span class="truncate">USD</span> <span class="font-medium ml-auto" id="nn_USDPerc">43%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">EUR</span> <span class="font-medium ml-auto" id="nn_EURPerc">63%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                    <span class="truncate">INR</span> <span class="font-medium ml-auto" id="nn_INRPerc">18%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END: per currency --> 
+        <!-- BEGIN: Per transaction status -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                Per Transaction Status
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="pre-transaction-status-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-pre-transaction-status" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_trans_status_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Status</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
+                                    <span class="truncate">Success</span> <span class="font-medium ml-auto" id="nn_SucPerc">65%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">Hold</span> <span class="font-medium ml-auto" id="nn_HoldPerc">25%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-warning rounded-full mr-3"></div>
+                                    <span class="truncate">Failed</span> <span class="font-medium ml-auto" id="nn_FailedPerc">9%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Per transaction status --> 
+        <!-- BEGIN: CC 3D secure or Not -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                    Credit/Debit Card 3D secure
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="creditcard-3D-secure-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-creditcard-3D" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_cc_3D_secure_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Status</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
+                                    <span class="truncate">3D secure</span> <span class="font-medium ml-auto" id="nn_3D_secPerc">76%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">Non 3D secure</span> <span class="font-medium ml-auto" id="nn_N3D_secPerc">23%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CC 3D secure or Not --> 
+        <!-- BEGIN: Overdue Payments -->
+        <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+            <div class="intro-y flex items-center h-10">
+                <h2 class="text-lg font-medium truncate mr-5">
+                    Overdue Payments
+                </h2>
+                <a href="" class="ml-auto text-primary truncate">View all</a> 
+            </div>
+            <div class="report-box-2 intro-y mt-5" id="overdue-payments-dynamic">
+                <div class="box p-5">
+                    <ul class=" nav nav-pills w-4/5 bg-slate-100 dark:bg-black/20 rounded-md mx-auto " role="tablist">
+                        <li id="active-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2 active" data-tw-toggle="pill" data-tw-target="#active-users" type="button" role="tab" aria-controls="active-users" aria-selected="true"> Live </button>
+                        </li>
+                        <li id="inactive-users-tab" class="nav-item flex-1" role="presentation">
+                            <button class="nav-link w-full py-1.5 px-2" data-tw-toggle="pill" data-tw-target="#inactive-users" type="button" role="tab" aria-selected="false"> Test </button>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-6">
+                        <div class="tab-pane active" id="active-users" role="tabpanel" aria-labelledby="active-users-tab">
+                            <div class="relative">
+                                <div class="h-[150px]">
+                                    <canvas class="mt-3" id="report-donut-chart-overdue-payments" width="342" height="138" style="display: block; box-sizing: border-box; height: 138px; width: 342px;"></canvas>
+                                </div>
+                                <div class="flex flex-col justify-center items-center absolute w-full h-full top-0 left-0">
+                                    <div class="text-2xl font-medium" id="nn_overdue_increase">121686</div>
+                                    <div class="text-slate-500 mt-0.5">Total Status</div>
+                                </div>
+                            </div>
+                            <div class="w-52 sm:w-auto mx-auto mt-5">
+                                <div class="flex items-center">
+                                    <div class="w-2 h-2 bg-success rounded-full mr-3"></div>
+                                    <span class="truncate">Invoice</span> <span class="font-medium ml-auto" id="nn_overdue_invPerc">50%</span> 
+                                </div>
+                                <div class="flex items-center mt-4">
+                                    <div class="w-2 h-2 bg-pending rounded-full mr-3"></div>
+                                    <span class="truncate">Pre Payment</span> <span class="font-medium ml-auto" id="nn_overdue_prepayPerc">35%</span> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Overdue Payments --> 
+    </div>
+
+    <!-- Start: Transaction Details -->
+    <div class="grid grid-cols-12 gap-6 mt-5 intro-y">
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 bg-info cl-1">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/shopping_bag.png" alt="shopping bag"></span>
+                <div class="pd-1 f-1">272.563</div>
+                <div class="pd-1 ft-1">Total</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 cl-2">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_up_icon.png" alt="thumbs up"></span>
+                <div class="pd-1 f-1">238.929</div>
+                <div class="pd-1 ft-1">87.67%Success</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 cl-3">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_up_icon.png" alt="thumbs up"></span>
+                <div class="pd-1 f-1">1.196</div>
+                <div class="pd-1 ft-1">0.44% On-Hold</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">32.411</div>
+                <div class="pd-1 ft-1">11.89% Total Failed</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">11.697</div>
+                <div class="pd-1 ft-1">by PAYMENT</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">10.892</div>
+                <div class="pd-1 ft-1">by GENERAL</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">8.446</div>
+                <div class="pd-1 ft-1">by MODULE</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">677</div>
+                <div class="pd-1 ft-1">by GENERAL</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/images/icons/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">573</div>
+                <div class="pd-1 ft-1">by PAYCHANNEL</div>
+            </div>
+        </div>
+        <div class="col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2">
+            <div class="box col-span-2 sm-box ">
+                <span class="pos"><img class="w-20 h-20 mb-3 op-1" src="/dist/images/thumbs_down.png" alt="thumbs down"></span>
+                <div class="pd-1 f-1">126</div>
+                <div class="pd-1 ft-1">by TRANSACTION DATA</div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5 intro-y" id="currency-transaction-status">
+     <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:EUR</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">265</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">269</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">293</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:USD</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">12564</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">545</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">23</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">87956</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:GBP</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26265</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26975</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">151</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">295753</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:CHF</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">65656</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">2679</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">111</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">297543</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:PLN</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">268755</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">28569</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">121</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">29253</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:SEK</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2565</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26529</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">121</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">29223</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:DKK</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26265</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">2625359</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">117</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">29253</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:AUD</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2625</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">2639</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2933</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:RUB</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26225</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26529</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2983</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:NOK</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">27465</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">275269</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">121</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">27293</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:CAD</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">42424</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">261149</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">1141</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2917117</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:CZK</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2165</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">265259</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">511</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">293500</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:ZAR</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26425</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">269111</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">141</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2941413</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:NZD</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2465</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">24169</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">111</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">24193</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:INR</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26715</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26119</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">217193</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:THB</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">267415</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">267179</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">171</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">271193</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:FID</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">261715</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">21769</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">111</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">29113</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:BGN</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2265</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26259</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">29283</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:JPY</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">265</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">269</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">11</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">293</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:VND</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">2465</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26419</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">111</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2934</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:HRK</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26285</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">269828</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">121</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">28293</td><td class="t-pad">97%</td></tr></tbody></table></div></div> <div class="box col-span-6 lg:col-span-3 xl:col-span-2 gap-6 mt-2"><div class="col-span-2 table1"><table class="container"><tbody><tr><th class="t-pad">Currency:US</th></tr><tr><td class="t-pad">Success</td><td></td><td class="t-pad">26175</td><td class="t-pad">86%</td></tr><tr><td class="t-pad">Onhold</td><td></td><td class="t-pad">26779</td><td class="t-pad">10.73%</td></tr><tr><td class="t-pad">Failed</td><td></td><td class="t-pad">117</td><td class="t-pad">0.43%</td></tr><tr><td class="t-pad">Total</td><td></td><td class="t-pad">2917173</td><td class="t-pad">97%</td></tr></tbody></table></div></div></div>
+    <!-- End: Transaction Details -->
+</div>
+
+<%- include('../partials/footer_login.ejs') %>

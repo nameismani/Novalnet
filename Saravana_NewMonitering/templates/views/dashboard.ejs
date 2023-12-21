@@ -1,0 +1,206 @@
+    <%- include('../partials/header_login.ejs') %>
+    <div class="content">
+      <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-12 2xl:col-span-9">
+          <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 mt-6 -mb-6 intro-y">
+              <% if (diskSpace >= 85) { %>
+              <div class="relative border rounded-md px-5 py-4 border-danger text-danger dark:border-danger flex items-center mb-2" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 w-6 h-6 mr-2">
+                  <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                  <line x1="12" y1="8" x2="12" y2="12"></line>
+                  <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg> Hard disk space on the home page server reaches 85%<button type="button" class="text-slate-800 py-2 px-3 absolute right-0 my-auto mr-2 btn-close" aria-label="Close"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 w-4 h-4">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg></button>
+              </div>
+              <% } %>
+            <a href="/create_dashboard">
+              <button class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-secondary/70 border-secondary/70 text-slate-500 dark:border-darkmode-400 dark:bg-darkmode-400 dark:text-slate-300 [&amp;:hover:not(:disabled)]:bg-slate-100 [&amp;:hover:not(:disabled)]:border-slate-100 [&amp;:hover:not(:disabled)]:dark:border-darkmode-300/80 [&amp;:hover:not(:disabled)]:dark:bg-darkmode-300/80 w-60 mb-2 mr-2"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="stroke-1.5 block mx-auto">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="16"></line>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg> Add Custom Dashboard</button>
+            </a>
+            </div>
+            <div class="col-span-12 lg:col-span-8 xl:col-span-6 mt-2">
+              <%-include('../widgets/general_report.ejs') %>
+            </div>
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2">
+              <%-include('../widgets/transaction_real_statistics.ejs') %>
+            </div>
+            <div class="col-span-12 sm:col-span-6 lg:col-span-4 xl:col-span-3 mt-2 lg:mt-6 xl:mt-2">
+              <%-include('../widgets/transaction_statistics.ejs') %>
+            </div>
+            <div class="col-span-12 xl:col-span-4 mt-6">
+              <%-include('../widgets/suspicious_transactions.ejs') %>
+            </div>
+            <div class="col-span-12 mt-6 md:col-span-6 lg:col-span-4">
+              <%-include('../widgets/transaction_per_payment_type.ejs') %>
+            </div>
+            <div class="col-span-12 mt-6 md:col-span-6 lg:col-span-4">
+              <%-include('../widgets/transaction_failure_per_status.ejs') %>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 2xl:col-span-3">
+          <div class="2xl:border-l -mb-10 pb-10">
+            <div class="2xl:pl-6 grid grid-cols-12 gap-x-6 2xl:gap-x-0 gap-y-6">
+              <div class="col-span-12 md:col-span-6 xl:col-span-12 mt-3 2xl:mt-8">
+                <div class="intro-x flex items-center h-10">
+                  <h2 class="text-lg font-medium truncate mr-auto">
+                    Recent Alerts
+                  </h2>
+                  <button data-carousel="important-notes" data-target="prev" class="tiny-slider-navigator btn px-2 border-slate-300 text-slate-600 dark:text-slate-300 mr-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-left" data-lucide="chevron-left" class="lucide lucide-chevron-left w-4 h-4">
+                      <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg> </button>
+                  <button data-carousel="important-notes" data-target="next" class="tiny-slider-navigator btn px-2 border-slate-300 text-slate-600 dark:text-slate-300 mr-2"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="chevron-right" data-lucide="chevron-right" class="lucide lucide-chevron-right w-4 h-4">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg> </button>
+                </div>
+                <div class="mt-5 intro-x">
+                  <div class="box zoom-in">
+                    <div class="tns-outer" id="important-notes-ow"><button type="button" data-action="start" style="display: none;"><span class="tns-visually-hidden">start animation</span>start</button>
+                      <div class="tns-liveregion tns-visually-hidden" aria-live="polite" aria-atomic="true">slide <span class="current">1</span> of 1</div>
+                      <div id="important-notes-mw" class="tns-ovh">
+                        <div class="tns-inner" id="important-notes-iw">
+                          <div class="tiny-slider  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" id="important-notes" style="transition-duration: 0s; transform: translate3d(0%, 0px, 0px);">
+                            <div class="p-5 tns-item tns-slide-active" id="important-notes-item0">
+                              <div class="text-base font-medium truncate">Hard disk space on the home page server reaches 85%</div>
+                              <div class="text-slate-400 mt-1">1 hour ago</div>
+                              <div class="text-slate-500 text-justify mt-1">The hard disk space of the production home page server has reached the threadhold limit of 85%. Please run process <a href="/process/plan/659845" target="_blank">#659845</a> on this server as soon as possible.</div>
+                              <div class="font-medium flex mt-5">
+                                <button type="button" class="btn btn-secondary py-1 px-2">Read more</button>
+                                <button type="button" class="btn btn-outline-secondary py-1 px-2 ml-auto ml-auto">Dismiss</button>
+                              </div>
+                            </div>
+                            <div class="p-5 tns-item tns-slide" id="important-notes-item0">
+                              <div class="text-base font-medium truncate">Hard disk space on the home page server reaches 85%</div>
+                              <div class="text-slate-400 mt-1">1 hour ago</div>
+                              <div class="text-slate-500 text-justify mt-1">The hard disk space of the production home page server has reached the threadhold limit of 85%. Please run process <a href="/process/plan/659845" target="_blank">#659845</a> on this server as soon as possible.</div>
+                              <div class="font-medium flex mt-5">
+                                <button type="button" class="btn btn-secondary py-1 px-2">Read more</button>
+                                <button type="button" class="btn btn-outline-secondary py-1 px-2 ml-auto ml-auto">Dismiss</button>
+                              </div>
+                            </div>
+                            <div class="p-5 tns-item tns-slide" id="important-notes-item0">
+                              <div class="text-base font-medium truncate">Hard disk space on the home page server reaches 85%</div>
+                              <div class="text-slate-400 mt-1">1 hour ago</div>
+                              <div class="text-slate-500 text-justify mt-1">The hard disk space of the production home page server has reached the threadhold limit of 85%. Please run process <a href="/process/plan/659845" target="_blank">#659845</a> on this server as soon as possible.</div>
+                              <div class="font-medium flex mt-5">
+                                <button type="button" class="btn btn-secondary py-1 px-2">Read more</button>
+                                <button type="button" class="btn btn-outline-secondary py-1 px-2 ml-auto ml-auto">Dismiss</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-span-12 md:col-span-6 xl:col-span-4 2xl:col-span-12 mt-3">
+                <div class="intro-x flex items-center h-10">
+                  <h2 class="text-lg font-medium truncate mr-5">
+                    Recent Activities
+                  </h2>
+                  <a href="" class="ml-auto text-primary truncate">Show More</a>
+                </div>
+                <div class="mt-5 relative before:block before:absolute before:w-px before:h-[85%] before:bg-slate-200 before:dark:bg-darkmode-400 before:ml-5 before:mt-5">
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">Project ID 6532 - screening</div>
+                        <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                      </div>
+                      <div class="text-slate-500 mt-1">Initiated</div>
+                    </div>
+                  </div>
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">Production server screening</div>
+                        <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                      </div>
+                      <div class="text-slate-500">
+                        <div class="mt-1">Completed</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">Homepage www.novalnet.de screening</div>
+                        <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                      </div>
+                      <div class="text-slate-500 mt-1">Initiated</div>
+                    </div>
+                  </div>
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">5 Suspicious transaction found</div>
+                        <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                      </div>
+                      <div class="text-slate-500 mt-1">Reported</div>
+                    </div>
+                  </div>
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">Too many failed transaction found from Barzahlen payment type</div>
+                        <div class="text-xs text-slate-500 ml-auto">07:00 PM</div>
+                      </div>
+                      <div class="text-slate-500 mt-1">Reported</div>
+                    </div>
+                  </div>
+                  <div class="intro-x relative flex items-center mb-3">
+                    <div class="before:block before:absolute before:w-20 before:h-px before:bg-slate-200 before:dark:bg-darkmode-400 before:mt-5 before:ml-5">
+                      <div class="w-10 h-10 flex-none image-fit rounded-full overflow-hidden">
+                        <img alt="Midone - HTML Admin Template" src="/images/profile.jpg">
+                      </div>
+                    </div>
+                    <div class="box px-5 py-3 ml-4 flex-1 zoom-in">
+                      <div class="flex items-center">
+                        <div class="font-medium">Sandbox server proxy server got timeout error</div>
+                        <div class="text-xs text-slate-500 ml-auto">04:00 PM</div>
+                      </div>
+                      <div class="text-slate-500 mt-1">Recorded</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <%- include('../partials/footer_login.ejs') %>

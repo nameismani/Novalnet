@@ -1,0 +1,622 @@
+<%- include('../partials/header_login.ejs') %>
+<style>
+    .drag_remove_enter {
+      background-color: red !important;
+    }
+    .toggle {
+      cursor: pointer;
+      display: inline-block;
+    }
+
+    .toggle-switch {
+      display: inline-block;
+      background: #ccc;
+      border-radius: 16px;
+      width: 38px;
+      /*58px*/
+      height: 18px;
+      /*32px*/
+      position: relative;
+      vertical-align: middle;
+      transition: background 0.25s;
+    }
+
+    .toggle-switch:before,
+    .toggle-switch:after {
+      content: "";
+    }
+
+    .toggle-switch:before {
+      display: block;
+      background: linear-gradient(to bottom, #fff 0%, #eee 100%);
+      border-radius: 50%;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25);
+      width: 12px;
+      height: 12px;
+      position: absolute;
+      top: 3px;
+      left: 4px;
+      transition: left 0.25s;
+    }
+
+    .toggle:hover .toggle-switch:before {
+      background: linear-gradient(to bottom, #fff 0%, #fff 100%);
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+    }
+
+    .toggle-checkbox:checked+.toggle-switch {
+      background: #56c080;
+    }
+
+    .toggle-checkbox:checked+.toggle-switch:before {
+      left: 23px;
+    }
+
+    .toggle-checkbox {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .toggle-label {
+      margin-left: 3px;
+      position: relative;
+      top: 2px;
+    }
+
+    .cursor_progress {
+      cursor: progress !important;
+    }
+
+    .error_border {
+      border: 1px solid red !important;
+    }
+
+    /* .ajs-footer {
+      padding: 8px 16px !important;
+    }
+
+    .ajs-footer,
+    .ajs-header,
+    .ajs-dialog {
+      border-radius: 10px !important;
+    }
+
+    .alertify .ajs-commands button.ajs-close {
+      background-image: url('/images/trash.svg') !important;
+    }
+
+    .ajs-ok {
+      color: white;
+      background-color: rgb(0, 128, 200);
+      outline: 0;
+      border-radius: 0.375rem;
+    }
+
+    .ajs-cancel {
+      color: white;
+      background-color: rgb(220, 38, 38);
+      border-radius: 0.375rem;
+    }
+
+    .ajs-body {
+      border-top: 1px solid rgba(0, 0, 0, 0.123);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.123);
+    }
+
+    .ajs-buttons {
+      display: flex;
+      justify-content: space-between;
+      padding: 0px 10px;
+      flex-direction: row-reverse;
+    } */
+
+    .remove_image {
+      position: absolute;
+      left: -5px;
+      top: -5px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      background-color: tomato;
+      padding: 3px;
+    }
+
+    .drag_events_receive {
+      overflow: hidden;
+      cursor: pointer;
+      line-height: 340px;
+    }
+
+    .border-color {
+      border-color: rgba(0, 81, 255, 0.5) !important;
+      background-color: #2195f327;
+    }
+
+    .drag_events_receive>p {
+      width: 100%;
+      height: inherit;
+      vertical-align: middle;
+      opacity: 0.6;
+      border: 2px dashed #ddd;
+    }
+
+    .displayToogle input {
+      color: black;
+    }
+
+    .drag_events_receive>p::after {
+      content: url('/images/addIcon.svg');
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    .side-nav .box {
+      background-color: transparent;
+    }
+
+    #widget {
+      display: block !important;
+      width: 260px;
+      transition: all 0.3s ease;
+    }
+
+    .searchDisplay {
+      display: none;
+    }
+
+    .d-block {
+      display: block;
+    }
+
+    .displayToogle {
+      transition: all 0.3s ease;
+    }
+    .form-check-custom {
+      cursor: pointer;
+    }
+
+    .cursor_progress .form-check-custom {
+      cursor: progress;
+    }
+
+    .form-check-custom input {
+      position: absolute;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .form-check-custom span {
+      display: inline-block;
+      position: relative;
+      width: 13px;
+      height: 13px;
+      border: 1px solid grey;
+      border-radius: 50%;
+      background-color: #fff;
+      box-sizing: border-box;
+      transition: border-color 200ms ease;
+    }
+
+    .form-check-custom.with-icon span,
+    .form-check-custom.with-icon-side span {
+      width: 21px;
+      height: 21px;
+    }
+
+    .form-check-custom input:disabled+span {
+      opacity: .35;
+    }
+
+    .form-check-custom input:checked:disabled+span {
+      opacity: .25;
+    }
+
+    .form-check-custom input:not(:disabled)+span:hover {
+      border-color: grey;
+    }
+
+    .form-check-custom input:checked+span {
+      border-color: blue;
+    }
+
+    .form-check-custom.success input:checked+span {
+      border-color: green;
+    }
+
+    .form-check-custom.danger input:checked+span {
+      border-color: red;
+    }
+
+    .form-check-custom span:before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      z-index: 1;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: blue;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .form-check-custom.with-icon span:before,
+    .form-check-custom.with-icon-side span:before {
+    top: 2px;
+    left: 2px;
+    width: 15px;
+    height: 15px;
+    }
+
+    .form-check-custom.success span:before {
+      background-color: green;
+    }
+
+    .form-check-custom.danger span:before {
+      background-color: red;
+    }
+
+    .form-check-custom input:checked+span:before {
+      opacity: 1;
+    }
+
+    .form-check-custom.with-icon i,
+    .form-check-custom.with-icon-side i {
+      position: absolute;
+      top: 4px;
+      left: 5px;
+      z-index: 2;
+      color: red;
+      font-size: 10px;
+      opacity: 0;
+      transition: opacity 200ms ease;
+    }
+
+    .form-check-custom.with-icon-side i {
+      top: 2px;
+      left: 26px;
+      color: blue;
+      font-size: 14px;
+    }
+
+    .form-check-custom.danger.with-icon-side i {
+      color: red;
+    }
+
+    .form-check-custom.success.with-icon-side i {
+      color: green;
+    }
+
+    .form-check-custom.with-icon input:checked+span i,
+    .form-check-custom.with-icon-side input:checked+span i {
+      opacity: 1;
+    }
+
+
+    .list_widget {
+      height: 72vh;
+      overflow-y: scroll;
+    }
+
+    @media screen and (min-width:1536px) {
+      .sticky {
+        position: fixed;
+        top: 80px;
+        right: 22px;
+      }
+
+    }
+
+    @media screen and (max-width:767px) {
+
+      #widget {
+        display: none !important;
+      }
+    }
+
+    #widget .side-nav .box {
+      margin: 0px 1.25rem;
+    }
+
+    .list_widget li {
+      margin-bottom: 10px;
+    }
+
+</style>
+    <div class="content">
+        <div
+            class="max-w-full md:max-w-none rounded-[30px] md:rounded-none px-4 md:px-[22px] min-w-0 min-h-screen bg-slate-100 flex-1 md:pt-20 pb-10 mt-5 md:mt-1 relative dark:bg-darkmode-700 before:content-[''] before:w-full before:h-px before:block">
+            <div class="flex items-center mt-8 intro-y justify-between">
+                <h2 class="mr-auto text-lg font-medium">My Dashboard</h2>
+                <button type="button" class="btn box mr-2 flex items-center ml-auto sm:ml-0 back-url"> <svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        icon-name="arrow-left" class="lucide lucide-arrow-left w-4 h-4 mr-2" data-lucide="arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg> Back </button>
+
+            </div>
+            <div class="grid grid-cols-12 gap-6 mt-5">
+                <div class="flex flex-col-reverse col-span-12 lg:col-span-4 2xl:col-span-3 lg:block">
+                    <div class="intro-y box">
+                        <div class="relative flex items-center p-5">
+                            <div class="w-12 h-12 image-fit"><img alt="Midone Tailwind HTML Admin Template"
+                                    class="rounded-full" src="/images/Thangadurai.png"></div>
+                            <div class="ml-4 mr-auto">
+                                <div class="text-base font-medium">Thangadurai</div>
+                                <div class="text-slate-500">Front end Engineer</div>
+                            </div>
+                            <!-- <div class="relative" data-headlessui-state=""><a class="cursor-pointer block w-5 h-5"
+                                    id="headlessui-menu-button-:rl:" aria-haspopup="menu" aria-expanded="false"
+                                    data-headlessui-state=""><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="stroke-1.5 w-5 h-5 text-slate-500">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg></a></div> -->
+                        </div>
+                        <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
+                            <ul class="mtab" role="tablist">
+
+
+
+                                <li class="flex">
+
+                                    <a href="/settings/personal_information" class="py-2 flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>Personal Information</a>
+                                </li>
+
+                                <li class="flex-1 font-medium">
+                                    <a href="javascript:void(0);" class="py-2 flex items-center text-primary">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 mr-2">
+                                        <rect width="7" height="7" x="3" y="3" rx="1"/>
+                                        <rect width="7" height="7" x="14" y="3" rx="1"/>
+                                        <rect width="7" height="7" x="14" y="14" rx="1"/>
+                                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                                      </svg>
+                                        My Dashboard</a>
+                                </li>
+
+                                <!-- <li class="flex-1 ">
+                                    <a href="/settings/change_password" class="flex py-2 ">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                        Change Password</a>
+                                </li> -->
+
+                                <li class="flex-1">
+                                    <a href="/settings/user_settings" class="flex py-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <path
+                                                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                                            </path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        User Settings</a>
+                                </li>
+
+                            </ul>
+                            <!-- <div class="flex p-5 border-t border-slate-200/60 dark:border-darkmode-400"><button
+                                    type="button"
+                                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary px-2 py-1">New
+                                    Group</button><button type="button"
+                                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed border-secondary text-slate-500 dark:border-darkmode-100/40 dark:text-slate-300 [&amp;:hover:not(:disabled)]:bg-secondary/20 [&amp;:hover:not(:disabled)]:dark:bg-darkmode-100/10 px-2 py-1 ml-auto">New
+                                    Quick Link</button>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
+                    <div class="intro-y">
+                        <div class="p-5 intro-y box">
+                            <div class="flex" style="justify-content: end;">
+                                <a href="/create_dashboard"
+                                    class="btn btn-primary mr-2 flex items-center ml-auto sm:ml-0 ">
+                                    <i class="mr-1" data-lucide="plus"></i> Create Dashboard </a>
+                            </div>
+                            <div class="overflow-x-auto scrollbar-hidden">
+                                <div id="" class="mt-5 tabulator" role="grid" tabulator-layout="fitColumns">
+                                    <div class="tabulator-header" role="rowgroup">
+                                        <div class="tabulator-header-contents" role="rowgroup">
+                                            <div class="tabulator-headers" role="row" style="height: 44px;">
+                                                <% let title_name=[{name:"SET DEFAULT",field : 'set_default'},{name:"DASHBOARD NAME",field : 'name'},{name:"STATUS",field : 'status'},{name:"ACTIONS",field : 'actions' }] %>
+                                                    <% title_name.forEach((item)=>{ %>
+                                                        <div class="tabulator-col tabulator-sortable tabulator-col-sorter-element"
+                                                            role="columnheader" aria-sort="none"
+                                                            tabulator-field="<%= item.field %>"
+                                                            style="min-width: 200px; width: 228px; height: 44px;">
+                                                            <div class="tabulator-col-content">
+                                                                <div class="tabulator-col-title-holder">
+                                                                    <div
+                                                                        class="tabulator-col-title <%= item.field != 'name' && 'text-center' %>">
+                                                                        <%= item.name %>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <span class="tabulator-col-resize-handle"
+                                                            style="height: 44px;"></span>
+                                                 <% }) %>
+
+
+                                            </div>
+                                            <div class="tabulator-frozen-rows-holder"
+                                                style="min-width: 0px;"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tabulator-tableholder" tabindex="0" style="min-height: 300px;">
+                                        <div class="tabulator-table" role="rowgroup"
+                                            style="padding-top: 0px; padding-bottom: 0px;">
+                                            <input type="hidden" name="" id="dashboards_list" value="<%= dashboards_list %>">
+                                            <% if(dashboards_list.length==0){ %>
+                                                <div class="flex justify-center items-center flex-col"
+                                                    style="height: 200px;">
+
+                                                    <h1 class="font-medium text-xl uppercase">No Dashboard
+                                                        Found !</h1>
+
+                                                    <p class="mt-5 text-slate-700"><a
+                                                            href="/create_dashboard"
+                                                            class="text-primary underline">click to</a>,
+                                                        Create a dashboard </p>
+
+                                                </div>
+                                                <% } else { %>
+                                                    <% dashboards_list.forEach((value)=>{ %>
+
+                                                        <div class="tabulator-row tabulator-selectable tabulator-row-odd my_dashboard" data-dashboard-id="<%= value.id %>"
+                                                            role="row">
+                                                            <div class="tabulator-cell" role="gridcell"
+                                                            style="width: 228px; display: inline-flex; align-items: center; height: 64px;">
+                                                            <div style="display: flex;width: 100%;justify-content: center;">
+                                                                <div
+                                                        
+                                                                    class="font-medium whitespace-nowrap text-slate-700 checkboxes">
+                                                                    <label class="form-check-custom success with-icon">
+                                                                        <input id="<%= value.id %>" type="checkbox" class="set_default_checkbox" name="default_dashboard_checkbox" <%= value.default_dashboard == true && 'checked' %>>
+                                                                        <span ><i data-lucide="check" style="color: #fff;position: absolute;z-index: 999999;stroke-width: 2.75px;width: 20px;height: 20px;"   ></i>
+                                                                      </label>
+                                                             
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                            <div class="tabulator-cell" role="gridcell"
+                                                                style="width: 228px; display: inline-flex; align-items: center; height: 64px;">
+                                                                <div>
+                                                                    <div
+                                                                        class="font-medium whitespace-nowrap text-slate-700">
+                                                                        <%= value.name %>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="tabulator-cell" role="gridcell"
+                                                                tabulator-field="status"
+                                                                style="width: 228px; text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 64px;">
+                                                                <div
+                                                                    class="flex items-center lg:justify-center <%= value.active ==true ? 'text-success' : 'text-danger' %>">
+                                                                    <label class="toggle">
+                                                                        <input
+                                                                            data-status="<%= value.active ==true ? 'Active' : 'Inactive' %>"
+                                                                            data-list-id="<%= value.id %>"
+                                                                            data-dash-name="<%= value.name %> "
+                                                                            class="toggle-checkbox dashboard_status"
+                                                                            type="checkbox"
+                                                                            <%=value.active==true
+                                                                            && 'checked' %> >
+                                                                        <div class="toggle-switch"></div>
+                                                                        <span class="toggle-label">
+                                                                            <%= value.active==true ? 'Active' : 'Inactive' %>
+                                                                        </span>
+                                                                    </label>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="tabulator-cell" role="gridcell"
+                                                                tabulator-field="actions"
+                                                                style="width: 231px; text-align: center; display: inline-flex; align-items: center; justify-content: center; height: 64px;">
+                                                                <div
+                                                                    class="flex lg:justify-center items-center">
+                                                                    <a class="flex items-center mr-3"
+                                                                        href="/edit_dashboard/<%= value.id %>">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            stroke="currentColor"
+                                                                            stroke-width="1.5"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            icon-name="check-square"
+                                                                            data-lucide="check-square"
+                                                                            class="lucide lucide-check-square w-4 h-4 mr-1">
+                                                                            <polyline
+                                                                                points="9 11 12 14 22 4">
+                                                                            </polyline>
+                                                                            <path
+                                                                                d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11">
+                                                                            </path>
+                                                                        </svg> Edit
+                                                                    </a>
+                                                                    <button
+                                                                        class="flex items-center text-danger delete_dashboard"
+                                                                        data-list-id="<%= value.id %>"
+                                                                        data-dash-name="<%= value.name %>">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="24" height="24"
+                                                                            viewBox="0 0 24 24" fill="none"
+                                                                            stroke="currentColor"
+                                                                            stroke-width="1.5"
+                                                                            stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            icon-name="trash-2"
+                                                                            data-lucide="trash-2"
+                                                                            class="lucide lucide-trash-2 w-4 h-4 mr-1">
+                                                                            <path d="M3 6h18"></path>
+                                                                            <path
+                                                                                d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6">
+                                                                            </path>
+                                                                            <path
+                                                                                d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2">
+                                                                            </path>
+                                                                            <line x1="10" y1="11" x2="10"
+                                                                                y2="17"></line>
+                                                                            <line x1="14" y1="11" x2="14"
+                                                                                y2="17"></line>
+                                                                        </svg> Delete
+                                                                    </button>
+                                                                </div>
+
+
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <% }) %>
+                                                 <% } %>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/confirm_popup.ejs',{modalname : 'backbtn-modal' ,dash_name:false,error_text:"Are you sure you want to leave this page without save ?",cancel_btn:'backbtn_cancel',save_btn:'backbtn_confirm'}) %>
+        <%- include('../partials/confirm_popup.ejs',{modalname:"delete_dashboard",dash_name:true,error_text:"Are you sure you want to delete",cancel_btn:"cancel_dashboard_delete",save_btn:"confirm_dashboard_delete"}) %>
+            <%- include('../partials/confirm_popup.ejs',{modalname:"delete_profile_image",dash_name:false,error_text:"Are you sure you want to delete this image ? ",cancel_btn:" cancel_image_delete",save_btn:"confirm_image_delete"}) %>
+            <%- include('../partials/success_modal.ejs') %>
+            <%- include('../partials/warn_modal.ejs') %>
+                    <%- include('../partials/footer_login.ejs') %>

@@ -1,0 +1,56 @@
+<%- include('../partials/header_before_login.ejs') %>
+
+<div class="login">
+    <div class="container sm:px-10">
+        <div class="block xl:grid grid-cols-2 gap-4">
+            <!-- BEGIN: Login Info -->
+            <div class="hidden xl:flex flex-col min-h-screen">
+                <a href="" class="-intro-x flex items-center pt-5">
+                    <img alt="Novalnet AG" class="w-50" src="/images/Novalnet-Logo-white.svg">
+                </a>
+                <div class="my-auto">
+                    <img alt="Novalnet Monitoring Portal" class="-intro-x w-1/2 -mt-16" src="/images/account_lock.svg">
+                    <div class="-intro-x text-white font-medium text-4xl leading-tight mt-10">
+                        Please enter your
+                       <br>
+                      <%= lang("email") %>
+
+                    </div>
+                </div>
+            </div>
+            <!-- END: Login Info -->
+            <!-- BEGIN: Login Form -->
+            <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                
+                <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                    <h2 class="intro-x font-bold text-2xl xl:text-3xl text-center xl:text-left">
+                        <%= lang("forgot_password") %>
+                    </h2>
+                    <input type="hidden" id="is_error_found" value="0" />
+                    <div class="alert alert-danger flex items-center my-4 display_none" role="alert" id="error_forgot_emailing_block"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="alert-octagon" data-lucide="alert-octagon" class="lucide lucide-alert-octagon w-6 h-6 mr-2 inline"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg> <span id="error_forgot_emailing_form"></span></div>
+                    <div class="intro-x mt-2 text-slate-400 xl:hidden text-center">A few more clicks to sign in to your account. Manage all your e-commerce accounts in one place</div>
+                    <div class="relative border rounded-md mt-5 px-5 py-4 border-success text-success dark:border-success flex mb-2 flex-col display_none" role="alert" id="forgot_emailing_success_block">
+                        <div class="flex items-center">
+                            <div class="font-medium text-lg" id="forgot_emailing_success_text"><%= lang("resent_code_suc_msg1") %></div>                            
+                        </div>
+                    </div>
+                    <div class="intro-x mt-8">
+                        <input type="email" required class="intro-x login__input form-control py-3 px-4 block mt-4" placeholder="Enter your <%= lang("email") %>" id="email" name="email">
+                    </div>
+                    <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                        <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3" type="button" id="forgot_password_btn">
+                            <span class="display_none flex justify-center items-center" id="loader">
+                                <span class="loader"></span>
+                               <span> Sending...</span>
+                            </span>
+                            <span id="forgot_password_text">Send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- END: Login Form -->
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer_before_login.ejs') %>

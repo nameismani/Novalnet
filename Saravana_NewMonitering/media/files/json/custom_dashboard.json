@@ -1,0 +1,86 @@
+{
+  "custom_dashboard": [
+    {
+      "name": "Transaction",
+      "widget_ids": [
+        {
+          "custom_col": [
+            "1",
+            "3"
+          ]
+        },
+        {
+          "custom_col": [
+            "2",
+            "5",
+            "4"
+          ]
+        }
+      ],
+      "active": "1",
+      "id": "1",
+      "default_dashboard": "0"
+    },
+    {
+      "name": "Merchant",
+      "widget_ids": [
+        {
+          "custom_col": [
+            "2",
+            "3",
+            "4"
+          ]
+        },
+        {
+          "custom_col": [
+            "6",
+            "5"
+          ]
+        }
+      ],
+      "active": "1",
+      "id": "a85cec20-8938-11ee-a6c6-c55a4c5c42ca",
+      "default_dashboard": "1"
+    },
+    {
+      "name": "Common",
+      "widget_ids": [
+        {
+          "custom_col": [
+            "1",
+            "2"
+          ]
+        },
+        {
+          "custom_col": [
+            "4",
+            "5",
+            "6"
+          ]
+        }
+      ],
+      "active": "1",
+      "id": "3",
+      "default_dashboard": "0"
+    },
+    {
+      "name": "My Dashboard",
+      "widget_ids": [
+        {
+          "custom_col": [
+            "3",
+            "2"
+          ]
+        },
+        {
+          "custom_col": [
+            "1"
+          ]
+        }
+      ],
+      "active": "1",
+      "id": "a0274100-88fb-11ee-9e3d-678c1e58019b",
+      "default_dashboard": "0"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+<%- include('../partials/header_login.ejs') %>
+<style>  
+ .nav.nav-boxed-tabs.mtab .nav-item .nav-link.active {
+   background: transparent;
+   color: black;
+   font-weight: 500;
+   color: rgb(var(--color-primary) / var(--tw-bg-opacity));
+   border-bottom: 2px solid rgb(var(--color-primary) / var(--tw-bg-opacity));
+ }
+ .nav.nav-boxed-tabs.mtab .nav-item .nav-link {
+  box-shadow: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+  border-radius: 0px;
+ }
+</style>
+
+    <div class="content">
+        <div class="grid grid-cols-12 gap-6 mt-5 intro-y">
+            <div class="col-span-12">
+                <div class="mt-5 intro-y box">
+                    <div
+                        class="flex flex-col items-center p-5 border-b sm:flex-row border-slate-200/60 dark:border-darkmode-400">
+                        <h2 class="mr-auto text-base font-medium">Transaction Failures</h2>
+                    </div>
+                    <div id="boxed-tab" class="flex flex-col p-5">
+                        <div class="preview">
+                            <ul class="nav nav-boxed-tabs mtab flex flex-col sm:flex-row sm:items-end xl:items-start"
+                                role="tablist" aria-orientation="horizontal">
+                                <li id="tab_1" class="nav-item flex-1"
+                                    data-tab="tab_content_1" role="presentation">
+                                    <button class="nav-link w-full py-2" data-tw-toggle="pill"
+                                        data-tw-target="#tab_content_1" type="button" role="tab"
+                                        aria-controls="tab_1" aria-selected="false">TAB 1 </button>
+                                </li>
+                                <li id="tab_2" class="nav-item flex-1"
+                                    data-tab="tab_content_2" role="presentation">
+                                    <button class="nav-link w-full py-2" data-tw-toggle="pill"
+                                        data-tw-target="#tab_content_2" type="button" role="tab"
+                                        aria-controls="tab_2" aria-selected="false">
+                                        TAB 2</button>
+                                </li>
+                                <li id="tab_3" class="nav-item flex-1"
+                                    data-tab="tab_content_3" role="presentation">
+                                    <button class="nav-link w-full py-2" data-tw-toggle="pill"
+                                        data-tw-target="#tab_content_3" type="button" role="tab"
+                                        aria-controls="tab_content_3_tab" aria-selected="false">TAB 3 </button>
+                                </li>
+                                <li id="tab_4" class="nav-item flex-1"
+                                    data-tab="tab_content_4" role="presentation">
+                                    <button class="nav-link w-full py-2 active" data-tw-toggle="pill"
+                                        data-tw-target="#tab_content_4" type="button" role="tab"
+                                        aria-controls="tab_content_4_tab" aria-selected="true"> TAB 4</button>
+                                </li>
+                                <li id="tab_5" class="nav-item flex-1"
+                                    data-tab="tab_content_5" role="presentation">
+                                    <button class="nav-link w-full py-2" data-tw-toggle="pill"
+                                        data-tw-target="#tab_content_5" type="button" role="tab"
+                                        aria-controls="tab_content_5_tab" aria-selected="false">
+                                        TAB 5</button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-5 intro-y box h-56">
+                <div class="tab-content mt-5">
+                    <div id="tab_content_1" class="tab-pane leading-relaxed" role="tabpanel"
+                        aria-labelledby="example-1-tab">
+                     <h1>tab 1</h1>
+                    </div>
+                    <div id="tab_content_2" class="tab-pane leading-relaxed"
+                        role="tabpanel" aria-labelledby="example-2-tab">
+                       <h1> tab 2</h1>
+                    </div>
+                    <div id="tab_content_3" class="tab-pane leading-relaxed"
+                        role="tabpanel" aria-labelledby="example-3-tab">
+                    <h1>tab 3</h1>
+                    </div>
+                    <div id="tab_content_4" class="tab-pane leading-relaxed active"
+                        role="tabpanel" aria-labelledby="example-4-tab" style="width: 1158px;">
+                        <h1>tab 4</h1>
+                    </div>
+                    <div id="tab_content_5" class="tab-pane leading-relaxed"
+                        role="tabpanel" aria-labelledby="example-5-tab">
+                        <h1>tab 5</h1>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/footer_login.ejs') %>

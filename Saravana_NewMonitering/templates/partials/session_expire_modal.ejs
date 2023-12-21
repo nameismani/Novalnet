@@ -1,0 +1,66 @@
+<style>
+    .replace_show{
+        display: block !important;
+    }
+    #modal-card{
+        transition: all 0.5s ease-in-out;
+    }
+    .showpass {
+        position: absolute;
+        right: 1rem;
+        top: 1.7rem;
+        z-index: 50;
+        cursor: pointer;
+    }
+</style>
+
+
+<div id="<%= modalname %>" class=" shadow-md"
+    style="position: fixed;z-index:99999;height: 100vh; width: 100vw; background-color: rgba(0, 0, 0, 0.295);display: none;">
+    <div style="position: relative;  height: 245px;display: flex;
+    justify-content: center;align-items: center">
+        <div id="modal-card" class="intro-x flex flex-col justify-end"
+            style="top:100px;transform: translate(0%,-20%);margin: 25px;width: 500px;display: flex;flex-direction: column;padding:13px 20px;background-color: white;border-radius: 10px;">
+            <div class="flex justify-center items-center btn-rounded text-white bg-primary"
+                style="position: absolute; top: 0px;left: 50%;transform: translate(-50%,-50%) ;height: 70px;width: 70px;">
+                <span class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-alert-circle"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                  
+
+                </span>
+            </div>
+
+            <div class="flex justify-center items-center flex-col" style="padding: 10px 0px;margin-top: 10px;">
+                <h1 class="font-bold" style="font-size: 22px;">Session Expire</h1>
+                <p class="mt-4">
+                <span class="ml-2">
+                    Do you want to extend the session ? 
+                    </span>  
+                </p>
+                   
+            </div>
+            <div style="position: relative;">
+                <input id="session_extend_password" type="password" class="intro-x login__input form-control py-3 px-4 block mt-4 mb-5" placeholder="<%= lang("password") %>" id="password" name="password">
+
+                <div class="showpass" onclick="Pass_Toggle('eye_icon_on','eye_icon_off','session_extend_password')">
+                   <svg id="eye_icon_on" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye eye" style="display: block;" ><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                   <svg id="eye_icon_off" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-off eye-off"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" x2="22" y1="2" y2="22"/></svg>
+  
+                </div>
+                <p class="text-danger p-1 mt-1 mb-5" id="session_pass_err" style="position: absolute;top:3.5rem;display: none;"></p>
+
+                </div>
+            <div style="padding: 10px 0px;margin-top: 5px;">
+        
+                <button id="<%= save_btn %>" class="btn btn-primary w-full">Yes, Extend session</button>
+                    <button class="btn w-full mt-2 btn-outline-warning <%= cancel_btn %>">Logout Now</button>
+           
+     
+            </div>
+        </div>
+        
+    </div>
+<input type="hidden" id="hidden_event">
+
+</div>
+

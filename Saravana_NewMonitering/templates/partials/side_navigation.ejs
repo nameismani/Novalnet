@@ -1,0 +1,240 @@
+<nav class="side-nav">
+    <ul>
+        <li>
+            <a href="javascript:;" class="side-menu <% if (activeTab == 'dashboard') { %> side-menu--active <% } %>">
+                <div class="side-menu__icon"> <i data-lucide="home"></i> </div>
+                <div class="side-menu__title">
+                    Dashboard
+                    <div class="side-menu__sub-icon transform rotate-180"> <i data-lucide="chevron-down"></i> </div>
+                </div>
+            </a>
+
+           
+                <ul class="<% if (activeTab == 'dashboard') { %>side-menu__sub-open<% } %>" id="dashboard_navlink">
+                    
+                    <% if(default_dashboard.index == true){ %>
+                        <li>
+                            <a href="/dashboard/<%= default_dashboard.dashboard[0].id %>"
+                                class="side-menu <% if (activeMenu == default_dashboard.dashboard[0].id) { %> side-menu--active <% } %> custom_dashboard_page">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> <%= default_dashboard.dashboard[0].name %> </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/dashboard/standard"
+                                class="side-menu <% if (activeMenu == 'standard') { %> side-menu--active <% } %>">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title"> Standard </div>
+                            </a>
+                        </li>
+                  <%  }else{ %>
+                    <li>
+                        <a href="/dashboard/standard"
+                            class="side-menu <% if (activeMenu == 'standard') { %> side-menu--active <% } %>">
+                            <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                            <div class="side-menu__title"> Standard </div>
+                        </a>
+                    </li>
+                  <%} %>
+                    <% dashboards.forEach(dashboard=> { %>
+                        <li class="custom_dashboard_page my_dashboard" data-dashboard-id="<%= dashboard.id %>">
+                            <a href="/dashboard/<%= dashboard.id %>"
+                                class="side-menu <% if (activeMenu == dashboard.id) { %> side-menu--active <% } %>">
+                                <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                                <div class="side-menu__title">
+                                    <%= dashboard.name %>
+                                </div>
+                            </a>
+                        </li>
+                        <% }) %>
+                </ul>
+              
+
+        </li>
+       
+        <li>
+            <a href="javascript:;" class="side-menu <% if (activeTab == 'system') { %> side-menu--active <% } %>">
+                <div class="side-menu__icon"> <i data-lucide="cpu"></i> </div>
+                <div class="side-menu__title">
+                    System / Server
+                    <div class="side-menu__sub-icon "> <i data-lucide="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="">
+                <li>
+                    <a href="/side-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Availability </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Health </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Database </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Disk Space </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Crons </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Applications </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Host </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Files </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Services </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Services </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="side-menu"> 
+                <div class="side-menu__icon"> <i data-lucide="shopping-bag"></i> </div>
+                <div class="side-menu__title">
+                    Merchant
+                    <div class="side-menu__sub-icon "> <i data-lucide="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="">
+                <li>
+                    <a href="/side-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/side-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Risk </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/simple-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Projects </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Return debit/Chargeback </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Key management </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/top-menu-light-dashboard-overview-1.html" class="side-menu">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Contract/Conditions </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="side-menu <% if (activeTab == 'transaction') { %> side-menu--active <% } %>">
+                <div class="side-menu__icon"> <i data-lucide="banknote"></i> </div>
+                <div class="side-menu__title">
+                    Transaction
+                    <div class="side-menu__sub-icon "> <i data-lucide="chevron-down"></i> </div>
+                </div>
+            </a>
+            <ul class="<% if (activeTab == 'transaction') { %>side-menu__sub-open<% } %>">
+                <li>
+                    <a href="/transaction"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'dashboard') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/failure"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'failure') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Failures </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/risk"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'risk') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Risk </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/fraud"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'fraud') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Fraud/Suspicious </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/statistics"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'statistics') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Statistics </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/customer"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'customer') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Endcustomers </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="/transaction/interrupt"
+                        class="side-menu <% if (activeTab == 'transaction' && activeMenu == 'interrupt') { %> side-menu--active <% } %>">
+                        <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
+                        <div class="side-menu__title"> Interrupt </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</nav>

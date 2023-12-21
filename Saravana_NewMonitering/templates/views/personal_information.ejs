@@ -1,0 +1,174 @@
+<%- include('../partials/header_login.ejs') %>
+    <div class="content">
+        <div
+            class="max-w-full md:max-w-none rounded-[30px] md:rounded-none px-4 md:px-[22px] min-w-0 min-h-screen bg-slate-100 flex-1 md:pt-20 pb-10 mt-5 md:mt-1 relative dark:bg-darkmode-700 before:content-[''] before:w-full before:h-px before:block">
+            <div class="flex items-center mt-8 intro-y justify-between">
+                <h2 class="mr-auto text-lg font-medium">Personal Information</h2>
+                <button type="button" class="btn box mr-2 flex items-center ml-auto sm:ml-0 back-url"> <svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        icon-name="arrow-left" class="lucide lucide-arrow-left w-4 h-4 mr-2" data-lucide="arrow-left">
+                        <line x1="19" y1="12" x2="5" y2="12"></line>
+                        <polyline points="12 19 5 12 12 5"></polyline>
+                    </svg> Back </button>
+
+            </div>
+            <div class="grid grid-cols-12 gap-6 mt-5">
+                <div class="flex flex-col-reverse col-span-12 lg:col-span-4 2xl:col-span-3 lg:block">
+                    <div class="intro-y box">
+                        <div class="relative flex items-center p-5">
+                            <div class="w-12 h-12 image-fit"><img alt="Midone Tailwind HTML Admin Template"
+                                    class="rounded-full" src="/images/Thangadurai.png"></div>
+                            <div class="ml-4 mr-auto">
+                                <div class="text-base font-medium">Thangadurai</div>
+                                <div class="text-slate-500">Front end Engineer</div>
+                            </div>
+                            <!-- <div class="relative" data-headlessui-state=""><a class="cursor-pointer block w-5 h-5"
+                                    id="headlessui-menu-button-:rl:" aria-haspopup="menu" aria-expanded="false"
+                                    data-headlessui-state=""><svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        class="stroke-1.5 w-5 h-5 text-slate-500">
+                                        <circle cx="12" cy="12" r="1"></circle>
+                                        <circle cx="19" cy="12" r="1"></circle>
+                                        <circle cx="5" cy="12" r="1"></circle>
+                                    </svg></a></div> -->
+                        </div>
+                        <div class="p-5 border-t border-slate-200/60 dark:border-darkmode-400">
+                            <ul class="mtab" role="tablist">
+
+
+
+                                <li class="flex font-medium">
+
+                                    <a href="javascript:void(0);" class="py-2 flex text-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                        </svg>Personal Information</a>
+                                </li>
+
+                                <li class="flex-1">
+                                    <a href="/settings/my_dashboard" class="py-2 flex items-center">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-grid w-4 h-4 mr-2">
+                                        <rect width="7" height="7" x="3" y="3" rx="1"/>
+                                        <rect width="7" height="7" x="14" y="3" rx="1"/>
+                                        <rect width="7" height="7" x="14" y="14" rx="1"/>
+                                        <rect width="7" height="7" x="3" y="14" rx="1"/>
+                                      </svg>
+                                        My Dashboard</a>
+                                </li>
+
+                                <!-- <li class="flex-1 ">
+                                    <a href="/settings/change_password" class="flex py-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                        </svg>
+                                        Change Password</a>
+                                </li> -->
+
+                                <li class="flex-1">
+                                    <a href="/settings/user_settings" class="flex py-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round"
+                                            class="stroke-1.5 w-4 h-4 mr-2">
+                                            <path
+                                                d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                                            </path>
+                                            <circle cx="12" cy="12" r="3"></circle>
+                                        </svg>
+                                        User Settings</a>
+                                </li>
+
+                            </ul>
+                            <!-- <div class="flex p-5 border-t border-slate-200/60 dark:border-darkmode-400"><button
+                                    type="button"
+                                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary px-2 py-1">New
+                                    Group</button><button type="button"
+                                    class="transition duration-200 border shadow-sm inline-flex items-center justify-center rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed border-secondary text-slate-500 dark:border-darkmode-100/40 dark:text-slate-300 [&amp;:hover:not(:disabled)]:bg-secondary/20 [&amp;:hover:not(:disabled)]:dark:bg-darkmode-100/10 px-2 py-1 ml-auto">New
+                                    Quick Link</button>
+                            </div> -->
+                        </div>
+                    </div>
+
+                </div>
+                <div class=" col-span-12 lg:col-span-8 2xl:col-span-9 "> 
+                     <div class="grid grid-cols-12 gap-6 intro-y box">
+                                <div class="col-span-12 lg:col-span-4" style="padding: 30px;">
+                                    <div class="flex flex-col h-full" style="justify-content: space-around;">
+                                        <div class="flex justify-center items-center">
+                                            <div class=" image-fit" style="width: 200px; height: 200px;"><img
+                                                data-action="zoom"
+                                                    alt="Midone Tailwind HTML Admin Template"
+                                                    class="rounded-full" src="/images/Thangadurai.png"></div>
+                                        </div>
+                                        <div class=" w-full flex" style="justify-content: center">
+                                            <span><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                    class="lucide lucide-map-pin">
+                                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                                                    <circle cx="12" cy="10" r="3" />
+                                                </svg></span>
+                                            <h1 class="font-medium text-slate-600 ml-1">Chennai</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-span-12 lg:col-span-8">
+                                    <div style="margin: 15px;" class="personal_details">
+                                        <div class="grid grid-cols-12 gap-6 px-5 py-5 border-b border-slate-200/60">
+                                            <div class="col-span-3  text-base font-medium">Name</div>
+                                            <div class="col-span-3  text-center">:</div>
+                                            <div class="col-span-6   ">Thangadurai</div>
+                                        </div>
+                                        <div class="grid grid-cols-12 gap-6  px-5 py-5 border-b border-slate-200/60"
+                                            style="justify-content: space-between;">
+                                            <div class=" col-span-3  text-base font-medium">E-mail</div>
+                                            <div class="col-span-3 text-center">:</div>
+                                            <div class="col-span-6  " style="overflow-wrap: break-word;">
+                                                test@novalnetsolutions.com</div>
+                                        </div>
+                                        <div class="grid grid-cols-12 gap-6 px-5 py-5 border-b border-slate-200/60">
+                                            <div class="col-span-3    text-base font-medium">Role</div>
+                                            <div class="col-span-3   text-center">:</div>
+                                            <div class="col-span-6   ">Senior developer</div>
+                                        </div>
+                                        <div class="grid grid-cols-12 gap-6 px-5 py-5 border-b border-slate-200/60">
+                                            <div class="col-span-3    text-base font-medium">Contact</div>
+                                            <div class="col-span-3   text-center">:</div>
+                                            <div class="col-span-6  ">9876543210</div>
+                                        </div>
+                                        <!-- <div
+                                            class="grid grid-cols-12 gap-6  px-5 py-5 border-b border-slate-200/60">
+                                            <div class="col-span-3    text-base font-medium">Status</div>
+                                            <div class="col-span-3   text-center">:</div>
+
+                                            <span class="flex col-span-6  ">
+                                                <span style="position: relative; top: 25%;"> <svg class="w-2 h-2"
+                                                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                        <path fill="#00FF00"
+                                                            d="m2 12a10 10 0 1 1 10 10 10 10 0 0 1 -10-10z" />
+                                                    </svg>
+                                                </span><span class="ml-1">Active</span>
+
+
+                                        </div> -->
+
+                                    </div>
+
+
+                                </div>
+                     </div>                 
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../partials/confirm_popup.ejs',{modalname : 'backbtn-modal' ,dash_name:false,error_text:"Are you sure you want to leave this page without save ?",cancel_btn:'backbtn_cancel',save_btn:'backbtn_confirm'}) %>
+                    <%- include('../partials/footer_login.ejs') %>
