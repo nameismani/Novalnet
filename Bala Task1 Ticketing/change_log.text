@@ -1,0 +1,141 @@
+
+PROBLEM-
+         "Whatever text is passed on the URL on the task listing page is displayed. We may add additional 
+validation in this place."
+
+
+
+1) --- Changes in ticket.ejs file (templates->views->ticket.ejs)--- 
+  
+    In h2 (class=page-title), added few more conditions to check for status_name and display h2 that matches status Url.  (Line-173)
+
+        Replaced this 
+                                   <h2 class="page-title">
+                                        <% if ( active_menu == ''){ %> All tickets <% } else if (active_menu == 'mytickets') { %> My tickets <% } else if (active_menu == 'iresolved') { %> My resolved tickets <% } else if (active_menu == 'falsepositive') { %> False positive tickets <% } else { %> <%= active_menu %> tickets <% } %> 
+                                    </h2>
+
+       with the below code     
+                                    
+                                     <h2 class="page-title">
+                                        <% if ( active_menu == ''){ %> All tickets <% } else if (active_menu == 'mytickets') { %> My tickets <% } else if (active_menu == 'iresolved') { %> My Resolved tickets <% }  else if (active_menu == 'open') { %> Open tickets <% } else if (active_menu == 'assigned') { %> Assigned tickets <% }  else if (active_menu == 'progress') { %> In-progress tickets <% } else if (active_menu == 'waiting') { %> Waiting tickets <% }else if (active_menu == 'hold') { %> On-Hold tickets <% }else if (active_menu == 'resolved') { %> Resolved tickets <% }else if (active_menu == 'falsepositive') { %> False positive tickets <% }  %> 
+                                    </h2>
+
+2) --- Changes in tickets.js file  (src->routes->tickets.js) ---
+
+|- In router for status name (Line-66):
+                             modified express validator conditions so that any url other than intended  is typed we will be redirected to the 'Tickets' page.  
+
+  Replaced this 
+
+                   check('status_name').trim().matches(/^[a-zA-Z]+$/),
+
+  with the below code 
+
+                  check('status_name').trim().matches( "^(mytickets||iresolved||open||assigned||progress||waiting||hold||resolved||falsepositive)$")
+
+||- In router for detail 
+  
+  (Line 140)   
+
+             Added a query to check if id exists 
+                              const result = await req.app.get('db').query("SELECT id FROM ticket WHERE id = ?", [req.params.ticketId]);
+                  
+  
+  (Line: 145-147 )
+
+                added if condition so that only if id exists in database then only activity to that id is added 
+
+                 before->        tickets_model.addActivityEntry(req, ticketId, note) 
+        
+                 after->             if (result.length > 0) {
+                                                        tickets_model.addActivityEntry(req, ticketId, note);
+                                                            }
+ ( Line-186)
+                    passed result detail(result:result) to ejs to conditionally render based on result data
+
+                                                                    
+                                                                                         
+                    res.render('tickets_detail',                                                
+                {
+                    result:result,                                (added this line)
+                    ticket: response[0][0],
+                    ticket_detail: response[1],
+                    sub_tickets: response[2],
+                    activities: response[3],
+                    comments: response[4],
+                    status: response[5],
+                    priority: response[6],
+                    users: response[7],
+                    util: util,
+                    application: response[8],
+                    server: response[9],
+                    group: response[10],
+                    total_count: total_count,
+                    total_comment_count: total_comment_count,
+                    currentActivityPage: activityPage,
+                    currentCommentPage: commentPage,
+                    page_limit: page_limit,
+                    no_of_activity_pages: no_of_activity_pages,
+                    no_of_comments_pages: no_of_comments_pages,
+                });
+
+
+
+
+
+3)--- Changes in tickets_detail.ejs file   (templates->views->tickets_detail.ejs)  ---
+
+
+  |- If  condition to check whether any id matches & will render ticket description details.(Line-3) 
+
+               -->search  <%- include('../partials/header_after_login.ejs') %>,below that 
+            Added            
+                   <% if (result.length!=0) { %>                         (Line-3)
+                   
+
+                   before change->
+                                     <%- include('../partials/header_after_login.ejs') %>
+                                     <div class="page-wrapper">
+
+                   after change->
+                                  <%- include('../partials/header_after_login.ejs') %>
+                                  <% if (result.length!=0) { %>
+                                  <div class="page-wrapper">
+
+ 
+                   
+               --> search </form> , on 6th instance  and (1 line below the </div>)  2 line below add                inside this  description details code  which is already there
+                   <% }  (closing if condition starting at line 3)     
+
+
+                  after change->
+                    </form>
+                      </div>
+                     <% } 
+
+
+||-  Else condition to show error message in the same page if relative url doesnot match with ticketid (Line 700-704)  
+
+         search <%- include('../partials/footer_after_login.ejs') %> , before that add  
+    else { %>
+          <div class="empty">
+            <img src="/img/record_not_found.svg" class="w-50 no_records_image">
+            <p class="empty-title text-info ">No records found</p>
+          </div>
+        
+   <% } %>
+
+
+
+6) ---- Created  files ---
+  
+                                      ->  To show an error page, if any error occcured in url in tickets page(dev10.fobits.de/tickets...) or domain(dev10.fobits.de/...) page .In error page if back button (used as link) is clicked  redirects to previous page.
+
+
+|- (404.ejs file) templates->views->404_page.ejs file                                    
+
+7)--- In emticket.js file (src->routes->emticket.js) ---
+
+Added     at line 46
+
+          app.use("*", (req,res)=>res.render('404'), { title: '404' })
