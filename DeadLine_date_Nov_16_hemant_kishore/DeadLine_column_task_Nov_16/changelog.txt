@@ -1,0 +1,552 @@
+-----------------------------------------Deadline_Task--------------------------------------
+file => templates/views/tickets_details.ejs 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+change : 1
+~~~~~~~~~~~~
+- Search this word 'row' in 3rd occurrence, Replace this code with 2nd child of 'Status'
+
+<div class="col-xl-1 col-xs-12 col-md-12">
+    <div class="col-md-6 col-xl-12">
+        <div class="mb-3">
+             <div class="form-label">Status</div>
+                    <select class="form-select" name="status" id="status">
+                        <% for(var i=0; i < status.length; i++) { %>
+                   <option value="<%= status[i].id %>" <% if(status[i].id == ticket.ticket_status_id) { %> selected <%}%>><%= status[i].name %></option>
+             <% }%>
+            </select>
+        </div>
+    </div>
+</div>
+
+change : 2
+~~~~~~~~~~~~
+- Search this word 'row' in 3rd occurrence, Add this code after the 3rd child of 'Priority'
+ 
+ <!-- Deadline -->
+<input type="hidden" id="creation_date" value=<%= util.formatDateTime(ticket.creation_date) %> />
+<!-- start date -->
+    <div class="col-xl-1 col-xs-12 col-md-12">
+        <div class="col-md-6 col-xl-12">
+            <div class="mb-3">
+                <div class="form-label">Start Date</div>
+                    <div class="input-icon">
+                    <span class="input-icon-addon">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="start_calendar" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><rect x="4" y="5" width="16" height="16" rx="2"></rect><line x1="16" y1="3" x2="16" y2="7"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="4" y1="11" x2="20" y2="11"></line><line x1="11" y1="15" x2="12" y2="15"></line><line x1="12" y1="15" x2="12" y2="18"></line></svg>
+                    </span>
+                <input class="form-control" autocomplete="off" type="text" placeholder="Select a date" name="start_date" id="start_date"  data-start-date="<%= deadLine_startDate %>" style="cursor: pointer;" readonly value="<%= deadLine_startDate %>"/>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End date -->
+<div class="col-xl-1 col-xs-12 col-md-12">
+    <div class="col-md-6 col-xl-12">
+        <div class="mb-3">
+            <div class="form-label">End Date</div>
+                <div class="input-icon">
+                    <span class="input-icon-addon">
+                    <svg xmlns="http://www.w3.org/2000/svg" id="endDate_calender" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><rect x="4" y="5" width="16" height="16" rx="2"></rect><line x1="16" y1="3" x2="16" y2="7"></line><line x1="8" y1="3" x2="8" y2="7"></line><line x1="4" y1="11" x2="20" y2="11"></line><line x1="11" y1="15" x2="12" y2="15"></line><line x1="12" y1="15" x2="12" y2="18"></line></svg>
+                    </span>
+                <input class="form-control" type="text" autocomplete="off" placeholder="Select a date" data-toggle="tooltip" name="end_date" id="end_date" data-end-date="<%= deadLine_endDate %>" style="cursor: pointer;" readonly value="<%= deadLine_endDate %>"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+----------------------------------------------------------------------------------------------------
+
+file => media/js/custom.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Add this below code on custom.js file -
+
+if(document.querySelector("#start_date") != undefined && document.querySelector("#end_date") != undefined ){
+
+    const ticketId = document.querySelector('#ticketId').value;
+    let currentDate = new Date().toJSON().slice(0,10).replace(/-/g,'/');
+    currentDate = new Date(currentDate)
+    
+    document.addEventListener("DOMContentLoaded",function () {
+
+        let startDate = start_date.value
+        let endDate = end_date.value
+        console.log(start_date.value);
+
+        if(endDate != '' && endDate.length > 0){
+
+            let deadLine_EndDate = end_date.value.split("/")
+            const endDate = deadLine_EndDate[1] + '/' + deadLine_EndDate[0] + '/' + deadLine_EndDate[2]
+             
+            if(new Date(endDate) < currentDate && status.value != 6){
+
+            $('#end_date').attr("data-bs-original-title","You are crossed the deadline")
+            $('#end_date').tooltip({trigger:'manual', placement:'top'}).tooltip('show');  
+            end_date.classList.add('border-danger','text-danger','custom-end-date')
+            document.querySelector("#endDate_calender").setAttribute("stroke","#d9534f")
+              setTimeout(()=>{
+                 $('#end_date').tooltip('hide')
+              },3000)
+            }
+              
+        }else{
+            console.log('top validate');
+            end_date.classList.remove("text-danger","border-danger","custom-end-date")
+            document.querySelector("#endDate_calender").setAttribute("stroke","currentColor")
+            // $('#end_date').tooltip('hide'); 
+        }
+
+        if(window.Litepicker && status.value != 6 ){
+             start_date.disabled = false
+             end_date.disabled = false
+         
+            let deadlineInput_startDate = document.getElementById('start_date');
+            let deadlineInput_endDate = document.getElementById('end_date');
+
+          
+            let startPicker = new Litepicker({
+          element: deadlineInput_startDate,
+          format: 'DD/MM/YYYY',
+          singleMode: true,
+          numberOfMonths: 1,
+          numberOfColumns: 1,
+          showTooltip: true,    
+          scrollToDate: true,
+          dropdowns: {
+            months: true,
+           },
+          buttonText: {
+            apply:start_date.value.length > 0 ? 'Update' : 'Apply',
+            reset:`<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-reload" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+            <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+            <path d="M20 4v5h-5"></path>
+         </svg>`,
+            previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>`,
+            nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>`,
+           },
+    
+           minDate: reverseDate(creation_date.value),
+           maxDate: end_date.value && end_date.value.length > 0 ?  reverseDate(end_date.value) : null,
+           highlightedDays : [reverseDate(start_date.value) != reverseDate(end_date.value)? reverseDate(end_date.value):null],
+           autoApply:false,
+        
+        setup: function(picker){
+            picker.on('preselect',function(ele){
+                
+            const selectedDate = picker.datePicked[0].dateInstance
+            deadlineInput_startDate.value = changeFormatDate(selectedDate)
+               
+    
+        picker.on('selected', function(date) {   
+               
+            let deadLine_startDate = date.dateInstance.toISOString().slice(0, 19).replace("T", " ");
+            const jsonData = {
+                ticketId : ticketId,
+                deadLine : {
+                    startDate:changeFormatDate(selectedDate),
+                    endDate:null,
+                } 
+            }
+           
+            if(date.dateInstance.toDateString() == selectedDate.toDateString()
+             && changeFormatDate(selectedDate) != startDate){
+               
+                client.post('/tickets/update/' + ticketId, JSON.stringify(jsonData), (request,response) => {
+                    setTimeout(()=>{
+                   window.location.reload();
+                    },1500)
+                    
+                });
+            }
+          
+        })
+     })
+        }
+        });
+
+            let endPicker = new Litepicker({
+            element: deadlineInput_endDate,
+            format: 'DD/MM/YYYY',
+            singleMode: true,
+            numberOfMonths: 1,
+            numberOfColumns: 1,
+            showTooltip: true,    
+            scrollToDate: true,  
+            dropdowns: {
+              months: true,
+            },
+            buttonText: {
+                apply:end_date.value.length > 0 ? 'Update' : 'Apply',
+              reset:`<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-reload" width="28" height="28" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747"></path>
+              <path d="M20 4v5h-5"></path>
+           </svg>`,
+              previousMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>`,
+              nextMonth: `<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>`,
+            },
+            minDate: start_date.value && start_date.value.length > 0 ? reverseDate(start_date.value) :reverseDate(creation_date.value),
+            highlightedDays : [reverseDate(end_date.value) != reverseDate(start_date.value) ? reverseDate(start_date.value) : null , reverseDate(creation_date.value)],
+            autoApply:false,
+  
+          setup: function(picker){
+              picker.on('preselect',(element)=>{
+              const selectedDate = picker.datePicked[0].dateInstance
+              console.log(picker.datePicked[0].dateInstance);
+              deadlineInput_endDate.value = changeFormatDate(selectedDate)
+
+                  let deadLine_startDate = start_date.value.split("/")
+                  let startDate = deadLine_startDate[1] + '/' + deadLine_startDate[0] + '/' + deadLine_startDate[2] 
+                  let startSelectedDate = new Date(startDate)
+
+                  if(end_date.value.length == 0){
+
+                      end_date.classList.remove("text-danger","border-danger",'custom-end-date')
+                      document.querySelector("#endDate_calender").setAttribute("stroke","currentColor")
+                      $('#end_date').tooltip('hide');
+                    
+                  }
+                  if(selectedDate < currentDate && status.value != 6){
+
+                    $('#end_date').attr("data-bs-original-title","Selected date is crossed the deadline")
+                    $('#end_date').tooltip({trigger:'manual', placement:'top'}).tooltip('show');  
+                    console.log('in')
+                    deadlineInput_endDate.value = changeFormatDate(selectedDate)  
+                    end_date.classList.add('border-danger')
+                    document.querySelector("#endDate_calender").setAttribute("stroke","#d9534f")
+               
+                    setTimeout(()=>{
+                        $('#end_date').tooltip('hide');
+                    },3000)
+                  }
+                  else{
+
+                     console.log('out')
+                     end_date.classList.remove("text-danger","border-danger",'custom-end-date')
+                     document.querySelector("#endDate_calender").setAttribute("stroke","currentColor")
+                     $('#end_date').tooltip('hide');
+                   
+                  }
+
+                picker.on('selected', function(date) {   
+                    console.log('server =>', date)
+                    let deadLine_endDate = date.dateInstance.toISOString().slice(0, 19).replace("T", " ");
+                    const jsonData = {
+                        ticketId : ticketId,
+                        deadLine : {
+                           startDate:null,
+                           endDate : changeFormatDate(date)
+                        } 
+                    }    
+                    if(date.dateInstance.toDateString() == selectedDate.toDateString() 
+                    && changeFormatDate(selectedDate) != endDate){
+                        client.post('/tickets/update/' + ticketId, JSON.stringify(jsonData), (request,response) => {
+                            setTimeout(()=>{
+                                   window.location.reload();
+                            },1500)
+                                    
+                        });            
+
+                    }
+                    
+            }) 
+
+              })
+          },
+           
+          });  
+        
+    }else{
+        start_date.disabled = true
+        start_date.style.cursor ="not-allowed"
+        end_date.disabled = true
+        end_date.style.cursor ="not-allowed"
+
+        end_date.classList.remove("text-danger","border-danger","custom-end-date")
+        document.querySelector("#endDate_calender").setAttribute("stroke","currentColor")
+    }
+
+}) 
+
+document.addEventListener("click",(e)=>{
+  
+ if(e.target.id != 'end_date' && status.value !=6 ){
+    if(end_date.value != '' && end_date.value.length > 0){
+
+        let deadLine_EndDate = end_date.value.split("/")
+        const endDate = deadLine_EndDate[1] + '/' + deadLine_EndDate[0] + '/' + deadLine_EndDate[2]
+         
+        if(new Date(endDate) < currentDate){
+
+        end_date.classList.add('border-danger','text-danger','custom-end-date')
+        document.querySelector("#endDate_calender").setAttribute("stroke","#d9534f")
+
+        }
+          
+    }else{
+        end_date.classList.remove("text-danger","border-danger","custom-end-date")
+        document.querySelector("#endDate_calender").setAttribute("stroke","currentColor")
+        
+    }
+ }
+
+})
+
+}
+
+function reverseDate(date){
+    if(date.includes("/")){
+        const [day, month, year] = date.split('/');
+        return `${year}-${month}-${day}`
+    }else{
+
+        const [day, month, year] = date.split('.');
+        return `${year}-${month}-${day}`
+    }
+    // return `${year}-${month}-${day}`
+}
+
+function changeFormatDate(date) {
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+   
+       return `${day}/${month}/${year}`;    
+  }
+
+----------------------------------------------------------------------------------------------------
+
+file => src/routes/tickets.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+change : 1
+~~~~~~~~~~~~
+- Add this code on router.all('detail/:ticketId') before the try block 
+
+ let date_dead;
+    const jsonData = fs.readFileSync("media/data.json","utf8")
+    const deadLine_Data = await JSON.parse(jsonData)
+    const existingItem = await deadLine_Data.find((item) => item.ticketId == ticketId) 
+    if( existingItem != undefined){
+        date_dead = {
+            startDate: await existingItem.deadLine.startDate,
+            endDate: await existingItem.deadLine.endDate
+        }
+    }else{
+        date_dead = {
+            startDate: null,
+            endDate: null
+        }
+    }
+
+change : 2
+~~~~~~~~~~~~
+- Search this word 'no_of_comments_pages', on the 3rd occurrence below paste this code -
+
+deadLine_startDate : date_dead.startDate,
+deadLine_endDate :  date_dead.endDate
+
+----------------------------------------------------------------------------------------------------
+
+file => src/routes/tickets.js
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+-Replace this code on router.post('/update/:ticketId')
+
+router.post('/update/:ticketId', check('ticketId').trim().matches(/^[0-9]+$/), async (req, res, next) => {
+    const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+	   res.redirect('/tickets');
+	}
+
+    const ticketId = req.params.ticketId.replace(/[^0-9 ]/g, '')
+    const assignees = req.body.assignees
+    const status = req.body.status
+    const priority = req.body.priority
+    const deadLine = req.body.deadLine
+    
+    const ticketDetails = await tickets_model.getTicketDetailsById(req, ticketId)
+   
+    res.locals.user = req.session;
+
+    if(assignees != undefined && assignees != 0) {
+        const assigneeDetails = await tickets_model.getUserById(req, assignees)
+        note = res.locals.user.first_name + ' ' + res.locals.user.last_name + ' assigned the task to ' + assigneeDetails[0].first_name + ' ' + assigneeDetails[0].last_name
+    } else if(status != undefined && status != '') {
+        const currentStatus = await tickets_model.getStatusById(req, status);
+        note = res.locals.user.first_name + ' ' + res.locals.user.last_name + ' changed the task status from ' + ticketDetails[0].name + ' to ' + currentStatus[0].name
+    } else if(priority != undefined && priority != '') {
+        const currentPriority = await tickets_model.getPriorityById(req, priority);
+        note = res.locals.user.first_name + ' ' + res.locals.user.last_name + ' changed the task priority from ' + ticketDetails[0].level +' to ' + currentPriority[0].level
+    }else if(deadLine != undefined && deadLine != '') {
+            
+        let jsonFile = await JSON.parse(fs.readFileSync('media/data.json','utf-8'))
+        const existingData = await jsonFile.findIndex((data)=> data.ticketId === req.body.ticketId)
+       
+        if(existingData !== -1 ){
+            if(req.body.deadLine.startDate != undefined && req.body.deadLine.startDate != null){
+                note = res.locals.user.first_name + ' ' + res.locals.user.last_name  +' changed the deadline start date from ' + jsonFile[existingData].deadLine.startDate +' to ' + req.body.deadLine.startDate
+                jsonFile[existingData].deadLine.startDate = req.body.deadLine.startDate
+            }else{
+                note = res.locals.user.first_name + ' ' + res.locals.user.last_name  +' changed the deadline end date from ' + jsonFile[existingData].deadLine.endDate + " to "  + req.body.deadLine.endDate 
+                jsonFile[existingData].deadLine.endDate = req.body.deadLine.endDate
+            }
+        }else{
+            jsonFile.push(req.body)
+            if(req.body.deadLine.startDate != undefined && req.body.deadLine.startDate != null){
+               
+                note = res.locals.user.first_name + ' ' + res.locals.user.last_name  +' set the deadline start date to ' + req.body.deadLine.startDate +'.'
+            }else{
+              
+                note = res.locals.user.first_name + ' ' + res.locals.user.last_name  +' set the deadline end date to ' + req.body.deadLine.endDate +"."
+            }
+          
+        }
+
+        const updateJsonFile = JSON.stringify(jsonFile,null,2)
+
+        fs.writeFileSync('media/data.json', updateJsonFile)
+            console.log("Deadline is updated on "+ ticketId + " tickets") 
+
+            res.status(200).json({
+               message:"success"
+            })
+
+     }
+
+    tickets_model.addActivityEntry(req, ticketId, note);
+
+     try {
+       if(deadLine == undefined){
+           Promise.all([
+               tickets_model.updateTicketById(req, ticketId)
+           ]).then((response) => {
+               res.end();
+           });
+       }
+    } catch (error) {
+        // Handle your error here
+        console.log(error);
+        res.end();
+    }
+})
+
+----------------------------------------------------------------------------------------------------
+
+file => media/css/custom.css
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+- Add this css code on custom.css 
+
+.custom-end-date {
+    box-shadow: 0 0 0.25em;
+    animation: shake 0.15s ease-in-out 0.5s 2;
+}
+
+@keyframes shake {
+    0% { margin-left: 0rem; }
+    25% { margin-left: 0.5rem; }
+    75% { margin-left: -0.5rem; }
+    100% { margin-left: 0rem; }
+  }
+
+----------------------------------------------------------------------------------------------------
+
+file => src/models/tickets.models.js
+
+change : 1
+~~~~~~~~~~
+- Search this word 'fetchTicketById', In 1st occurrence after the if condition add this code - 
+
+// const result = await req.app.get('db').query("SELECT id, deadline_startDate, deadline_endDate, source, creation_date, ticket_no, psp_staff_id, ticket_status_id, ticket_priority_id, ticket_group_id, ticket_application_id, server_id, subject, test_mode, active, last_updated FROM ticket WHERE id = ?", [ticketId]);
+
+change : 2
+~~~~~~~~~~
+ - Search this word 'updateTicketById',In 1st occurrence replace this below code -
+
+exports.updateTicketById = async (req, ticketId) => {
+    if(!ticketId) {
+        ticketId = req.params.ticketId;
+    }
+
+    const assignees = req.body.assignees
+    const status = req.body.status
+    const priority = req.body.priority
+    // const startDate = req.body.deadLine.startDate
+    // const endDate = req.body.deadLine.endDate
+
+    let update_query = "";let note = "";
+    let update_placeholders = [];
+    
+    if(assignees != undefined && assignees != 0) {
+        update_query += "psp_staff_id = ?";
+        update_placeholders.push(assignees)
+    }
+
+    if(status != undefined && status != '') {
+        update_query += "ticket_status_id = ?";
+        update_placeholders.push(status)
+    }
+
+    if(priority != undefined && priority != 0) {
+        update_query += "ticket_priority_id = ?";
+        update_placeholders.push(priority)
+    }
+
+    // if(startDate != undefined && startDate != null){
+    //     update_query += 'deadline_startDate ='
+    //     update_placeholders.push(startDate)
+    // }
+
+    // if(endDate != undefined && endDate != null){
+    //     update_query += 'deadline_endDate ='
+    //     update_placeholders.push(endDate)
+    // }
+
+    update_placeholders.push(ticketId)
+
+    result = await req.app.get('db').query("UPDATE ticket SET " + update_query +" WHERE id = ?", update_placeholders);
+    if(result.length) {
+        return result;
+    }
+    return [];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
